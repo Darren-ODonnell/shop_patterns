@@ -24,4 +24,11 @@ public class LastnameModel {
         lastname.setLastnameIrish(this.lastnameIrish);
         return lastname;
     }
+    // used in update operations
+
+    public Lastname translateModelToLastname(Long id){
+        Lastname lastname = translateModelToLastname();
+        lastname.setId(id);
+        return lastname;
+    }
 }

@@ -29,4 +29,12 @@ public class FirstnameModel {
         return firstname;
     }
 
+    // used in update operations
+
+    public Firstname translateModelToFirstname(Long id){
+        Firstname firstname = translateModelToFirstname();
+        firstname.setId(id);
+        return firstname;
+    }
+
 }

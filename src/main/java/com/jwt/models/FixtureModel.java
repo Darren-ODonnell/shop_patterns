@@ -5,6 +5,7 @@ import com.jwt.repositories.CompetitionRepository;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Optional;
 
 public class FixtureModel {
 
@@ -55,13 +56,22 @@ public class FixtureModel {
         Fixture fixture = new Fixture();
 
         fixture.setCompetition(competitionRepository.getById(this.competitionId));
-        fixture.setHomeTeam(clubRepository.findClubById(this.homeTeamId));
-        fixture.setAwayTeam(clubRepository.findClubById(this.awayTeamId));
+        Optional<Club> club = clubRepository.findById(this.homeTeamId);
+        fixture.setHomeTeam(club.orElse(new Club()));
+        club = clubRepository.findById(this.awayTeamId);
+        fixture.setAwayTeam(club.orElse(new Club()));
         fixture.setFixtureDate(this.fixtureDate);
         fixture.setFixtureTime(this.fixtureTime);
         fixture.setSeason(this.season);
         fixture.setRound(this.round);
 
+        return fixture;
+    }
+    // used in update operations
+
+    public Fixture translateModelToFixture(CompetitionRepository competitionRepository, ClubRepository clubRepository, Long id){
+        Fixture fixture = translateModelToFixture(competitionRepository, clubRepository);
+        fixture.setId(id);
         return fixture;
     }
 }

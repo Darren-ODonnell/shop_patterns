@@ -54,24 +54,24 @@ public class PlayerController {
 
     @GetMapping(value="/findByFirstnameLastname/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Player findByFirstnameLastname(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname) {
-        return playerService.findByFirstnameLastname(firstname, lastname);
+    public @ResponseBody Player findByFirstnameLastname(@ModelAttribute PlayerModel playerModel ) { //@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname) {
+        return playerService.findByFirstnameLastname(playerModel);
     }
 
     // return players with same lastname
 
     @GetMapping(value="/findByLastname/")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERTAOR') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Player> findByLastname(@RequestParam("lastname") String lastname) {
-        return playerService.findByLastname(lastname);
+    public @ResponseBody List<Player> findByLastname(@ModelAttribute PlayerModel playerModel) {
+        return playerService.findByLastname(playerModel);
     }
 
     // return players with same firstname
 
     @GetMapping(value="/findByFirstname/")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Player> findByFirstname(@RequestParam("firstname") String firstname) {
-        return playerService.findByFirstname(firstname);
+    public @ResponseBody List<Player> findByFirstname(@ModelAttribute PlayerModel playerModel) {
+        return playerService.findByFirstname(playerModel);
     }
 
     // add player

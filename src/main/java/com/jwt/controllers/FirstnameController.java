@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Darren O'Donnell
@@ -34,7 +33,8 @@ public class FirstnameController {
 
     @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Firstname> list(){
+    public @ResponseBody
+    List<Firstname> list(){
         return firstnameService.list();
     }
 
@@ -50,8 +50,7 @@ public class FirstnameController {
 
     @GetMapping(value="/findById/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody
-    Optional<Firstname> findById(@RequestParam("id") Long id){
+    public @ResponseBody Firstname findById(@RequestParam("id") Long id){
         return firstnameService.findById( id);
     }
 
@@ -67,17 +66,17 @@ public class FirstnameController {
 
     @GetMapping(value="/findIrish/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody String findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
+    public @ResponseBody Firstname findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findIrishFirstname( firstnameModel);
     }
 
-    // return english lastname given the irish lastname
-
-    @GetMapping(value="/findEnglish/")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<String> findEnglishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
-        return firstnameService.findEnglishFirstname( firstnameModel);
-    }
+//    // return english lastname given the irish lastname
+//
+//    @GetMapping(value="/findEnglish/")
+//    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+//    public @ResponseBody List<Firstname> findEnglishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
+//        return firstnameService.findEnglishFirstname( firstnameModel);
+//    }
 
     // add new firstname
 

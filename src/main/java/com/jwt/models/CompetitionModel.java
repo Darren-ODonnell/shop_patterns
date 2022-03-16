@@ -20,9 +20,15 @@ public class CompetitionModel {
 
     public Competition translateModelToCompetition(){
         Competition competition = new Competition();
-
         competition.setSeason(this.season);
         competition.setName(this.name);
+        return competition;
+    }
+    // used in update operations
+
+    public Competition translateModelToCompetition(Long id){
+        Competition competition = translateModelToCompetition();
+        competition.setId(id);
         return competition;
     }
 

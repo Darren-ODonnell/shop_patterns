@@ -9,11 +9,12 @@ import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-    Optional<Player> findById(Long id);
-    Player findByFirstnameAndLastname(String firstname, String lastname);
     List<Player> findAll();
-    List<Player> findByLastname(String lastname);
-    List<Player> findByFirstname(String firstname);
+    Optional<Player> findById(Long id);
+    Optional<Player> findByFirstnameAndLastname(String firstname, String lastname);
+    Optional<List<Player>> findByLastname(String lastname);
+    Optional<List<Player>> findByFirstname(String firstname);
     boolean existsByFirstnameAndLastname(String firstname, String lastname);
     void deleteById(Long id);
+
 }

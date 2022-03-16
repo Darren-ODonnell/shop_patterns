@@ -1,5 +1,7 @@
 package com.jwt.services;
 
+import com.jwt.enums.MessageTypes;
+import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.Competition;
 import com.jwt.models.CompetitionModel;
 import com.jwt.payload.response.MessageResponse;
@@ -23,9 +25,7 @@ public class CompetitionService {
         this.competitionRepository = competitionRepository;
     }
 
-
     // return all Competitions - done
-
 
     public List<Competition> list(){
         return competitionRepository.findAll();
@@ -35,17 +35,14 @@ public class CompetitionService {
 
     public ResponseEntity<MessageResponse> deleteById( Long id){
 
-        logger.info("deleteCompetition by id = "+id);
-        if(competitionRepository.existsById(id))
-            competitionRepository.deleteById(id);
-        else
-            return ResponseEntity.ok(new MessageResponse("Error: Cannot delete competition with id: "+id));
+        if(!competitionRepository.existsById(id))
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete competition with id: "+id, MessageTypes.WARN));
 
-        return ResponseEntity.ok(new MessageResponse("Competition deleted with id: " + id));
+        competitionRepository.deleteById(id);
+        return ResponseEntity.ok(new MyMessageResponse("Competition deleted with id: " + id, MessageTypes.INFO));
     }
 
     // return Competition by id
-
 
     public  Optional<Competition> findById(Long id){
         return competitionRepository.findById(id);
@@ -55,29 +52,26 @@ public class CompetitionService {
 
 
     public Competition findByName(CompetitionModel competitionModel) {
-        if(!competitionRepository.existsByName(competitionModel.getName())) {
-            logger.info("Competition name does not exist : " + competitionModel.getName());
-            return null;
-        } else {
-            return competitionRepository.findByName(competitionModel.getName());
+        Optional<Competition> competition = competitionRepository.findByName(competitionModel.getName());
+        if(competition.isEmpty()) {
+            new MyMessageResponse( "Competition name does not exist : " + competitionModel.getName(),MessageTypes.WARN);
+            return new Competition();
         }
+        return competition.orElse(new Competition());
     }
 
     // add new Competition
 
-
     public  ResponseEntity<MessageResponse> add(CompetitionModel competitionModel){
 
         if(competitionRepository.existsByName(competitionModel.getName()))
-            return ResponseEntity.ok(new MessageResponse("Error: Competition already exists"));
-        else
-            competitionRepository.save(competitionModel.translateModelToCompetition());
+            return ResponseEntity.ok(new MyMessageResponse("Error: Competition already exists", MessageTypes.WARN));
 
-        return ResponseEntity.ok(new MessageResponse("new Competition added"));
+        competitionRepository.save(competitionModel.translateModelToCompetition());
+        return ResponseEntity.ok(new MyMessageResponse("new Competition added", MessageTypes.INFO));
     }
 
     // edit/update a competition record - only if record with id exists
-
 
     public ResponseEntity<MessageResponse> update(Long id,  CompetitionModel competitionModel){
 
@@ -85,14 +79,10 @@ public class CompetitionService {
         // insert id
         // then update
 
-        if(competitionRepository.existsById(id)) {
-            Competition competition = competitionModel.translateModelToCompetition();
-            competition.setId(id);
-            competitionRepository.save(competition);
-        }
-        else
-            return ResponseEntity.ok(new MessageResponse("Error: Id does not exist ["+id+"] -> cannot update record"));
+        if(!competitionRepository.existsById(id))
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
 
-        return ResponseEntity.ok(new MessageResponse("Competition record updated"));
+        competitionRepository.save(competitionModel.translateModelToCompetition(id));
+        return ResponseEntity.ok(new MyMessageResponse("Competition record updated", MessageTypes.INFO));
     }
 }

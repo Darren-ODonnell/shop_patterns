@@ -4,7 +4,6 @@ import com.jwt.models.Fixture;
 import com.jwt.models.FixtureModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.FixtureService;
-import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class FixtureController {
 
     // return all Fixtures
 
-    @GetMapping(value="/list" )
+    @GetMapping(value={"/","/list" })
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Fixture> list(){
         return fixtureService.findAll();
@@ -57,7 +56,7 @@ public class FixtureController {
 
     @GetMapping(value="/findByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Fixture> findByClub(@RequestParam("name") String name) throws NotFoundException {
+    public @ResponseBody List<Fixture> findByClub(@RequestParam("name") String name)  {
         return fixtureService.getClubFixtures(name);
     }
 
@@ -65,7 +64,7 @@ public class FixtureController {
 
     @GetMapping(value="/findNextByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Fixture findNextFixture(@RequestParam("name") String name) throws NotFoundException {
+    public @ResponseBody Fixture findNextFixture(@RequestParam("name") String name) {
         return fixtureService.getNextClubFixture(name);
     }
 
@@ -73,7 +72,7 @@ public class FixtureController {
 
     @GetMapping(value="/findByHomeByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Fixture> findByHomeByClub(@RequestParam("name") String name) throws NotFoundException {
+    public @ResponseBody List<Fixture> findByHomeByClub(@RequestParam("name") String name) {
         return fixtureService.getClubHomeFixtures(name);
     }
 
@@ -81,7 +80,7 @@ public class FixtureController {
 
     @GetMapping(value="/findByAwayByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Fixture> findByAwayByClub(@RequestParam("name") String name) throws NotFoundException {
+    public @ResponseBody List<Fixture> findByAwayByClub(@RequestParam("name") String name)  {
 
         return fixtureService.getClubAwayFixtures(name);
     }
@@ -94,7 +93,7 @@ public class FixtureController {
 
         return fixtureService.add(fixtureModel);
     }
-    @GetMapping(value="/findByCompetitionHomeTeamAwayTeamFixtureDateSesaon")
+    @GetMapping(value="/findByCompetitionHomeTeamAwayTeamFixtureDateSeason")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody Fixture findByCompetitionHomeTeamAwayTeamFixtureDateSeason(@ModelAttribute FixtureModel fixtureModel) {
 

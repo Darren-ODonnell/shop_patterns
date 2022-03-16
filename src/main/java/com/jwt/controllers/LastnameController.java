@@ -57,29 +57,20 @@ public class LastnameController {
         return lastnameService.findById(id);
     }
 
-    // return Lastname by lastname
-
-    @GetMapping(value="/findByLastname/")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody
-    List<Lastname> findByLastname(@ModelAttribute LastnameModel lastnameModel) {
-        return lastnameService.findByLastname(lastnameModel);
-    }
-
     // return irish lastname given the english lastname
 
     @GetMapping(value={"/findIrish/","/findByLastname"})
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<String> findIrishLastname(@ModelAttribute LastnameModel lastnameModel) {
-        return lastnameService.findIrishLastname(lastnameModel);
+    public @ResponseBody List<Lastname> findIrishLastname(@ModelAttribute LastnameModel lastnameModel) {
+        return lastnameService.findByIrishLastname(lastnameModel);
     }
 
     // return english lastname given the irish lastname
 
     @GetMapping(value="/findEnglish/")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<String> findEnglishLastname(@ModelAttribute LastnameModel lastnameModel) {
-        return lastnameService.findEnglishLastname(lastnameModel);
+    public @ResponseBody List<Lastname> findEnglishLastname(@ModelAttribute LastnameModel lastnameModel) {
+        return lastnameService.findByEnglishLastname(lastnameModel);
     }
 
     // delete lastname

@@ -58,4 +58,11 @@ public class ClubModel {
 
         return club;
     }
+    // used in update operations
+
+    public Club translateModelToClub(Long id){
+        Club club = translateModelToClub();
+        club.setId(id);
+        return club;
+    }
 }

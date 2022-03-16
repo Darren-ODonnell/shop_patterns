@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,9 +59,9 @@ public class ClubController {
 
     @GetMapping(value="/findByName/")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody  Club findByName(Model model, @RequestParam("name") String name) {
+    public @ResponseBody  Club findByName(@ModelAttribute ClubModel clubModel) {
 
-        return clubService.findByName(name);
+        return clubService.findByName(clubModel);
     }
 
     // add new Club

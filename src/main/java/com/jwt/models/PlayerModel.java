@@ -98,4 +98,11 @@ public class PlayerModel {
 
         return player;
     }
+    // used in update operations
+
+    public Player translateModelToPlayer(Long id){
+        Player player = translateModelToPlayer();
+        player.setId(id);
+        return player;
+    }
 }

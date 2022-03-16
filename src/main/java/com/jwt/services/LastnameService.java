@@ -1,6 +1,7 @@
 package com.jwt.services;
 
-import com.jwt.exceptions.NotFoundException;
+import com.jwt.enums.MessageTypes;
+import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.Lastname;
 import com.jwt.models.LastnameModel;
 import com.jwt.payload.response.MessageResponse;
@@ -18,8 +19,7 @@ import java.util.Optional;
 @Service
 public class LastnameService {
     private static final Logger logger = LoggerFactory.getLogger(LastnameService.class);
-    private LastnameRepository lastnameRepository;
-
+    private final LastnameRepository lastnameRepository;
 
     @Autowired
     public LastnameService(LastnameRepository lastnameRepository) {
@@ -28,78 +28,52 @@ public class LastnameService {
 
     public ResponseEntity<MessageResponse> add(LastnameModel lastnameModel){
         if(lastnameRepository.existsByLastname(lastnameModel.getLastname()))
-            return ResponseEntity.ok(new MessageResponse("Error: Lastname already exists"));
-        else
-            lastnameRepository.save(lastnameModel.translateModelToLastname());
+            return ResponseEntity.ok(new MyMessageResponse("Error: Lastname already exists", MessageTypes.WARN));
 
-        return ResponseEntity.ok(new MessageResponse("new Lastname added"));
+        lastnameRepository.save(lastnameModel.translateModelToLastname());
+        return ResponseEntity.ok(new MyMessageResponse("new Lastname added", MessageTypes.INFO));
     }
 
     // edit/update lastname
 
     public ResponseEntity<MessageResponse> update( Long id,  LastnameModel lastnameModel){
 
-        if(lastnameRepository.existsById(id)) {
-            Lastname lastname = lastnameModel.translateModelToLastname();
-            lastname.setId(id);
-            lastnameRepository.save(lastname);
+        if(!lastnameRepository.existsById(id))
+            return ResponseEntity.ok(new MyMessageResponse("Error: Lastname with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
 
-        } else
-            return ResponseEntity.ok(new MessageResponse("Error: Lastname with Id: ["+id+"] -> does not exist - cannot update record"));
-
-        return ResponseEntity.ok(new MessageResponse("Lastname record updated"));
+        lastnameRepository.save(lastnameModel.translateModelToLastname(id));
+        return ResponseEntity.ok(new MyMessageResponse("Lastname record updated", MessageTypes.INFO));
 
     }
 
     // return all lastnames
 
     public List<Lastname> list(){
-
         return lastnameRepository.findAll();
     }
 
     // return Lastname by id
 
     public Optional<Lastname> findById(Long id){
-
         return lastnameRepository.findById(id);
     }
 
-    // return Lastname by lastname
+    // return lastname given English lastname
 
+    public List<Lastname> findByEnglishLastname(LastnameModel lastnameModel) {
 
-    public List<Lastname> findByLastname(LastnameModel lastnameModel) {
-        return lastnameRepository.findByLastname(lastnameModel.getLastname());
+        Optional<List<Lastname>> lastname = lastnameRepository.findByLastname(lastnameModel.getLastname());
+        if(lastname.isEmpty()) logger.warn(String.format("Firstname : %s not found", lastnameModel.getLastname()));
+        return lastname.orElse(new ArrayList<>());
     }
 
-    // return irish lastname given the english lastname
+    // return lastname given Irish lastname
 
-    public List<String> findIrishLastname(LastnameModel lastnameModel) {
+    public List<Lastname> findByIrishLastname(LastnameModel lastnameModel) {
 
-        List<String> names = new ArrayList<>();
-        List<Lastname> lnames = lastnameRepository.findByLastname(lastnameModel.getLastname());
-
-        if (lnames.isEmpty()) throw new NotFoundException(String.format("Irish Firstname : %s not found", lastnameModel.getLastname()));
-        lnames.forEach(ln -> names.add(ln.getLastnameIrish()));
-
-        return names;
-    }
-
-    // return english lastname given the irish lastname
-
-
-    public List<String> findEnglishLastname(LastnameModel lastnameModel) {
-
-        List<String> names = new ArrayList<>();
-        List<Lastname> lnames;
-
-        if(lastnameRepository.existsByLastnameIrish(lastnameModel.getLastname())) {
-            lnames = lastnameRepository.findByLastnameIrish(lastnameModel.getLastname());
-            lnames.forEach(ln -> names.add(ln.getLastname()));
-        } else
-            throw new NotFoundException(String.format("Irish Firstname : %s not found", lastnameModel.getLastname()));
-
-        return names;
+        Optional<List<Lastname>> lastname = lastnameRepository.findByLastnameIrish(lastnameModel.getLastnameIrish());
+        if(lastname.isEmpty()) logger.warn(String.format("Firstname : %s not found", lastnameModel.getLastnameIrish()));
+        return lastname.orElse(new ArrayList<>());
     }
 
     // delete lastname
@@ -109,12 +83,11 @@ public class LastnameService {
         // check if records exists first
         // delete record
 
-        if(lastnameRepository.existsById(id))
-            lastnameRepository.deleteById(id);
-        else
-            return ResponseEntity.ok(new MessageResponse("Error: No Record exists with id: "+id));
+        if(!lastnameRepository.existsById(id))
+            return ResponseEntity.ok(new MyMessageResponse("Error: No Record exists with id: "+id, MessageTypes.WARN));
 
-        return ResponseEntity.ok(new MessageResponse("Lastname deleted with id: " + id));
+        lastnameRepository.deleteById(id);
+        return ResponseEntity.ok(new MyMessageResponse("Lastname deleted with id: " + id, MessageTypes.INFO));
     }
 
 
