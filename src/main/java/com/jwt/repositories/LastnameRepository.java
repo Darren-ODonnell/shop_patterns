@@ -10,7 +10,6 @@ public interface LastnameRepository extends JpaRepository<Lastname, Long> {
     Optional<Lastname> findById(Long id);
     Optional<List<Lastname>> findByLastname(String lastname);
     Optional<List<Lastname>> findByLastnameIrish(String lastnameIrish);
-    boolean existsByLastname(String lastname);
-    boolean existsByLastnameIrish(String lastname);
 
+    boolean existsByLastname(String lastname);
 }

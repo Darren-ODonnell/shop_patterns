@@ -12,5 +12,4 @@ public interface FirstnameRepository extends JpaRepository<Firstname, Long> {
     Optional<List<Firstname>> findByFirstnameIrish(String firstnameIrish);
 
     boolean existsByFirstname(String firstname);
-
 }

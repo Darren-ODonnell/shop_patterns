@@ -1,11 +1,10 @@
 package com.jwt.controllers;
 
+import com.jwt.models.ClubModel;
 import com.jwt.models.Fixture;
 import com.jwt.models.FixtureModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.FixtureService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +19,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/fixture")
 public class FixtureController {
-    private static final Logger logger = LoggerFactory.getLogger(FixtureController.class);
     public final FixtureService fixtureService;
 
     @Autowired
@@ -56,33 +54,32 @@ public class FixtureController {
 
     @GetMapping(value="/findByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Fixture> findByClub(@RequestParam("name") String name)  {
-        return fixtureService.getClubFixtures(name);
+    public @ResponseBody List<Fixture> findByClub(@ModelAttribute ClubModel clubModel)  {
+        return fixtureService.getClubFixtures(clubModel);
     }
 
     // return next Fixture By Club name
 
     @GetMapping(value="/findNextByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Fixture findNextFixture(@RequestParam("name") String name) {
-        return fixtureService.getNextClubFixture(name);
+    public @ResponseBody Fixture findNextFixture(@ModelAttribute ClubModel clubModel) {
+        return fixtureService.getNextClubFixture(clubModel);
     }
 
     // return Home Fixtures By Club name
 
     @GetMapping(value="/findByHomeByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Fixture> findByHomeByClub(@RequestParam("name") String name) {
-        return fixtureService.getClubHomeFixtures(name);
+    public @ResponseBody List<Fixture> findByHomeByClub(@ModelAttribute ClubModel clubModel) {
+        return fixtureService.getClubHomeFixtures(clubModel);
     }
 
     // return Away Fixtures By Club name
 
     @GetMapping(value="/findByAwayByClub/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Fixture> findByAwayByClub(@RequestParam("name") String name)  {
-
-        return fixtureService.getClubAwayFixtures(name);
+    public @ResponseBody List<Fixture> findByAwayByClub(@ModelAttribute ClubModel clubModel)  {
+        return fixtureService.getClubAwayFixtures(clubModel.getName());
     }
 
 //    // add new fixture
@@ -90,13 +87,11 @@ public class FixtureController {
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody  ResponseEntity<MessageResponse> add(@ModelAttribute FixtureModel fixtureModel) {
-
         return fixtureService.add(fixtureModel);
     }
     @GetMapping(value="/findByCompetitionHomeTeamAwayTeamFixtureDateSeason")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody Fixture findByCompetitionHomeTeamAwayTeamFixtureDateSeason(@ModelAttribute FixtureModel fixtureModel) {
-
         return fixtureService.findByCompetitionHomeTeamAwayTeamFixtureDateSeason( fixtureModel);
     }
 

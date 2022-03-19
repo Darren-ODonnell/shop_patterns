@@ -4,8 +4,6 @@ import com.jwt.models.Competition;
 import com.jwt.models.CompetitionModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.CompetitionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +19,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/competition")
 public class CompetitionController {
-    private static final Logger logger = LoggerFactory.getLogger(CompetitionController.class);
     CompetitionService competitionService;
 
     @Autowired
@@ -42,7 +39,6 @@ public class CompetitionController {
     @DeleteMapping(value="/deleteById/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-
         return competitionService.deleteById(id) ;
     }
 
@@ -59,7 +55,6 @@ public class CompetitionController {
     @GetMapping(value="/findByName/")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public @ResponseBody Competition findByName(@ModelAttribute CompetitionModel competitionModel) {
-
         return competitionService.findByName(competitionModel);
     }
 
@@ -68,7 +63,6 @@ public class CompetitionController {
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody  ResponseEntity<MessageResponse> add(@ModelAttribute CompetitionModel competitionModel){
-
         return competitionService.add( competitionModel);
     }
 
@@ -77,7 +71,6 @@ public class CompetitionController {
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody ResponseEntity<MessageResponse> update( @RequestParam("id") Long id, @ModelAttribute CompetitionModel competitionModel){
-
         return competitionService.update(id, competitionModel);
     }
 

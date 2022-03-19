@@ -20,6 +20,4 @@ public interface FixtureRepository extends JpaRepository<Fixture, Long> {
     Optional<Fixture> findByCompetitionIdAndHomeTeamIdAndAwayTeamIdAndFixtureDateAndSeason(Long compId, Long homeId, Long awayId, Date fixtureDate, int season);
 
     boolean existsByHomeTeamAndAwayTeamAndCompetitionAndSeason(Club home, Club away, Competition comp, int season);
-
-
 }

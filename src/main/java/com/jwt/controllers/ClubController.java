@@ -4,8 +4,6 @@ import com.jwt.models.Club;
 import com.jwt.models.ClubModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.ClubService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +18,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/club")
 public class ClubController {
-    private static final Logger logger = LoggerFactory.getLogger(ClubController.class);
     public final ClubService clubService;
 
     @Autowired
@@ -33,7 +30,6 @@ public class ClubController {
     @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Club> list(){
-
         return clubService.list();
     }
 
@@ -42,7 +38,6 @@ public class ClubController {
     @DeleteMapping(value="/deleteById/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-
         return clubService.deleteById(id);
     }
 
@@ -51,7 +46,6 @@ public class ClubController {
     @GetMapping(value="/findById/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Club findById(@RequestParam("id")  Long id){
-
         return clubService.findById(id);
     }
 
@@ -60,7 +54,6 @@ public class ClubController {
     @GetMapping(value="/findByName/")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody  Club findByName(@ModelAttribute ClubModel clubModel) {
-
         return clubService.findByName(clubModel);
     }
 

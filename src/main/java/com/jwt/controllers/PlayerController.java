@@ -54,7 +54,7 @@ public class PlayerController {
 
     @GetMapping(value="/findByFirstnameLastname/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Player findByFirstnameLastname(@ModelAttribute PlayerModel playerModel ) { //@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname) {
+    public @ResponseBody Player findByFirstnameLastname(@ModelAttribute PlayerModel playerModel ) {
         return playerService.findByFirstnameLastname(playerModel);
     }
 

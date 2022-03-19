@@ -4,8 +4,6 @@ import com.jwt.models.Firstname;
 import com.jwt.models.FirstnameModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.FirstnameService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,8 +18,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/firstname")
 public class FirstnameController {
-    private static final Logger logger = LoggerFactory.getLogger(FirstnameController.class);
-
     public final FirstnameService firstnameService;
 
     @Autowired
@@ -70,13 +66,13 @@ public class FirstnameController {
         return firstnameService.findIrishFirstname( firstnameModel);
     }
 
-//    // return english lastname given the irish lastname
-//
-//    @GetMapping(value="/findEnglish/")
-//    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-//    public @ResponseBody List<Firstname> findEnglishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
-//        return firstnameService.findEnglishFirstname( firstnameModel);
-//    }
+    // return english lastname given the irish lastname
+
+    @GetMapping(value="/findEnglish/")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<Firstname> findEnglishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
+        return firstnameService.findEnglishFirstname( firstnameModel);
+    }
 
     // add new firstname
 

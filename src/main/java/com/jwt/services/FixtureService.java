@@ -2,10 +2,7 @@ package com.jwt.services;
 
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
-import com.jwt.models.Club;
-import com.jwt.models.Competition;
-import com.jwt.models.Fixture;
-import com.jwt.models.FixtureModel;
+import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.ClubRepository;
 import com.jwt.repositories.CompetitionRepository;
@@ -41,19 +38,19 @@ public class FixtureService {
 
     // Return all fixture for a given club
 
-    public List<Fixture> getClubFixtures(String name)  {
-        List<Fixture> fixtures = getClubHomeFixtures(name);
-        fixtures.addAll(getClubAwayFixtures(name));
+    public List<Fixture> getClubFixtures(ClubModel clubModel)  {
+        List<Fixture> fixtures = getClubHomeFixtures(clubModel);
+        fixtures.addAll(getClubAwayFixtures(clubModel.getName()));
         return fixtures;
     }
 
     // return all the home fixtures form a club
 
-    public List<Fixture> getClubHomeFixtures(String name)  {
-        Long id = getClubId(name);
+    public List<Fixture> getClubHomeFixtures(ClubModel clubModel)  {
+        Long id = getClubId(clubModel.getName());
 
         if(id == null) {
-            new MyMessageResponse("No Home fixtures found for Club: " + name, MessageTypes.WARN);
+            new MyMessageResponse("No Home fixtures found for Club: " + clubModel.getName(), MessageTypes.WARN);
             return new ArrayList<>();
         }
 
@@ -77,8 +74,8 @@ public class FixtureService {
 
     // find next fixture for club
 
-    public Fixture getNextClubFixture(String name) {
-        Long clubId = getClubId(name);
+    public Fixture getNextClubFixture(ClubModel clubModel) {
+        Long clubId = getClubId(clubModel.getName());
         Date today = new Date(Calendar.getInstance().getTime().getTime());
 
         if(clubId == null) {
