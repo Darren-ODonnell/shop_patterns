@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Darren O'Donnell
@@ -34,19 +33,11 @@ public class CompetitionController {
         return competitionService.list();
     }
 
-    // delete by id
-
-    @DeleteMapping(value="/deleteById/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return competitionService.deleteById(id) ;
-    }
-
     // return Competition by id
 
     @GetMapping(value="/findById/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Optional<Competition> findById(@RequestParam("id") Long id){
+    public @ResponseBody Competition findById(@RequestParam("id") Long id){
         return competitionService.findById(id);
     }
 
@@ -62,7 +53,7 @@ public class CompetitionController {
 
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody  ResponseEntity<MessageResponse> add(@ModelAttribute CompetitionModel competitionModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute CompetitionModel competitionModel){
         return competitionService.add( competitionModel);
     }
 
@@ -70,8 +61,15 @@ public class CompetitionController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody ResponseEntity<MessageResponse> update( @RequestParam("id") Long id, @ModelAttribute CompetitionModel competitionModel){
+    public ResponseEntity<MessageResponse> update( @RequestParam("id") Long id, @ModelAttribute CompetitionModel competitionModel){
         return competitionService.update(id, competitionModel);
     }
 
+    // delete by id
+
+    @DeleteMapping(value="/deleteById/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
+        return competitionService.deleteById(id) ;
+    }
 }

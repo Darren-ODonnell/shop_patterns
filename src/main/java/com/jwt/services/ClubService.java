@@ -35,7 +35,8 @@ public class ClubService {
 
     public Club findById( Long id){
         Optional<Club> club = clubRepository.findById(id);
-        if(club.isEmpty()) new MyMessageResponse(String.format("Club id: %d not found", id), MessageTypes.ERROR);
+        if(club.isEmpty())
+            new MyMessageResponse(String.format("Club id: %d not found", id), MessageTypes.ERROR);
         return club.orElse(new Club());
     }
 

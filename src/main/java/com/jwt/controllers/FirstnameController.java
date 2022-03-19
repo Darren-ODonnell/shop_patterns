@@ -34,14 +34,6 @@ public class FirstnameController {
         return firstnameService.list();
     }
 
-    // delete by id
-
-    @DeleteMapping(value="/deleteById/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return firstnameService.deleteById(id);
-    }
-
     // return Firstname by id
 
     @GetMapping(value="/findById/")
@@ -78,7 +70,7 @@ public class FirstnameController {
 
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody  ResponseEntity<MessageResponse> add( @ModelAttribute FirstnameModel firstnameModel){
+    public ResponseEntity<MessageResponse> add( @ModelAttribute FirstnameModel firstnameModel){
         return firstnameService.add( firstnameModel);
     }
 
@@ -86,7 +78,15 @@ public class FirstnameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody ResponseEntity<MessageResponse> update(@RequestParam("id") Long id, @ModelAttribute FirstnameModel firstnameModel){
+    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id, @ModelAttribute FirstnameModel firstnameModel){
         return firstnameService.update(id, firstnameModel);
+    }
+
+    // delete by id
+
+    @DeleteMapping(value="/deleteById/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
+        return firstnameService.deleteById(id);
     }
 }

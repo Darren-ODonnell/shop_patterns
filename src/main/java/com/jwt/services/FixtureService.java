@@ -87,10 +87,8 @@ public class FixtureService {
         // return the first fixture in this list - this will be the next fixture.
 
         Optional<Fixture> fixture = fixtureRepository.findFirstByAwayTeamIdOrHomeTeamIdAndFixtureDateGreaterThanOrderByFixtureDate(clubId, clubId, today);
-        if(fixture.isEmpty()) {
+        if(fixture.isEmpty())
             new MyMessageResponse("No Fixture Found with clubid: "+ clubId + ", and date: "+today,MessageTypes.WARN);
-            return new Fixture();
-        }
 
         return fixture.orElse(new Fixture());
     }
@@ -99,10 +97,9 @@ public class FixtureService {
 
     public Fixture findById(Long id) {
         Optional<Fixture> fixture = fixtureRepository.findById(id);
-        if(fixture.isEmpty()) {
+        if(fixture.isEmpty())
             new MyMessageResponse("Fixture Does not exist",MessageTypes.WARN);
-            return new Fixture();
-        }
+
         return fixture.orElse(new Fixture());
     }
 
@@ -117,10 +114,8 @@ public class FixtureService {
                 fixtureModel.getFixtureDate(),
                 fixtureModel.getSeason()
         );
-        if(fixture.isEmpty()) {
+        if(fixture.isEmpty())
             new MyMessageResponse("Error: Fixture does not exist", MessageTypes.WARN);
-            return new Fixture();
-        }
 
         return fixture.orElse(new Fixture());
 

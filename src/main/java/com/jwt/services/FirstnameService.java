@@ -6,8 +6,6 @@ import com.jwt.models.Firstname;
 import com.jwt.models.FirstnameModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.FirstnameRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ import java.util.Optional;
 
 @Service
 public class FirstnameService {
-    private static final Logger logger = LoggerFactory.getLogger(FirstnameService.class);
     private final FirstnameRepository firstnameRepository;
 
     @Autowired
@@ -37,7 +34,8 @@ public class FirstnameService {
 
     public Firstname findById( @RequestParam("id") Long id){
         Optional<Firstname> firstname = firstnameRepository.findById(id);
-        if(firstname.isEmpty()) logger.warn("Firstname not found with is: "+id);
+        if(firstname.isEmpty())
+            new MyMessageResponse("Firstname not found with is: "+id, MessageTypes.WARN);
         return firstname.orElse(new Firstname());
     }
 
@@ -45,7 +43,8 @@ public class FirstnameService {
 
     public  Firstname findByFirstname( @ModelAttribute FirstnameModel firstnameModel) {
         Optional<Firstname> firstname =firstnameRepository.findByFirstname(firstnameModel.getFirstname());
-        if(firstname.isEmpty()) logger.warn(String.format("Firstname : %s not found", firstnameModel.getFirstname()));
+        if(firstname.isEmpty())
+            new MyMessageResponse(String.format("Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
         return firstname.orElse(new Firstname());
     }
 
@@ -53,7 +52,8 @@ public class FirstnameService {
 
     public  Firstname findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         Optional<Firstname> firstname = firstnameRepository.findByFirstname(firstnameModel.getFirstname());
-        if(firstname.isEmpty()) logger.warn(String.format("English Firstname : %s not found", firstnameModel.getFirstname()));
+        if(firstname.isEmpty())
+            new MyMessageResponse(String.format("English Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
         return firstname.orElse(new Firstname());
     }
 
@@ -61,7 +61,8 @@ public class FirstnameService {
 
     public List<Firstname> findEnglishFirstname( @ModelAttribute FirstnameModel firstnameModel) {
         Optional<List<Firstname>> firstnames = firstnameRepository.findByFirstnameIrish(firstnameModel.getFirstnameIrish());
-        if(firstnames.isEmpty()) logger.warn(String.format("Irish Firstname : %s not found", firstnameModel.getFirstname()));
+        if(firstnames.isEmpty())
+            new MyMessageResponse(String.format("Irish Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
         return firstnames.orElse(new ArrayList<>());
     }
 

@@ -34,14 +34,6 @@ public class PlayerController {
         return playerService.list();
     }
 
-    // delete player
-
-    @DeleteMapping(value="/deleteById/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-            return playerService.deleteById(id);
-    }
-
     // return player by id
 
     @GetMapping(value="/findById/")
@@ -61,7 +53,7 @@ public class PlayerController {
     // return players with same lastname
 
     @GetMapping(value="/findByLastname/")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERTAOR') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Player> findByLastname(@ModelAttribute PlayerModel playerModel) {
         return playerService.findByLastname(playerModel);
     }
@@ -78,7 +70,7 @@ public class PlayerController {
 
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody  ResponseEntity<MessageResponse> add( @ModelAttribute PlayerModel playerModel){
+    public ResponseEntity<MessageResponse> add( @ModelAttribute PlayerModel playerModel){
         return playerService.add( playerModel);
     }
 
@@ -88,5 +80,13 @@ public class PlayerController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> update( @RequestParam("id") Long id, @ModelAttribute PlayerModel playerModel){
         return playerService.update(id, playerModel);
+    }
+
+    // delete player
+
+    @DeleteMapping(value="/deleteById/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
+        return playerService.deleteById(id);
     }
 }

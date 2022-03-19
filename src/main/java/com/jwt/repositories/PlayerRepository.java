@@ -16,6 +16,4 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     Optional<List<Player>> findByFirstname(String firstname);
 
     boolean existsByFirstnameAndLastname(String firstname, String lastname);
-    void deleteById(Long id);
-
 }

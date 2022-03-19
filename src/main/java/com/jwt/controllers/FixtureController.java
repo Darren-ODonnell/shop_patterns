@@ -34,14 +34,6 @@ public class FixtureController {
         return fixtureService.findAll();
     }
 
-    // delete by id
-
-    @DeleteMapping(value="/deleteById/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return fixtureService.deleteById(id);
-    }
-
     // return Fixture by id
 
     @GetMapping(value="/findById/")
@@ -74,6 +66,14 @@ public class FixtureController {
         return fixtureService.getClubHomeFixtures(clubModel);
     }
 
+    // locate specific fixture by Competition, HomeTeam, AwayTeam , FixtureDate and Season
+
+    @GetMapping(value="/findByCompetitionHomeTeamAwayTeamFixtureDateSeason")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public @ResponseBody Fixture findByCompetitionHomeTeamAwayTeamFixtureDateSeason(@ModelAttribute FixtureModel fixtureModel) {
+        return fixtureService.findByCompetitionHomeTeamAwayTeamFixtureDateSeason( fixtureModel);
+    }
+
     // return Away Fixtures By Club name
 
     @GetMapping(value="/findByAwayByClub/")
@@ -82,23 +82,27 @@ public class FixtureController {
         return fixtureService.getClubAwayFixtures(clubModel.getName());
     }
 
-//    // add new fixture
+    // add new fixture
 
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody  ResponseEntity<MessageResponse> add(@ModelAttribute FixtureModel fixtureModel) {
+    public ResponseEntity<MessageResponse> add(@ModelAttribute FixtureModel fixtureModel) {
         return fixtureService.add(fixtureModel);
     }
-    @GetMapping(value="/findByCompetitionHomeTeamAwayTeamFixtureDateSeason")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Fixture findByCompetitionHomeTeamAwayTeamFixtureDateSeason(@ModelAttribute FixtureModel fixtureModel) {
-        return fixtureService.findByCompetitionHomeTeamAwayTeamFixtureDateSeason( fixtureModel);
-    }
+
+    // update record
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public @ResponseBody ResponseEntity<MessageResponse> update(@RequestParam Long id, @ModelAttribute FixtureModel fixtureModel){
+    public ResponseEntity<MessageResponse> update(@RequestParam Long id, @ModelAttribute FixtureModel fixtureModel){
         return fixtureService.update(id, fixtureModel);
     }
 
+    // delete by id
+
+    @DeleteMapping(value="/deleteById/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
+        return fixtureService.deleteById(id);
+    }
 }

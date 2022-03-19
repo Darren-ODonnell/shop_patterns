@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Darren O'Donnell
@@ -29,17 +28,6 @@ public class LastnameController {
         this.lastnameService = lastnameService;
     }
 
-    @PostMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody ResponseEntity<MessageResponse> add(@ModelAttribute LastnameModel lastnameModel){
-        return lastnameService.add(lastnameModel);
-    }
-
-    @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ADMIN')")
-    public @ResponseBody ResponseEntity<MessageResponse> update(@RequestParam Long id, @ModelAttribute LastnameModel lastnameModel){
-        return lastnameService.update(id, lastnameModel);
-    }
 
     // return all lastnames
 
@@ -53,7 +41,7 @@ public class LastnameController {
 
     @GetMapping(value="/findById/")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Optional<Lastname> findById(@RequestParam("id") Long id){
+    public @ResponseBody Lastname findById(@RequestParam("id") Long id){
         return lastnameService.findById(id);
     }
 
@@ -80,5 +68,21 @@ public class LastnameController {
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
         return lastnameService.deleteById(id);
 
+    }
+
+    // add record
+
+    @PostMapping(value="/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> add(@ModelAttribute LastnameModel lastnameModel){
+        return lastnameService.add(lastnameModel);
+    }
+
+    // updat5e record
+
+    @PostMapping(value="/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<MessageResponse> update(@RequestParam Long id, @ModelAttribute LastnameModel lastnameModel){
+        return lastnameService.update(id, lastnameModel);
     }
 }

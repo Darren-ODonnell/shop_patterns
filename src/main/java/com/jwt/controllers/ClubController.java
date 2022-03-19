@@ -33,14 +33,6 @@ public class ClubController {
         return clubService.list();
     }
 
-    // delete by id
-
-    @DeleteMapping(value="/deleteById/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return clubService.deleteById(id);
-    }
-
     // return Club by id
 
     @GetMapping(value="/findById/")
@@ -61,7 +53,7 @@ public class ClubController {
 
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody  ResponseEntity<MessageResponse> add(@ModelAttribute ClubModel clubModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute ClubModel clubModel){
         return clubService.add(clubModel);
     }
 
@@ -69,7 +61,15 @@ public class ClubController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute ClubModel clubModel) {
+    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute ClubModel clubModel) {
         return clubService.update( id, clubModel);
+    }
+
+    // delete by id
+
+    @DeleteMapping(value="/deleteById/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
+        return clubService.deleteById(id);
     }
 }
