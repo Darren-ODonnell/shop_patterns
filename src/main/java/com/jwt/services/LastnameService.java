@@ -52,7 +52,7 @@ public class LastnameService {
 
     public List<Lastname> findByIrishLastname(LastnameModel lastnameModel) {
 
-        Optional<List<Lastname>> lastname = lastnameRepository.findByLastnameIrish(lastnameModel.getLastnameIrish());
+        Optional<List<Lastname>> lastname = lastnameRepository.findByLastname(lastnameModel.getLastname());
         if(lastname.isEmpty())
             new MyMessageResponse(String.format("Firstname : %s not found", lastnameModel.getLastnameIrish()), MessageTypes.WARN);
         return lastname.orElse(new ArrayList<>());
