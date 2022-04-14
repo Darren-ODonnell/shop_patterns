@@ -17,7 +17,8 @@ import java.util.List;
  * @author Darren O'Donnell
  */
 @Controller
-@RequestMapping("/player")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping({"/player","/players"})
 public class PlayerController {
     public final PlayerService playerService;
 
@@ -28,7 +29,7 @@ public class PlayerController {
 
     // return all players - done
 
-    @GetMapping(value={"/", "/list"} )
+    @GetMapping(value={"/", "/list",""} )
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Player> list() {
         return playerService.list();
@@ -36,7 +37,7 @@ public class PlayerController {
 
     // return player by id
 
-    @GetMapping(value="/findById/")
+    @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Player findById(@RequestParam("id") Long id){
         return playerService.findById(id);
@@ -44,7 +45,7 @@ public class PlayerController {
 
     // return player by firstname + lastname
 
-    @GetMapping(value="/findByFirstnameLastname/")
+    @GetMapping(value="/findByFirstnameLastname")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Player findByFirstnameLastname(@ModelAttribute PlayerModel playerModel ) {
         return playerService.findByFirstnameLastname(playerModel);
@@ -52,7 +53,7 @@ public class PlayerController {
 
     // return players with same lastname
 
-    @GetMapping(value="/findByLastname/")
+    @GetMapping(value="/findByLastname")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Player> findByLastname(@ModelAttribute PlayerModel playerModel) {
         return playerService.findByLastname(playerModel);
@@ -60,7 +61,7 @@ public class PlayerController {
 
     // return players with same firstname
 
-    @GetMapping(value="/findByFirstname/")
+    @GetMapping(value="/findByFirstname")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Player> findByFirstname(@ModelAttribute PlayerModel playerModel) {
         return playerService.findByFirstname(playerModel);
@@ -68,7 +69,7 @@ public class PlayerController {
 
     // add player
 
-    @PostMapping(value="/add")
+    @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add( @ModelAttribute PlayerModel playerModel){
         return playerService.add( playerModel);
@@ -84,7 +85,7 @@ public class PlayerController {
 
     // delete player
 
-    @DeleteMapping(value="/deleteById/")
+    @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
         return playerService.deleteById(id);

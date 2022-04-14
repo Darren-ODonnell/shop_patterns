@@ -10,35 +10,40 @@ public class ClubModel {
     private String colours;
 
     public String getColours() {
-        return colours;
+                return colours;
     }
     public void setColours(String colours) {
         this.colours = colours;
     }
+
     public String getPitches() {
         return pitches;
     }
     public void setPitches(String pitches) {
         this.pitches = pitches;
     }
+
     public String getContactPhone() {
         return contactPhone;
     }
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
     }
+
     public String getContactEmail() {
         return contactEmail;
     }
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
+
     public String getContactName() {
         return contactName;
     }
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
+
     public String getName() {
         return name;
     }
@@ -48,14 +53,12 @@ public class ClubModel {
 
     public Club translateModelToClub(){
         Club club = new Club();
-
         club.setName(this.name);
         club.setContactName(this.contactName);
         club.setContactEmail(this.contactEmail);
         club.setContactPhone(this.contactPhone);
         club.setPitches(this.pitches);
         club.setColours(this.colours);
-
         return club;
     }
     // used in update operations

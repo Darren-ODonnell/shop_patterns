@@ -18,6 +18,7 @@ import java.util.List;
  * @author Darren O'Donnell
  */
 @Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/lastname")
 public class LastnameController {
     private static final Logger logger = LoggerFactory.getLogger(LastnameController.class);
@@ -28,10 +29,9 @@ public class LastnameController {
         this.lastnameService = lastnameService;
     }
 
-
     // return all lastnames
 
-    @GetMapping(value={"/","/list"} )
+    @GetMapping(value={"/","/list",""} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Lastname> list(){
         return lastnameService.list();
@@ -39,7 +39,7 @@ public class LastnameController {
 
     // return Lastname by id
 
-    @GetMapping(value="/findById/")
+    @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Lastname findById(@RequestParam("id") Long id){
         return lastnameService.findById(id);
@@ -47,23 +47,23 @@ public class LastnameController {
 
     // return irish lastname given the english lastname
 
-    @GetMapping(value={"/findIrish/","/findByLastname"})
+    @GetMapping(value={"/findIrish","/findByLastname"})
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Lastname> findIrishLastname(@ModelAttribute LastnameModel lastnameModel) {
-        return lastnameService.findByIrishLastname(lastnameModel);
+        return lastnameService.findByEnglishLastname(lastnameModel);
     }
 
     // return english lastname given the irish lastname
 
-    @GetMapping(value="/findEnglish/")
+    @GetMapping(value="/findEnglish")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Lastname> findEnglishLastname(@ModelAttribute LastnameModel lastnameModel) {
-        return lastnameService.findByEnglishLastname(lastnameModel);
+        return lastnameService.findByIrishLastname(lastnameModel);
     }
 
     // delete lastname
 
-    @DeleteMapping(value="/deleteById/")
+    @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
         return lastnameService.deleteById(id);
@@ -72,13 +72,13 @@ public class LastnameController {
 
     // add record
 
-    @PostMapping(value="/add")
+    @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add(@ModelAttribute LastnameModel lastnameModel){
         return lastnameService.add(lastnameModel);
     }
 
-    // updat5e record
+    // update record
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ADMIN')")

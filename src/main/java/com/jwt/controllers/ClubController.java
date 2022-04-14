@@ -16,6 +16,7 @@ import java.util.List;
  * @author Darren O'Donnell
  */
 @Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/club")
 public class ClubController {
     public final ClubService clubService;
@@ -27,7 +28,7 @@ public class ClubController {
 
     // return all Clubs
 
-    @GetMapping(value={"/","/list"} )
+    @GetMapping(value={"/","/list",""} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Club> list(){
         return clubService.list();
@@ -35,7 +36,7 @@ public class ClubController {
 
     // return Club by id
 
-    @GetMapping(value="/findById/")
+    @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Club findById(@RequestParam("id")  Long id){
         return clubService.findById(id);
@@ -43,7 +44,7 @@ public class ClubController {
 
     // return Club by name
 
-    @GetMapping(value="/findByName/")
+    @GetMapping(value="/findByName")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody  Club findByName(@ModelAttribute ClubModel clubModel) {
         return clubService.findByName(clubModel);
@@ -51,7 +52,7 @@ public class ClubController {
 
     // add new Club
 
-    @PostMapping(value="/add")
+    @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add(@ModelAttribute ClubModel clubModel){
         return clubService.add(clubModel);
@@ -67,7 +68,7 @@ public class ClubController {
 
     // delete by id
 
-    @DeleteMapping(value="/deleteById/")
+    @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
         return clubService.deleteById(id);

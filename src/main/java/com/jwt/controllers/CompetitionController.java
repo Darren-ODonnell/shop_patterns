@@ -16,6 +16,7 @@ import java.util.List;
  * @author Darren O'Donnell
  */
 @Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/competition")
 public class CompetitionController {
     CompetitionService competitionService;
@@ -27,7 +28,7 @@ public class CompetitionController {
 
     // return all Competitions - done
 
-    @GetMapping(value={"/","/list"} )
+    @GetMapping(value={"/","/list",""} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody   List<Competition> list(){
         return competitionService.list();
@@ -35,7 +36,7 @@ public class CompetitionController {
 
     // return Competition by id
 
-    @GetMapping(value="/findById/")
+    @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Competition findById(@RequestParam("id") Long id){
         return competitionService.findById(id);
@@ -43,7 +44,7 @@ public class CompetitionController {
 
     // return Competition by name
 
-    @GetMapping(value="/findByName/")
+    @GetMapping(value="/findByName")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public @ResponseBody Competition findByName(@ModelAttribute CompetitionModel competitionModel) {
         return competitionService.findByName(competitionModel);
@@ -51,7 +52,7 @@ public class CompetitionController {
 
     // add new Competition
 
-    @PostMapping(value="/add")
+    @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add(@ModelAttribute CompetitionModel competitionModel){
         return competitionService.add( competitionModel);
@@ -67,7 +68,7 @@ public class CompetitionController {
 
     // delete by id
 
-    @DeleteMapping(value="/deleteById/")
+    @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
         return competitionService.deleteById(id) ;

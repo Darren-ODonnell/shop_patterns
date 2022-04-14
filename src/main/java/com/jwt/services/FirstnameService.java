@@ -35,7 +35,7 @@ public class FirstnameService {
     public Firstname findById( @RequestParam("id") Long id){
         Optional<Firstname> firstname = firstnameRepository.findById(id);
         if(firstname.isEmpty())
-            new MyMessageResponse("Firstname not found with is: "+id, MessageTypes.WARN);
+            new MyMessageResponse("Firstname not found with id: "+id, MessageTypes.WARN);
         return firstname.orElse(new Firstname());
     }
 

@@ -1,0 +1,84 @@
+package com.jwt.controllers;
+
+import com.jwt.models.PitchGrid;
+import com.jwt.models.PitchGridModel;
+import com.jwt.payload.response.MessageResponse;
+import com.jwt.services.PitchGridService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * @author Darren O'Donnell
+ */
+@Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping({"/pitchgrid","/pitchgrids"})
+public class PitchGridController {
+    public final PitchGridService pitchGridService;
+
+    @Autowired
+    public PitchGridController(PitchGridService pitchGridService) {
+        this.pitchGridService = pitchGridService;
+    }
+
+    // return all PitchGrids
+
+    @GetMapping(value={"/","/list",""} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<PitchGrid> list(){
+        return pitchGridService.list();
+    }
+
+    // return PitchGrid by id
+
+    @GetMapping(value="/findById")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody PitchGrid findById(@RequestParam("id")  Long id){
+        return pitchGridService.findById(id);
+    }
+
+    // return PitchGrid by name
+
+    @GetMapping(value="/findByName")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public @ResponseBody  PitchGrid findByName(@ModelAttribute PitchGridModel pitchGridModel) {
+        return pitchGridService.findByName(pitchGridModel);
+    }
+
+    // return PitchGrid by Abbrev
+
+    @GetMapping(value="/findByAbbrev")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public @ResponseBody  PitchGrid findByAbbrev(@ModelAttribute PitchGridModel pitchGridModel) {
+        return pitchGridService.findByAbbrev(pitchGridModel);
+    }
+
+    // add new PitchGrid
+
+    @PutMapping(value="/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> add(@ModelAttribute PitchGridModel pitchGridModel){
+        return pitchGridService.add(pitchGridModel);
+    }
+
+    // edit/update a PitchGrid record - only if record with id exists
+
+    @PostMapping(value="/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute PitchGridModel pitchGridModel) {
+        return pitchGridService.update( id, pitchGridModel);
+    }
+
+    // delete by id
+
+    @DeleteMapping(value="/deleteById")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
+        return pitchGridService.deleteById(id);
+    }
+}

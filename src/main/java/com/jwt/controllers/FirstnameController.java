@@ -16,7 +16,8 @@ import java.util.List;
  * @author Darren O'Donnell
  */
 @Controller
-@RequestMapping("/firstname")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping({"/firstname","/firstnames"})
 public class FirstnameController {
     public final FirstnameService firstnameService;
 
@@ -27,7 +28,7 @@ public class FirstnameController {
 
     // return all Firstnames - done
 
-    @GetMapping(value={"/","/list"} )
+    @GetMapping(value={"/","/list",""} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody
     List<Firstname> list(){
@@ -36,15 +37,16 @@ public class FirstnameController {
 
     // return Firstname by id
 
-    @GetMapping(value="/findById/")
+    @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Firstname findById(@RequestParam("id") Long id){
+
         return firstnameService.findById( id);
     }
 
     // return Firstname by firstname
 
-    @GetMapping(value="/findByFirstname/")
+    @GetMapping(value="/findByFirstname")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public @ResponseBody Firstname findByFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findByFirstname(firstnameModel);
@@ -52,7 +54,7 @@ public class FirstnameController {
 
     // return irish firstname given the english firstname
 
-    @GetMapping(value="/findIrish/")
+    @GetMapping(value="/findIrish")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody Firstname findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findIrishFirstname( firstnameModel);
@@ -60,7 +62,7 @@ public class FirstnameController {
 
     // return english lastname given the irish lastname
 
-    @GetMapping(value="/findEnglish/")
+    @GetMapping(value="/findEnglish")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Firstname> findEnglishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findEnglishFirstname( firstnameModel);
@@ -68,7 +70,7 @@ public class FirstnameController {
 
     // add new firstname
 
-    @PostMapping(value="/add")
+    @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add( @ModelAttribute FirstnameModel firstnameModel){
         return firstnameService.add( firstnameModel);
@@ -84,7 +86,7 @@ public class FirstnameController {
 
     // delete by id
 
-    @DeleteMapping(value="/deleteById/")
+    @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
         return firstnameService.deleteById(id);
