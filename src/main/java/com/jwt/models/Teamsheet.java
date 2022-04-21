@@ -25,33 +25,25 @@ public class Teamsheet {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public Fixture getFixture() {
         return fixture;
     }
-
     public void setFixture(Fixture fixture) {
         this.fixture = fixture;
     }
-
     public Player getPlayer() {
         return player;
     }
-
     public void setPlayer(Player player) {
         this.player = player;
     }
-
     public Position getPosition() {
         return position;
     }
-
     public void setPosition(Position position) {
         this.position = position;
     }
-
 }
