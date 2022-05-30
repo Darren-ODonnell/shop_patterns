@@ -6,8 +6,6 @@ import com.jwt.models.Competition;
 import com.jwt.models.CompetitionModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.CompetitionRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,6 @@ import java.util.Optional;
 
 @Service
 public class CompetitionService {
-    private static final Logger logger = LoggerFactory.getLogger(CompetitionService.class);
     CompetitionRepository competitionRepository;
 
     @Autowired

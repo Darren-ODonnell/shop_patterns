@@ -54,7 +54,7 @@ public class CompetitionController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute CompetitionModel competitionModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody CompetitionModel competitionModel){
         return competitionService.add( competitionModel);
     }
 
