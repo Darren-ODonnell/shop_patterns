@@ -72,7 +72,7 @@ public class ClubService {
 
     // edit/update a Club record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, ClubModel clubModel){
+    public ResponseEntity<MessageResponse> update(Long id, Club club){
 
         // check if exists first
         // then update
@@ -80,7 +80,7 @@ public class ClubService {
         if(!clubRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
 
-        clubRepository.save(clubModel.translateModelToClub(id));
+        clubRepository.save(club);
         return ResponseEntity.ok(new MyMessageResponse("Club record updated", MessageTypes.INFO));
     }
 

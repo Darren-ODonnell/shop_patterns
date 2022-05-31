@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Competition;
 import com.jwt.models.Firstname;
 import com.jwt.models.FirstnameModel;
 import com.jwt.payload.response.MessageResponse;
@@ -80,15 +81,15 @@ public class FirstnameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id, @ModelAttribute FirstnameModel firstnameModel){
-        return firstnameService.update(id, firstnameModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody Firstname firstname){
+        return firstnameService.update(firstname.getId(), firstname);
     }
 
     // delete by id
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return firstnameService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Firstname firstname){
+        return firstnameService.deleteById(firstname.getId());
     }
 }

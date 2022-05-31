@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Position;
 import com.jwt.models.Teamsheet;
 import com.jwt.models.TeamsheetModel;
 import com.jwt.payload.response.MessageResponse;
@@ -55,15 +56,15 @@ public class TeamsheetController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute TeamsheetModel teamsheetModel) {
-        return teamsheetService.update( id, teamsheetModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody Teamsheet teamsheet) {
+        return teamsheetService.update( teamsheet.getId(), teamsheet);
     }
 
     // delete by id
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return teamsheetService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Teamsheet teamsheet){
+        return teamsheetService.deleteById(teamsheet.getId());
     }
 }

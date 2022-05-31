@@ -67,7 +67,7 @@ public class EventService {
 
     // edit/update a Event record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, EventModel eventModel){
+    public ResponseEntity<MessageResponse> update(Long id, Event event){
 
         // check if exists first
         // then update
@@ -75,7 +75,7 @@ public class EventService {
         if(!eventRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
 
-        eventRepository.save(eventModel.translateModelToEvent(id));
+        eventRepository.save(event);
         return ResponseEntity.ok(new MyMessageResponse("Event record updated", MessageTypes.INFO));
     }
 

@@ -1,6 +1,7 @@
 package com.jwt.controllers;
 
 import com.jwt.models.ClubModel;
+import com.jwt.models.Firstname;
 import com.jwt.models.Fixture;
 import com.jwt.models.FixtureModel;
 import com.jwt.payload.response.MessageResponse;
@@ -95,15 +96,15 @@ public class FixtureController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam Long id, @ModelAttribute FixtureModel fixtureModel){
-        return fixtureService.update(id, fixtureModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody Fixture fixture){
+        return fixtureService.update(fixture.getId(), fixture);
     }
 
     // delete by id
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return fixtureService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Fixture fixture){
+        return fixtureService.deleteById(fixture.getId());
     }
 }

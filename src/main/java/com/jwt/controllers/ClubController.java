@@ -2,6 +2,7 @@ package com.jwt.controllers;
 
 import com.jwt.models.Club;
 import com.jwt.models.ClubModel;
+import com.jwt.models.Competition;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,10 @@ public class ClubController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute ClubModel clubModel) {
-        return clubService.update( id, clubModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody Club club) {
+        return clubService.update( club.getId(), club );
     }
+
 
     // delete by id
 

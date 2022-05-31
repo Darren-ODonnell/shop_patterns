@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Competition;
 import com.jwt.models.Event;
 import com.jwt.models.EventModel;
 import com.jwt.payload.response.MessageResponse;
@@ -57,15 +58,17 @@ public class EventController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute EventModel eventModel) {
-        return eventService.update( id, eventModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody Event event) {
+        return eventService.update( event.getId(), event);
     }
+
 
     // delete by id
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return eventService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Event event){
+        return eventService.deleteById(event.getId());
     }
+
 }

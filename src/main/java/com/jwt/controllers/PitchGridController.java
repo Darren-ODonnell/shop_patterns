@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Firstname;
 import com.jwt.models.PitchGrid;
 import com.jwt.models.PitchGridModel;
 import com.jwt.payload.response.MessageResponse;
@@ -70,15 +71,15 @@ public class PitchGridController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute PitchGridModel pitchGridModel) {
-        return pitchGridService.update( id, pitchGridModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody PitchGrid pitchGrid) {
+        return pitchGridService.update( pitchGrid.getId(), pitchGrid);
     }
 
     // delete by id
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return pitchGridService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody PitchGrid pitchGrid){
+        return pitchGridService.deleteById(pitchGrid.getId());
     }
 }
