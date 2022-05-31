@@ -1,9 +1,12 @@
 package com.jwt.models;
 
+import lombok.Data;
+
+@Data
 public class CompetitionModel {
 
-    private String name;
-    private Integer season;
+    public String name;
+    public Integer season;
 
     public Integer getSeason() {
         return season;
