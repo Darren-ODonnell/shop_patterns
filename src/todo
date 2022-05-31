@@ -10,3 +10,6 @@ Fix Firstname and Lastname in postman
 
 FindById - works manually
 DeleteById - works manually
+
+
+deleteById and Update methods in controllers and services changed to allow said to operate
