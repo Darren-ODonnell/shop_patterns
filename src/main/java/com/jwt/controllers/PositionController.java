@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Firstname;
 import com.jwt.models.Position;
 import com.jwt.models.PositionModel;
 import com.jwt.payload.response.MessageResponse;
@@ -70,15 +71,15 @@ public class PositionController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam("id") Long id,  @ModelAttribute PositionModel positionModel) {
-        return positionService.update( id, positionModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody Position position) {
+        return positionService.update( position.getId(), position);
     }
 
     // delete by id
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return positionService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Position position){
+        return positionService.deleteById(position.getId());
     }
 }

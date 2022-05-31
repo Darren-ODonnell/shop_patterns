@@ -62,7 +62,7 @@ public class CompetitionService {
 
     // edit/update a competition record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id,  CompetitionModel competitionModel){
+    public ResponseEntity<MessageResponse> update(Long id,  Competition competition){
 
         // check if exists first
         // insert id
@@ -71,7 +71,7 @@ public class CompetitionService {
         if(!competitionRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
 
-        competitionRepository.save(competitionModel.translateModelToCompetition(id));
+        competitionRepository.save(competition);
         return ResponseEntity.ok(new MyMessageResponse("Competition record updated", MessageTypes.INFO));
     }
 

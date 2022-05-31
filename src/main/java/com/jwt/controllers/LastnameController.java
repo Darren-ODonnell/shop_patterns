@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Firstname;
 import com.jwt.models.Lastname;
 import com.jwt.models.LastnameModel;
 import com.jwt.payload.response.MessageResponse;
@@ -65,8 +66,8 @@ public class LastnameController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return lastnameService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Lastname lastname){
+        return lastnameService.deleteById(lastname.getId());
 
     }
 
@@ -82,7 +83,8 @@ public class LastnameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MessageResponse> update(@RequestParam Long id, @ModelAttribute LastnameModel lastnameModel){
-        return lastnameService.update(id, lastnameModel);
+    public ResponseEntity<MessageResponse> update(@RequestBody Lastname lastname){
+        return lastnameService.update(lastname.getId(), lastname);
     }
+
 }

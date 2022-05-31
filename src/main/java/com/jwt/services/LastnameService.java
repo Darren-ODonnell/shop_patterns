@@ -80,11 +80,11 @@ public class LastnameService {
 
     // edit/update lastname
 
-    public ResponseEntity<MessageResponse> update( Long id,  LastnameModel lastnameModel){
+    public ResponseEntity<MessageResponse> update( Long id,  Lastname lastname){
         if(!lastnameRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Lastname with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
 
-        lastnameRepository.save(lastnameModel.translateModelToLastname(id));
+        lastnameRepository.save(lastname);
         return ResponseEntity.ok(new MyMessageResponse("Lastname record updated", MessageTypes.INFO));
     }
 }

@@ -80,7 +80,7 @@ public class PitchGridService {
 
     // edit/update a PitchGrid record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, PitchGridModel pitchGridModel){
+    public ResponseEntity<MessageResponse> update(Long id, PitchGrid pitchGrid){
 
         // check if exists first
         // then update
@@ -88,7 +88,7 @@ public class PitchGridService {
         if(!pitchGridRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
 
-        pitchGridRepository.save(pitchGridModel.translateModelToPitchGrid(id));
+        pitchGridRepository.save(pitchGrid);
         return ResponseEntity.ok(new MyMessageResponse("PitchGrid record updated", MessageTypes.INFO));
     }
 

@@ -62,15 +62,15 @@ public class CompetitionController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update( @RequestParam("id") Long id, @ModelAttribute CompetitionModel competitionModel){
-        return competitionService.update(id, competitionModel);
+    public ResponseEntity<MessageResponse> update( @RequestBody Competition competition){
+        return competitionService.update(competition.getId(), competition);
     }
 
     // delete by id
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return competitionService.deleteById(id) ;
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Competition  competition){
+        return competitionService.deleteById(competition.getId()) ;
     }
 }

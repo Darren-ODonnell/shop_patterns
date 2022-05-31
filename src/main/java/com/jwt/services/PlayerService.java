@@ -82,11 +82,11 @@ public class PlayerService {
 
     // edit/update player
 
-    public ResponseEntity<MessageResponse> update(Long id, PlayerModel playerModel){
+    public ResponseEntity<MessageResponse> update(Long id, Player player){
         if(!playerRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Player with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
 
-        playerRepository.save(playerModel.translateModelToPlayer(id));
+        playerRepository.save(player);
         return ResponseEntity.ok(new MyMessageResponse("Player record updated", MessageTypes.INFO));
     }
 

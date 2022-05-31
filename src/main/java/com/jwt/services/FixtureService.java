@@ -138,11 +138,11 @@ public class FixtureService {
 
     // edit/update Fixture
 
-    public ResponseEntity<MessageResponse> update(Long id, FixtureModel fixtureModel){
+    public ResponseEntity<MessageResponse> update(Long id, Fixture fixture){
         if(!fixtureRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Fixture with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
 
-        fixtureRepository.save(fixtureModel.translateModelToFixture(competitionRepository, clubRepository, id));
+        fixtureRepository.save(fixture);
         return ResponseEntity.ok(new MyMessageResponse("Fixture record updated", MessageTypes.INFO));
     }
 

@@ -65,7 +65,7 @@ public class TeamsheetService {
 
     // edit/update a Teamsheet record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, TeamsheetModel teamsheetModel){
+    public ResponseEntity<MessageResponse> update(Long id, Teamsheet teamsheet){
 
         // check if exists first
         // then update
@@ -73,7 +73,7 @@ public class TeamsheetService {
         if(!teamsheetRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
 
-        teamsheetRepository.save(teamsheetModel.translateModelToTeamsheet(id));
+        teamsheetRepository.save(teamsheet);
         return ResponseEntity.ok(new MyMessageResponse("Teamsheet record updated", MessageTypes.INFO));
     }
 

@@ -1,6 +1,7 @@
 package com.jwt.controllers;
 
 
+import com.jwt.models.Firstname;
 import com.jwt.models.Player;
 import com.jwt.models.PlayerModel;
 import com.jwt.payload.response.MessageResponse;
@@ -79,15 +80,16 @@ public class PlayerController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MessageResponse> update( @RequestParam("id") Long id, @ModelAttribute PlayerModel playerModel){
-        return playerService.update(id, playerModel);
+    public ResponseEntity<MessageResponse> update( @RequestBody Player player){
+        return playerService.update(player.getId(), player);
     }
+
 
     // delete player
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return playerService.deleteById(id);
+    public ResponseEntity<MessageResponse> deleteById(@RequestBody Player player){
+        return playerService.deleteById(player.getId());
     }
 }

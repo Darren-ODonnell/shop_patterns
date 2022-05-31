@@ -91,14 +91,14 @@ public class FirstnameService {
 
     // edit/update a firstname record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, FirstnameModel firstnameModel){
+    public ResponseEntity<MessageResponse> update(Long id, Firstname firstname){
         // check if exists first
         // then update
 
         if(!firstnameRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Firstname with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
 
-        firstnameRepository.save(firstnameModel.translateModelToFirstname(id));
+        firstnameRepository.save(firstname);
         return ResponseEntity.ok(new MyMessageResponse("Firstname record updated", MessageTypes.INFO));
     }
 
