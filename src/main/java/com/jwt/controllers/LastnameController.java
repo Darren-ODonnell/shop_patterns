@@ -66,8 +66,8 @@ public class LastnameController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody Lastname lastname){
-        return lastnameService.deleteById(lastname.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody Lastname lastname){
+        return lastnameService.delete(lastname);
 
     }
 
@@ -75,7 +75,7 @@ public class LastnameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute LastnameModel lastnameModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody LastnameModel lastnameModel){
         return lastnameService.add(lastnameModel);
     }
 

@@ -69,8 +69,8 @@ public class PositionService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
-
+    public ResponseEntity<MessageResponse> delete( Position position){
+        Long id = position.getId();
         if(!positionRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Position with id: "+id, MessageTypes.WARN));
 

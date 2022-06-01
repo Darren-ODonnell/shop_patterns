@@ -55,7 +55,7 @@ public class ClubController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute ClubModel clubModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody ClubModel clubModel){
         return clubService.add(clubModel);
     }
 
@@ -72,7 +72,7 @@ public class ClubController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-        return clubService.deleteById(id);
+    public ResponseEntity<MessageResponse> delete(@RequestBody Club club){
+        return clubService.delete(club);
     }
 }

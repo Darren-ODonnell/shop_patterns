@@ -32,7 +32,6 @@ public class PositionController {
     @GetMapping(value={"/","/list",""} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Position> list(){
-
         return positionService.list();
     }
 
@@ -63,7 +62,7 @@ public class PositionController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute PositionModel positionModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody PositionModel positionModel){
         return positionService.add(positionModel);
     }
 
@@ -79,7 +78,7 @@ public class PositionController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody Position position){
-        return positionService.deleteById(position.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody Position position){
+        return positionService.delete(position);
     }
 }

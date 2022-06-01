@@ -148,7 +148,9 @@ public class FixtureService {
 
     // delete fixture
 
-    public ResponseEntity<MessageResponse> deleteById(Long id) {
+    public ResponseEntity<MessageResponse> delete(Fixture fixture) {
+        Long id = fixture.getId();
+
         if(!fixtureRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete fixture with id: "+id, MessageTypes.WARN));
 

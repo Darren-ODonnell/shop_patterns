@@ -92,7 +92,8 @@ public class PlayerService {
 
     // delete player
 
-    public ResponseEntity<MessageResponse> deleteById(Long id){
+    public ResponseEntity<MessageResponse> delete(Player player){
+        Long id = player.getId();
         if(!playerRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete player with id: "+id, MessageTypes.WARN));
 

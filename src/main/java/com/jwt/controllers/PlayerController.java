@@ -72,7 +72,7 @@ public class PlayerController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add( @ModelAttribute PlayerModel playerModel){
+    public ResponseEntity<MessageResponse> add( @RequestBody PlayerModel playerModel){
         return playerService.add( playerModel);
     }
 
@@ -89,7 +89,7 @@ public class PlayerController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody Player player){
-        return playerService.deleteById(player.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody Player player){
+        return playerService.delete(player);
     }
 }

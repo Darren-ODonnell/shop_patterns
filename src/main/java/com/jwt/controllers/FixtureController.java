@@ -88,7 +88,7 @@ public class FixtureController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute FixtureModel fixtureModel) {
+    public ResponseEntity<MessageResponse> add(@RequestBody FixtureModel fixtureModel) {
         return fixtureService.add(fixtureModel);
     }
 
@@ -104,7 +104,7 @@ public class FixtureController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody Fixture fixture){
-        return fixtureService.deleteById(fixture.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody Fixture fixture){
+        return fixtureService.delete(fixture);
     }
 }

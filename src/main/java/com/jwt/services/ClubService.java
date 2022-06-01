@@ -61,8 +61,8 @@ public class ClubService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
-
+    public ResponseEntity<MessageResponse> delete( Club club){
+        Long id = club.getId();
         if(!clubRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Club with id: "+id, MessageTypes.WARN));
 

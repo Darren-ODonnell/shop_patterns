@@ -68,8 +68,8 @@ public class EventNameService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
-
+    public ResponseEntity<MessageResponse> delete(EventName eventName){
+        Long id = eventName.getId();
         if(!eventNameRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete EventName with id: "+id, MessageTypes.WARN));
 

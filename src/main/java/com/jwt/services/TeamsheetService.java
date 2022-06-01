@@ -54,8 +54,8 @@ public class TeamsheetService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
-
+    public ResponseEntity<MessageResponse> delete(Teamsheet teamsheet){
+        Long id = teamsheet.getId();
         if(!teamsheetRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Teamsheet with id: "+id, MessageTypes.WARN));
 

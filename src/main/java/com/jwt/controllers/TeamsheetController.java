@@ -48,7 +48,7 @@ public class TeamsheetController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute TeamsheetModel teamsheetModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody TeamsheetModel teamsheetModel){
         return teamsheetService.add(teamsheetModel);
     }
 
@@ -64,7 +64,7 @@ public class TeamsheetController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody Teamsheet teamsheet){
-        return teamsheetService.deleteById(teamsheet.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody Teamsheet teamsheet){
+        return teamsheetService.delete(teamsheet);
     }
 }

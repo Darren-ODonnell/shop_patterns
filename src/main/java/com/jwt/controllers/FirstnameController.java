@@ -73,7 +73,7 @@ public class FirstnameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add( @ModelAttribute FirstnameModel firstnameModel){
+    public ResponseEntity<MessageResponse> add( @RequestBody FirstnameModel firstnameModel){
         return firstnameService.add( firstnameModel);
     }
 
@@ -89,7 +89,7 @@ public class FirstnameController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody Firstname firstname){
-        return firstnameService.deleteById(firstname.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody Firstname firstname){
+        return firstnameService.delete(firstname);
     }
 }

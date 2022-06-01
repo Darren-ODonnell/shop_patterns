@@ -77,8 +77,8 @@ public class CompetitionService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
-
+    public ResponseEntity<MessageResponse> delete(Competition competition){
+        Long id = competition.getId();
         if(!competitionRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete competition with id: "+id, MessageTypes.WARN));
 

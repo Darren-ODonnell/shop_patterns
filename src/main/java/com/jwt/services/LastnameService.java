@@ -60,7 +60,8 @@ public class LastnameService {
 
     // delete lastname
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
+    public ResponseEntity<MessageResponse> delete( Lastname lastname){
+        Long id = lastname.getId();
         if(!lastnameRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: No Record exists with id: "+id, MessageTypes.WARN));
 

@@ -63,7 +63,7 @@ public class EventNameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse>  add(@ModelAttribute EventNameModel eventNameModel){
+    public ResponseEntity<MessageResponse>  add(@RequestBody EventNameModel eventNameModel){
         return eventNameService.add(eventNameModel);
     }
 
@@ -81,7 +81,7 @@ public class EventNameController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody EventName eventName){
-        return eventNameService.deleteById(eventName.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody EventName eventName){
+        return eventNameService.delete(eventName);
     }
 }

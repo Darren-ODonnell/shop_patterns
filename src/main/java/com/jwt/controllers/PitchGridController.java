@@ -63,7 +63,7 @@ public class PitchGridController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute PitchGridModel pitchGridModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody PitchGridModel pitchGridModel){
         return pitchGridService.add(pitchGridModel);
     }
 
@@ -79,7 +79,7 @@ public class PitchGridController {
 
     @DeleteMapping(value="/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> deleteById(@RequestBody PitchGrid pitchGrid){
-        return pitchGridService.deleteById(pitchGrid.getId());
+    public ResponseEntity<MessageResponse> delete(@RequestBody PitchGrid pitchGrid){
+        return pitchGridService.delete(pitchGrid);
     }
 }

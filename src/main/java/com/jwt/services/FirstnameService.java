@@ -79,8 +79,8 @@ public class FirstnameService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
-
+    public ResponseEntity<MessageResponse> delete(Firstname fname){
+        Long id = fname.getId();
         Optional<Firstname> firstname = firstnameRepository.findById(id);
         if(firstname.isEmpty())
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete firstname with id: " + id, MessageTypes.WARN));

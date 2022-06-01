@@ -56,8 +56,8 @@ public class EventService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
-
+    public ResponseEntity<MessageResponse> delete(Event event){
+        Long id = event.getId();
         if(!eventRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Event with id: "+id, MessageTypes.WARN));
 

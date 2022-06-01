@@ -69,8 +69,8 @@ public class PitchGridService {
 
     // delete by name
 
-    public ResponseEntity<MessageResponse> deleteById( Long id){
-
+    public ResponseEntity<MessageResponse> delete( PitchGrid pitchGrid){
+        Long id = pitchGrid.getId();
         if(!pitchGridRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: "+id, MessageTypes.WARN));
 
