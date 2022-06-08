@@ -102,7 +102,7 @@ public class FixtureController {
 
     // delete by id
 
-    @DeleteMapping(value="/deleteById")
+    @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> delete(@RequestBody Fixture fixture){
         return fixtureService.delete(fixture);

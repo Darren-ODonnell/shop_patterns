@@ -87,7 +87,7 @@ public class PlayerController {
 
     // delete player
 
-    @DeleteMapping(value="/deleteById")
+    @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> delete(@RequestBody Player player){
         return playerService.delete(player);
