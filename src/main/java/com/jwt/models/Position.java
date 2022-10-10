@@ -1,13 +1,15 @@
 package com.jwt.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "positions")
 public class Position {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "number", nullable = false)
     private Long id;
 
     @Column(name = "name", length = 45)
@@ -15,9 +17,6 @@ public class Position {
 
     @Column(name = "abbrev", length = 8)
     private String abbrev;
-
-    @Column(name = "number")
-    private Integer number;
 
     public Long getId() {
         return id;
@@ -41,14 +40,6 @@ public class Position {
 
     public void setAbbrev(String abbrev) {
         this.abbrev = abbrev;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
     }
 
 }

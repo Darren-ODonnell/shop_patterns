@@ -1,7 +1,7 @@
 package com.jwt.controllers;
 
-import com.jwt.models.Position;
 import com.jwt.models.Teamsheet;
+import com.jwt.models.TeamsheetId;
 import com.jwt.models.TeamsheetModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.TeamsheetService;
@@ -40,7 +40,7 @@ public class TeamsheetController {
 
     @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Teamsheet findById(@RequestParam("id")  Long id){
+    public @ResponseBody Teamsheet findById(@RequestParam("id") TeamsheetId id){
         return teamsheetService.findById(id);
     }
 

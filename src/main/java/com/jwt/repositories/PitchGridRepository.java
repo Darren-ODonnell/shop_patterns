@@ -8,9 +8,10 @@ import java.util.Optional;
 
 public interface PitchGridRepository extends JpaRepository<PitchGrid, Long> {
     List<PitchGrid> findAll();
-    Optional<PitchGrid> findById(Long id);
+    Optional<PitchGrid> findById(String id);
     Optional<PitchGrid> findByName(String name);
-    Optional<PitchGrid> findByAbbrev(String abbrev);
-    boolean existsById(Long id);
-    boolean existsByAbbrev(String abbrev);
+    void deleteById(String id);
+
+    boolean existsById(String id);
+
 }

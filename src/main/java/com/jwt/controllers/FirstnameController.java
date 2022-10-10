@@ -1,6 +1,6 @@
 package com.jwt.controllers;
 
-import com.jwt.models.Competition;
+
 import com.jwt.models.Firstname;
 import com.jwt.models.FirstnameModel;
 import com.jwt.payload.response.MessageResponse;
@@ -73,7 +73,7 @@ public class FirstnameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add( @RequestBody FirstnameModel firstnameModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody FirstnameModel firstnameModel){
         return firstnameService.add( firstnameModel);
     }
 

@@ -1,6 +1,5 @@
 package com.jwt.controllers;
 
-import com.jwt.models.Firstname;
 import com.jwt.models.PitchGrid;
 import com.jwt.models.PitchGridModel;
 import com.jwt.payload.response.MessageResponse;
@@ -39,7 +38,7 @@ public class PitchGridController {
 
     @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody PitchGrid findById(@RequestParam("id")  Long id){
+    public @ResponseBody PitchGrid findById(@RequestParam("id")  String id){
         return pitchGridService.findById(id);
     }
 
@@ -49,14 +48,6 @@ public class PitchGridController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody  PitchGrid findByName(@ModelAttribute PitchGridModel pitchGridModel) {
         return pitchGridService.findByName(pitchGridModel);
-    }
-
-    // return PitchGrid by Abbrev
-
-    @GetMapping(value="/findByAbbrev")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody  PitchGrid findByAbbrev(@ModelAttribute PitchGridModel pitchGridModel) {
-        return pitchGridService.findByAbbrev(pitchGridModel);
     }
 
     // add new PitchGrid

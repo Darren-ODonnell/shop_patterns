@@ -1,6 +1,5 @@
 package com.jwt.controllers;
 
-import com.jwt.models.Firstname;
 import com.jwt.models.Position;
 import com.jwt.models.PositionModel;
 import com.jwt.payload.response.MessageResponse;

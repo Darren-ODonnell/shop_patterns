@@ -33,10 +33,10 @@ public class PitchGridService {
 
     // return PitchGrid by id
 
-    public PitchGrid findById(Long id){
+    public PitchGrid findById(String id){
         Optional<PitchGrid> pitchGrid = pitchGridRepository.findById(id);
         if(pitchGrid.isEmpty())
-            new MyMessageResponse(String.format("PitchGrid id: %d not found", id), MessageTypes.ERROR);
+            new MyMessageResponse(String.format("PitchGrid id: %s not found", id), MessageTypes.ERROR);
         return pitchGrid.orElse(new PitchGrid());
     }
 
@@ -48,20 +48,15 @@ public class PitchGridService {
         return pitchGrid.orElse(new PitchGrid());
     }
 
-    public PitchGrid findByAbbrev(PitchGridModel pitchGridModel) {
-        Optional<PitchGrid> pitchGrid = pitchGridRepository.findByAbbrev(pitchGridModel.getAbbrev());
-        if(pitchGrid.isEmpty()) new MyMessageResponse(String.format("PitchGrid abbrev: %s not found", pitchGridModel.getAbbrev()), MessageTypes.INFO);
-        return pitchGrid.orElse(new PitchGrid());
 
-    }
 
 
     // add new PitchGrid
 
     public ResponseEntity<MessageResponse> add(PitchGridModel pitchGridModel){
 
-        if(pitchGridRepository.existsByAbbrev(pitchGridModel.getAbbrev()))
-            return ResponseEntity.ok(new MyMessageResponse("Error: PitchGrid already exists", MessageTypes.WARN));
+//        if(pitchGridRepository.existsById(pitchGridModel.getId()))
+//            return ResponseEntity.ok(new MyMessageResponse("Error: PitchGrid already exists", MessageTypes.WARN));
 
         pitchGridRepository.save(pitchGridModel.translateModelToPitchGrid());
         return ResponseEntity.ok(new MyMessageResponse("new PitchGrid added", MessageTypes.INFO));
@@ -70,7 +65,7 @@ public class PitchGridService {
     // delete by name
 
     public ResponseEntity<MessageResponse> delete( PitchGrid pitchGrid){
-        Long id = pitchGrid.getId();
+        String id = pitchGrid.getId();
         if(!pitchGridRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: "+id, MessageTypes.WARN));
 
@@ -80,7 +75,7 @@ public class PitchGridService {
 
     // edit/update a PitchGrid record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, PitchGrid pitchGrid){
+    public ResponseEntity<MessageResponse> update(String id, PitchGrid pitchGrid){
 
         // check if exists first
         // then update

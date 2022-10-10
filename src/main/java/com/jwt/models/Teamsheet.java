@@ -3,47 +3,58 @@ package com.jwt.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "teamsheets")
+@Table(name = "teamsheets", indexes = {
+        @Index(name = "player_id", columnList = "player_id"),
+        @Index(name = "position_id", columnList = "position_id")
+})
 public class Teamsheet {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @EmbeddedId
+    private TeamsheetId id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "fixture_id")
+    @MapsId("fixtureId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "fixture_id", nullable = false)
     private Fixture fixture;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "player_id")
+    @MapsId("playerId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "player_id", nullable = false)
     private Player player;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "position_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 
-    public Long getId() {
+    public TeamsheetId getId() {
         return id;
     }
-    public void setId(Long id) {
+
+    public void setId(TeamsheetId id) {
         this.id = id;
     }
+
     public Fixture getFixture() {
         return fixture;
     }
+
     public void setFixture(Fixture fixture) {
         this.fixture = fixture;
     }
+
     public Player getPlayer() {
         return player;
     }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
+
     public Position getPosition() {
         return position;
     }
+
     public void setPosition(Position position) {
         this.position = position;
     }
+
 }

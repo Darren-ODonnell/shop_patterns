@@ -30,7 +30,7 @@ public class CompetitionService {
 
     // return Competition by id
 
-    public  Competition findById(Long id){
+    public Competition findById(Long id){
         Optional<Competition> competition = competitionRepository.findById(id);
         if(competition.isEmpty())
             new MyMessageResponse( "Competition id name does not exist: " + id,MessageTypes.WARN);

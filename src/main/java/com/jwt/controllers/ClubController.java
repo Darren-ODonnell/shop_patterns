@@ -2,7 +2,6 @@ package com.jwt.controllers;
 
 import com.jwt.models.Club;
 import com.jwt.models.ClubModel;
-import com.jwt.models.Competition;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.services.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,8 @@ public class ClubController {
 
     @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Club findById(@RequestParam("id")  Long id){
+    public @ResponseBody
+    Club findById(@RequestParam("id")  Long id){
         return clubService.findById(id);
     }
 

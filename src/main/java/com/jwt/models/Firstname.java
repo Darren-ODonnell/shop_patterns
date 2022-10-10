@@ -3,25 +3,25 @@ package com.jwt.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "FIRST_NAMES")
+@Table(name = "first_names")
 public class Firstname {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "FIRST_NAME", length = 45)
+    @Column(name = "first_name", length = 45)
     private String firstname;
 
-    @Column(name = "FIRST_NAME_IRISH", length = 45)
+    @Column(name = "first_name_irish", length = 45)
     private String firstnameIrish;
 
-    public String getFirstnameIrish() {
-        return firstnameIrish;
+    public Long getId() {
+        return id;
     }
 
-    public void setFirstnameIrish(String firstnameIrish) {
-        this.firstnameIrish = firstnameIrish;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -32,11 +32,12 @@ public class Firstname {
         this.firstname = firstname;
     }
 
-    public Long getId() {
-        return id;
+    public String getFirstnameIrish() {
+        return firstnameIrish;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFirstnameIrish(String firstnameIrish) {
+        this.firstnameIrish = firstnameIrish;
     }
+
 }

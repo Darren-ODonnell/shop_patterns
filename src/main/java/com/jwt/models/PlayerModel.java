@@ -48,18 +48,20 @@ public class PlayerModel {
     public void setYob(Integer yob) {
         this.yob = yob;
     }
-    public String getLastNameI() {
+
+    public String getLastnameI() {
         return lastnameI;
     }
-    public void setLastNameI(String lastNameI) {
-        this.lastnameI = lastNameI;
+    public void setLastnameI(String lastnameI) {
+        this.lastnameI = lastnameI;
     }
-    public String getFirstNameI() {
+    public String getFirstnameI() {
         return firstnameI;
     }
-    public void setFirstNameI(String firstNameI) {
-        this.firstnameI = firstNameI;
+    public void setFirstnameI(String firstnameI) {
+        this.firstnameI = firstnameI;
     }
+
     public String getLastname() {
         return lastname;
     }
@@ -87,6 +89,8 @@ public class PlayerModel {
         player.setLastname(this.lastname);
         player.setFirstnameI(this.firstnameI);
         player.setLastnameI(this.lastnameI);
+
+
         player.setEmail(this.email);
         player.setAddress(this.address);
         player.setPhone(this.phone);

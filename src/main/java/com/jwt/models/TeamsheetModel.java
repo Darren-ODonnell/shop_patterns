@@ -34,9 +34,9 @@ public class TeamsheetModel {
         teamsheet.setFixture(this.fixture);
 
         return teamsheet;
-    }
+    }cd 
 
-    public Teamsheet translateModelToTeamsheet(Long id){
+    public Teamsheet translateModelToTeamsheet(TeamsheetId id){
         Teamsheet teamsheet = translateModelToTeamsheet();
 
         teamsheet.setId(id);

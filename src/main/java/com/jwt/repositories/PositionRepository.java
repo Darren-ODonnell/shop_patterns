@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface PositionRepository extends JpaRepository<Position, Long> {
     List<Position> findAll();
-    boolean existsById(Long id);
+    boolean existsById(String id);
     boolean existsByName(String name);
     Optional<Position> findByName(String name);
-    Optional<Position> findById(Long id);
+    Optional<Position> findById(String id);
     Optional<Position> findByAbbrev(String abbrev);
 }

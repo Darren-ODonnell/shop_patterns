@@ -38,7 +38,8 @@ public class CompetitionController {
 
     @GetMapping(value="/findById")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Competition findById(@RequestParam("id") Long id){
+    public @ResponseBody
+    Competition findById(@RequestParam("id") Long id){
         return competitionService.findById(id);
     }
 

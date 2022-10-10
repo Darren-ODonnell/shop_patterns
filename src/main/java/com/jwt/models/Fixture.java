@@ -5,81 +5,103 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "FIXTURES")
+@Table(name = "fixtures", indexes = {
+        @Index(name = "away_team_idx", columnList = "away_team_id"),
+        @Index(name = "competition_idx", columnList = "competition_id"),
+        @Index(name = "home_team_idx", columnList = "home_team_id")
+})
 public class Fixture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "COMPETITION_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "competition_id")
     private Competition competition;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "HOME_TEAM_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "home_team_id")
     private Club homeTeam;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "AWAY_TEAM_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "away_team_id")
     private Club awayTeam;
 
-    @Column(name = "FIXTURE_DATE")
+    @Column(name = "fixture_date")
     private Date fixtureDate;
 
-    @Column(name = "FIXTURE_TIME")
+    @Column(name = "fixture_time")
     private Time fixtureTime;
 
-    @Column(name = "SEASON")
+    @Column(name = "season")
     private Integer season;
 
-    @Column(name = "ROUND")
+    @Column(name = "round")
     private Integer round;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Competition getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
+    public Club getHomeTeam() {
+        return homeTeam;
+    }
+
+    public void setHomeTeam(Club homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public Club getAwayTeam() {
+        return awayTeam;
+    }
+
+    public void setAwayTeam(Club awayTeam) {
+        this.awayTeam = awayTeam;
+    }
+
+    public Date getFixtureDate() {
+        return fixtureDate;
+    }
+
+    public void setFixtureDate(Date fixtureDate) {
+        this.fixtureDate = fixtureDate;
+    }
+
+    public Time getFixtureTime() {
+        return fixtureTime;
+    }
+
+    public void setFixtureTime(Time fixtureTime) {
+        this.fixtureTime = fixtureTime;
+    }
+
+    public Integer getSeason() {
+        return season;
+    }
+
+    public void setSeason(Integer season) {
+        this.season = season;
+    }
 
     public Integer getRound() {
         return round;
     }
+
     public void setRound(Integer round) {
         this.round = round;
     }
-    public Integer getSeason() {
-        return season;
-    }
-    public void setSeason(Integer season) {
-        this.season = season;
-    }
-    public Time getFixtureTime() {        return fixtureTime;    }
-    public void setFixtureTime(Time fixtureTime) {
-        this.fixtureTime = fixtureTime;
-    }
-    public Date getFixtureDate() {
-        return fixtureDate;
-    }
-    public void setFixtureDate(Date fixtureDate) {
-        this.fixtureDate = fixtureDate;
-    }
-    public Club getAwayTeam() {
-        return awayTeam;
-    }
-    public void setAwayTeam(Club awayTeam) {
-        this.awayTeam = awayTeam;
-    }
-    public Club getHomeTeam() {
-        return homeTeam;
-    }
-    public void setHomeTeam(Club homeTeam) {
-        this.homeTeam = homeTeam;
-    }
-    public Competition getCompetition() {
-        return competition;
-    }
-    public void setCompetition(Competition competition) {
-        this.competition = competition;
-    }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 }

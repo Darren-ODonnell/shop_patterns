@@ -1,7 +1,6 @@
 package com.jwt.controllers;
 
 
-import com.jwt.models.Firstname;
 import com.jwt.models.Player;
 import com.jwt.models.PlayerModel;
 import com.jwt.payload.response.MessageResponse;

@@ -1,7 +1,6 @@
 package com.jwt.controllers;
 
 import com.jwt.models.ClubModel;
-import com.jwt.models.Firstname;
 import com.jwt.models.Fixture;
 import com.jwt.models.FixtureModel;
 import com.jwt.payload.response.MessageResponse;

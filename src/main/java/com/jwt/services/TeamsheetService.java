@@ -3,6 +3,7 @@ package com.jwt.services;
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.Teamsheet;
+import com.jwt.models.TeamsheetId;
 import com.jwt.models.TeamsheetModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.TeamsheetRepository;
@@ -33,7 +34,7 @@ public class TeamsheetService {
 
     // return Teamsheet by id
 
-    public Teamsheet findById( Long id){
+    public Teamsheet findById( TeamsheetId id){
         Optional<Teamsheet> teamsheet = teamsheetRepository.findById(id);
         if(teamsheet.isEmpty())
             new MyMessageResponse(String.format("Teamsheet id: %d not found", id), MessageTypes.ERROR);
@@ -55,7 +56,7 @@ public class TeamsheetService {
     // delete by id
 
     public ResponseEntity<MessageResponse> delete(Teamsheet teamsheet){
-        Long id = teamsheet.getId();
+        TeamsheetId id = teamsheet.getId();
         if(!teamsheetRepository.existsById(id))
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Teamsheet with id: "+id, MessageTypes.WARN));
 
@@ -65,7 +66,7 @@ public class TeamsheetService {
 
     // edit/update a Teamsheet record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, Teamsheet teamsheet){
+    public ResponseEntity<MessageResponse> update(TeamsheetId id, Teamsheet teamsheet){
 
         // check if exists first
         // then update
