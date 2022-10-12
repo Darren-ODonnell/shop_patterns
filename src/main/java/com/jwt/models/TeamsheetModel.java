@@ -34,7 +34,7 @@ public class TeamsheetModel {
         teamsheet.setFixture(this.fixture);
 
         return teamsheet;
-    }cd 
+    }
 
     public Teamsheet translateModelToTeamsheet(TeamsheetId id){
         Teamsheet teamsheet = translateModelToTeamsheet();
