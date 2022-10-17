@@ -6,6 +6,7 @@ import com.jwt.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,6 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -30,11 +33,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AuthTokenFilter authenticationJwtTokenFilter;
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.userDetailsService( userDetailsService ).passwordEncoder(new BCryptPasswordEncoder(11));
+        auth.userDetailsService( userDetailsService ).passwordEncoder(passwordEncoder);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -45,17 +55,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/test/**" ).permitAll()
             .anyRequest().authenticated();
 
-        http.addFilterBefore( authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class );
+        http.addFilterBefore( authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter.class );
     }
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {  return new AuthTokenFilter();    }
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {  return super.authenticationManagerBean();    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {    return new BCryptPasswordEncoder(11);    }
+
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
