@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TeamsheetRepository extends JpaRepository<Teamsheet, Long> {
+public interface TeamsheetRepository extends JpaRepository<Teamsheet, TeamsheetId> {
     List<Teamsheet> findAll();
     boolean existsByFixtureId(Long id);
     boolean existsById(TeamsheetId id);

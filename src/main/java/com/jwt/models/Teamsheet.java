@@ -12,16 +12,16 @@ public class Teamsheet {
     private TeamsheetId id;
 
     @MapsId("fixtureId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "fixture_id", nullable = false)
     private Fixture fixture;
 
     @MapsId("playerId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "player_id", nullable = false)
     private Player player;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 

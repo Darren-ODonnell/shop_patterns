@@ -1,50 +1,15 @@
 package com.jwt.models;
 
-// refacture this structure to be simiolar to other models
-
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "stats", indexes = {
-        @Index(name = "player_id", columnList = "player_id"),
-        @Index(name = "stats_ibfk5_idx", columnList = "stat_name"),
-        @Index(name = "location_id", columnList = "location_id")
-})
 public class StatModel {
-    @EmbeddedId
-    private StatId id;
 
-    @MapsId("fixtureId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fixture_id", nullable = false)
+
     private Fixture fixture;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_id")
     private Player player;
-
-    @Column(name = "success")
     private Boolean success;
-
-    @Column(name = "half", nullable = false)
     private Boolean half = false;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id")
     private PitchGrid location;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "stat_name", nullable = false)
     private StatName statName;
-
-    public StatId getId() {
-        return id;
-    }
-
-    public void setId(StatId id) {
-        this.id = id;
-    }
 
     public Fixture getFixture() {
         return fixture;
@@ -94,4 +59,24 @@ public class StatModel {
         this.statName = statName;
     }
 
+
+    public Stat translateModelToStat(){
+        Stat stat = new Stat();
+        stat.setFixture(this.fixture);
+        stat.setPlayer(this.player);
+        stat.setSuccess(this.success);
+        stat.setHalf(this.half);
+        stat.setLocation(this.location);
+        return stat;
+    }
+
+    // used in update operations
+    public Stat translateModelToStat(StatId id){
+        Stat stat = translateModelToStat();
+        stat.setId(id);
+        return stat;
+    }
+    
+    
+    
 }

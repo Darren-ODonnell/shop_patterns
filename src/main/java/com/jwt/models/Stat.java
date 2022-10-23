@@ -13,11 +13,11 @@ public class Stat {
     private StatId id;
 
     @MapsId("fixtureId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "fixture_id", nullable = false)
     private Fixture fixture;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
     private Player player;
 
@@ -27,11 +27,11 @@ public class Stat {
     @Column(name = "half", nullable = false)
     private Boolean half = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id")
     private PitchGrid location;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "stat_name", nullable = false)
     private StatName statName;
 

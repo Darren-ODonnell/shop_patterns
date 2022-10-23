@@ -28,19 +28,15 @@ public class TeamsheetModel {
 
     public Teamsheet translateModelToTeamsheet(){
         Teamsheet teamsheet = new Teamsheet();
-
         teamsheet.setPosition(this.position);
         teamsheet.setPlayer(this.player);
         teamsheet.setFixture(this.fixture);
-
         return teamsheet;
     }
 
     public Teamsheet translateModelToTeamsheet(TeamsheetId id){
         Teamsheet teamsheet = translateModelToTeamsheet();
-
         teamsheet.setId(id);
-
         return teamsheet;
     }
 }
