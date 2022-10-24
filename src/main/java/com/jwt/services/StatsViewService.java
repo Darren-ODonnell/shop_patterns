@@ -8,6 +8,10 @@ import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 
+import com.jwt.models.stats.StatCountFixtureDate;
+import com.jwt.models.stats.StatCountPlayerDate;
+import com.jwt.models.stats.StatCountSeason;
+import com.jwt.models.stats.Stats;
 import com.jwt.repositories.StatsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,86 +72,16 @@ public class StatsViewService {
         return stats;
     }
 
-    public List<Object> findByStatnameSeason( String statname, int season) {
+    public List<StatCountSeason> findByStatnameSeason( String statname, int season) {
         List<Object> data = statsViewRepository.findByStatNameAndSeason( statname,  season);
-        // firstname, lastname, statnate, season, count
 
-        return data;
-    }
-
-    public class Stats {
-        BigInteger count;
-        String statname;
-
-        public Stats(BigInteger count, String statname) {
-            this.count = count;
-            this.statname = statname;
+        List<StatCountSeason> stats = new ArrayList<>();
+        for(Object o: data){
+            StatCountSeason stat = new StatCountSeason((Object[]) o);
+            stats.add(stat);
         }
-
-        public BigInteger getCount() {
-            return count;
-        }
-
-        public String getStatname() {
-            return statname;
-        }
-    }
-
-    public class StatCountFixtureDate extends Stats{
-
-        Date fixtureDate;
-
-        public StatCountFixtureDate(BigInteger count, String statname, Date fixtureDate) {
-            super(count, statname);
-            this.fixtureDate = fixtureDate;
-        }
-
-        public StatCountFixtureDate(BigInteger count, String statname) {
-            super(count, statname);
-        }
-
-        public Date getFixtureDate() {
-            return fixtureDate;
-        }
-    }
-
-    public class StatCountSeason extends Stats{
-        int season;
-
-        public StatCountSeason(BigInteger count, String statname, int season) {
-            super(count, statname);
-            this.season = season;
-        }
-
-        public int getSeason() {
-            return season;
-        }
-    }
-
-    public class StatCountPlayerDate extends StatCountFixtureDate{
-        String firstname;
-        String lastname;
-
-        public StatCountPlayerDate(BigInteger count, String statname, String firstname, String lastname, Date fixtureDate) {
-            super(count, statname, fixtureDate);
-            this.firstname = firstname;
-            this.lastname = lastname;
-        }
-
-
-        public StatCountPlayerDate() {
-            super(BigInteger.valueOf(0),"",stringToDate("2022-03-06"));
-        }
-
-        public StatCountPlayerDate(Object[] obj ) {
-            super((BigInteger) obj[4], (String) obj[2], (Date) obj[3]);
-            firstname = (String) obj[0];
-            lastname = (String) obj[1];
-        }
-
+        return stats;
 
     }
-
-
 
 }
