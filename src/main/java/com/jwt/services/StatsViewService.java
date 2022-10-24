@@ -12,7 +12,15 @@ import com.jwt.repositories.StatsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,29 +42,49 @@ public class StatsViewService {
         if(statsView.isEmpty()) new MyMessageResponse("Error: No Stats listed", MessageTypes.WARN);
         return statsView;
     }
-    public List<Object> findByStatNameFixtureDate(String statname, String fixtureDate) {
-        List<Object> data = statsViewRepository.findByStatNameAndFixtureDate(statname, fixtureDate);
-        return data;
+
+    public Date stringToDate(String date) {
+        SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return formatter.parse(date);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    public List<StatCountPlayerDate> findByStatNameFixtureDate(String statname, String fixtureDateStr) {
+
+        List<Object> data  = statsViewRepository.findByStatNameAndFixtureDate(statname,stringToDate(fixtureDateStr));
+        // firstname, lastname, statnate, fixturedate, count
+        // StatCountFixtureDate
+
+        List<StatCountPlayerDate> stats = new ArrayList<>();
+        for(Object o: data){
+            StatCountPlayerDate stat = new StatCountPlayerDate((Object[]) o);
+            stats.add(stat);
+        }
+        return stats;
     }
 
     public List<Object> findByStatnameSeason( String statname, int season) {
         List<Object> data = statsViewRepository.findByStatNameAndSeason( statname,  season);
+        // firstname, lastname, statnate, season, count
+
         return data;
     }
 
-
-
-
     public class Stats {
-        Long count;
+        BigInteger count;
         String statname;
 
-        public Stats(Long count, String statname) {
+        public Stats(BigInteger count, String statname) {
             this.count = count;
             this.statname = statname;
         }
 
-        public Long getCount() {
+        public BigInteger getCount() {
             return count;
         }
 
@@ -65,16 +93,20 @@ public class StatsViewService {
         }
     }
 
-    public class StatCount extends Stats{
+    public class StatCountFixtureDate extends Stats{
 
-        String fixtureDate;
+        Date fixtureDate;
 
-        public StatCount(Long count, String statname, String fixtureDate) {
+        public StatCountFixtureDate(BigInteger count, String statname, Date fixtureDate) {
             super(count, statname);
             this.fixtureDate = fixtureDate;
         }
 
-        public String getFixtureDate() {
+        public StatCountFixtureDate(BigInteger count, String statname) {
+            super(count, statname);
+        }
+
+        public Date getFixtureDate() {
             return fixtureDate;
         }
     }
@@ -82,7 +114,7 @@ public class StatsViewService {
     public class StatCountSeason extends Stats{
         int season;
 
-        public StatCountSeason(Long count, String statname, int season) {
+        public StatCountSeason(BigInteger count, String statname, int season) {
             super(count, statname);
             this.season = season;
         }
@@ -92,15 +124,28 @@ public class StatsViewService {
         }
     }
 
-    public class StatCountPlayerDate extends StatCount{
+    public class StatCountPlayerDate extends StatCountFixtureDate{
         String firstname;
         String lastname;
 
-        public StatCountPlayerDate(Long count, String statname, String firstname, String lastname, String fixtureDate) {
+        public StatCountPlayerDate(BigInteger count, String statname, String firstname, String lastname, Date fixtureDate) {
             super(count, statname, fixtureDate);
             this.firstname = firstname;
             this.lastname = lastname;
         }
+
+
+        public StatCountPlayerDate() {
+            super(BigInteger.valueOf(0),"",stringToDate("2022-03-06"));
+        }
+
+        public StatCountPlayerDate(Object[] obj ) {
+            super((BigInteger) obj[4], (String) obj[2], (Date) obj[3]);
+            firstname = (String) obj[0];
+            lastname = (String) obj[1];
+        }
+
+
     }
 
 

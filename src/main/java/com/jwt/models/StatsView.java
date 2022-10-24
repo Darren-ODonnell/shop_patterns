@@ -2,9 +2,13 @@ package com.jwt.models;
 
 import org.hibernate.annotations.Immutable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 
 /**
  * Mapping for DB view
@@ -13,10 +17,8 @@ import java.time.LocalDate;
 @Immutable
 @Table(name = "stats_view", schema = "teamstats")
 public class StatsView {
-    @Id
-    @jakarta.validation.constraints.Size(max = 36)
-    @Column(name = "id", length = 36)
-    private String id;
+    @EmbeddedId
+    private StatsViewId id;
 
     @jakarta.validation.constraints.Size(max = 45)
     @jakarta.validation.constraints.NotNull
@@ -29,10 +31,6 @@ public class StatsView {
     @jakarta.validation.constraints.NotNull
     @Column(name = "half", nullable = false)
     private Boolean half = false;
-
-    @jakarta.validation.constraints.NotNull
-    @Column(name = "time_occurred", nullable = false, precision = 4, scale = 2)
-    private BigDecimal timeOccurred;
 
     @Column(name = "season")
     private Integer season;
@@ -55,11 +53,12 @@ public class StatsView {
     @Column(name = "away_team", length = 45)
     private String awayTeam;
 
-    @Column(name = "fixture_date")
-    private String fixtureDate;
-
-    public String getId() {
+    public StatsViewId getId() {
         return id;
+    }
+
+    public void setId(StatsViewId id) {
+        this.id = id;
     }
 
     public String getStatName() {
@@ -72,10 +71,6 @@ public class StatsView {
 
     public Boolean getHalf() {
         return half;
-    }
-
-    public BigDecimal getTimeOccurred() {
-        return timeOccurred;
     }
 
     public Integer getSeason() {
@@ -98,8 +93,11 @@ public class StatsView {
         return awayTeam;
     }
 
-    public String getFixtureDate() {
-        return fixtureDate;
+    public LocalDate getFixtureDtae() {
+        return id.getFixtureDate();
+    }
+    public BigDecimal getTimeOccurred() {
+        return id.getTimeOccurred();
     }
 
     protected StatsView() {
