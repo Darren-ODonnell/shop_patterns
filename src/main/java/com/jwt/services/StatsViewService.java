@@ -8,22 +8,15 @@ import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 
-import com.jwt.models.stats.StatCountFixtureDate;
 import com.jwt.models.stats.StatCountPlayerDate;
 import com.jwt.models.stats.StatCountSeason;
-import com.jwt.models.stats.Stats;
 import com.jwt.repositories.StatsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -56,8 +49,6 @@ public class StatsViewService {
         }
     }
 
-
-
     public List<StatCountPlayerDate> findByStatNameFixtureDate(String statname, String fixtureDateStr) {
 
         List<Object> data  = statsViewRepository.findByStatNameAndFixtureDate(statname,stringToDate(fixtureDateStr));
@@ -74,7 +65,6 @@ public class StatsViewService {
 
     public List<StatCountSeason> findByStatnameSeason( String statname, int season) {
         List<Object> data = statsViewRepository.findByStatNameAndSeason( statname,  season);
-
         List<StatCountSeason> stats = new ArrayList<>();
         for(Object o: data){
             StatCountSeason stat = new StatCountSeason((Object[]) o);
@@ -84,4 +74,14 @@ public class StatsViewService {
 
     }
 
+    // attempt at generics
+
+//    public <T> List<T> convert(Object obj, List<Object> data) {
+//        List<T> stats = new ArrayList<>();
+//        for(Object o: data){
+//            T stat = new T((Object[]) o);
+//            stats.add(stat);
+//        }
+//        return stats;
+//    }
 }

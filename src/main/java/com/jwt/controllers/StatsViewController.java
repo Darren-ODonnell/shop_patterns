@@ -35,9 +35,7 @@ public class StatsViewController {
     @GetMapping(value={"/findByStatNameFixtureDate"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatCountPlayerDate> findByStatNameFixtureDate(@RequestParam("statname") String statname, @RequestParam("fixture_date") String fixtureDateStr){
-
-        List<StatCountPlayerDate> stats = statsViewService.findByStatNameFixtureDate(statname, fixtureDateStr);
-        return stats;
+        return statsViewService.findByStatNameFixtureDate(statname, fixtureDateStr);
     }
 
     @GetMapping(value={"/findByStatNameSeason"} )
