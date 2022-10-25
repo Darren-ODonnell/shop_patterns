@@ -9,7 +9,9 @@ import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 
 import com.jwt.models.stats.StatCountPlayerDate;
+import com.jwt.models.stats.StatCountPlayerSeason;
 import com.jwt.models.stats.StatCountSeason;
+import com.jwt.models.stats.Stats;
 import com.jwt.repositories.StatsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,12 +76,23 @@ public class StatsViewService {
 
     }
 
+    public List<StatCountPlayerSeason> findByFirstnameLastnameFixtureDate(String firstname, String lastname, String statname, Date fixtureDate) {
+        List<Object> data = statsViewRepository.findByFirstnameAndLastnameAndFixtureDate( firstname, lastname, statname,  fixtureDate);
+        List<StatCountPlayerSeason> stats = new ArrayList<>();
+        for(Object o: data){
+            StatCountPlayerSeason stat = new StatCountPlayerSeason((Object[]) o);
+            stats.add(stat);
+        }
+        return stats;
+
+    }
+
     // attempt at generics
 
-//    public <T> List<T> convert(Object obj, List<Object> data) {
+//    public <T> List<T> convert(List<Object> data) {
 //        List<T> stats = new ArrayList<>();
 //        for(Object o: data){
-//            T stat = new T((Object[]) o);
+//            T stat = new Stats((Object[]) o);
 //            stats.add(stat);
 //        }
 //        return stats;

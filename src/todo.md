@@ -7,6 +7,7 @@ Ix: Investigations
 Ux: Files currently UnUsed -
 Ig: Ignored for now
 Dx: Database Changes/Updates
+SQLx Sql scripts to incorporate into repositories
 
 # Bugs
     E1 Update and Edit do not work with React
@@ -23,6 +24,10 @@ Dx: Database Changes/Updates
 
 # Refactoring Rx
 # Investigations Ix
+    I1: How to implement Register
+    I2: How to implement Change Password
+    I3: How to implement forgot password
+    
 # Files Unused Ux
 # Ignored for now Ix
 
@@ -32,6 +37,7 @@ Dx: Database Changes/Updates
         Changes to @RequestBody - this now works with add()
         Need to test with other methods in Competition - then replicate to other controllers.
     
+
 # Completed
     E2 Vulnerabilities appear in Spring modules
         
@@ -65,3 +71,77 @@ Dx: Database Changes/Updates
        complete
     C2: Add code to create findByStatnameSeason
         complete.
+    SQL1: StatsByPlayerBySeason
+        /stats_view/countStatnameSeason/
+        SELECT season, stat_name, count(*) FROM teamstats.stats_view
+        where stat_name = "catchfail"
+        group by season;
+
+
+# sql scripts to incorporate
+    SQL2: StatByPLayerByFixture
+
+    /stats_view/countAllStatOnePlayersOneGame
+    //Count per game
+    SELECT stat_name, count(*) FROM teamstats.stats_view
+    where first_name = "laura"
+    AND last_name = "corcoran"
+    and fixture_date = "22-03-06"
+    GROUP BY stat_name;
+
+    SQL3: 
+
+    /stats_view/countAllStatOnePlayersOneSeason
+    
+    
+    //Season Graph -> List of Count per game
+    Example: List<List<stat_name, fixture_date, count>>
+    
+    SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
+    where first_name = "laura"
+    AND last_name = "corcoran"
+    and season = "2022"
+    GROUP BY fixture_date, stat_name
+    ORDER BY stat_name, fixture_date;
+
+    SQL4:
+    /stats_view/countAllStatOnePlayersAllTime
+    
+    //All Time Graph -> List of count per season
+    SELECT stat_name, season, count(*) FROM teamstats.stats_view
+    where first_name = "laura"
+    AND last_name = "corcoran"
+    GROUP BY season, stat_name
+    ORDER BY stat_name, season;
+    
+    All Players, All Stats
+
+    SQL5:
+
+    /stats_view/countAllStatAllPlayersOneGame
+    
+    //Count per game
+    SELECT stat_name, count(*) FROM teamstats.stats_view
+    WHERE fixture_date = "22-03-06"
+    GROUP BY stat_name
+    ORDER BY stat_name;
+
+    SQL6:
+
+    /stats_view/countAllStatAllPlayersOneSeason
+    
+    
+    //List of Counts per game-> List for season graph
+    SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
+    GROUP BY stat_name, fixture_date
+    ORDER BY stat_name, fixture_date;
+
+    SQL7: 
+
+    /stats_view/countAllStatAllPlayersAllTime
+
+    //Count per season -> list for all time graph
+    SELECT stat_name, season, count(*) FROM teamstats.stats_view
+    WHERE season = "2022"
+    GROUP BY stat_name, season
+    ORDER BY stat_name, season;
