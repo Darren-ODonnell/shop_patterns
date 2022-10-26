@@ -1,7 +1,7 @@
 package com.jwt.models.stats;
 
 import java.math.BigInteger;
-import java.util.Date;
+
 
 public class StatCountPlayerSeason extends StatCountSeason {
     String firstname;
@@ -12,10 +12,13 @@ public class StatCountPlayerSeason extends StatCountSeason {
         this.firstname = firstname;
         this.lastname = lastname;
     }
+    public StatCountPlayerSeason() {
+        super(BigInteger.ZERO, "", 0);
+    }
 
     public StatCountPlayerSeason(Object[] obj ) {
         // setup new object from that returned from the repo
-        super((BigInteger) obj[4], (String) obj[2], (int) obj[3]);
+        super((BigInteger) obj[5], (String) obj[2], (int) obj[4]);
         firstname = (String) obj[0];
         lastname = (String) obj[1];
     }

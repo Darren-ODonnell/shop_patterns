@@ -6,6 +6,10 @@ import java.util.Date;
 public class StatCountFixtureDate extends Stats{
     Date fixtureDate;
 
+    public StatCountFixtureDate() {
+        super(BigInteger.ZERO,"");
+    }
+
     public StatCountFixtureDate(BigInteger count, String statname, Date fixtureDate) {
         super(count, statname);
         this.fixtureDate = fixtureDate;

@@ -8,14 +8,12 @@ import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 
-import com.jwt.models.stats.StatCountPlayerDate;
-import com.jwt.models.stats.StatCountPlayerSeason;
-import com.jwt.models.stats.StatCountSeason;
-import com.jwt.models.stats.Stats;
+import com.jwt.models.stats.*;
 import com.jwt.repositories.StatsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,36 +63,45 @@ public class StatsViewService {
         return stats;
     }
 
+
     public List<StatCountSeason> findByStatnameSeason( String statname, int season) {
         List<Object> data = statsViewRepository.findByStatNameAndSeason( statname,  season);
+
         List<StatCountSeason> stats = new ArrayList<>();
         for(Object o: data){
             StatCountSeason stat = new StatCountSeason((Object[]) o);
             stats.add(stat);
         }
         return stats;
-
     }
 
-    public List<StatCountPlayerSeason> findByFirstnameLastnameFixtureDate(String firstname, String lastname, String statname, Date fixtureDate) {
-        List<Object> data = statsViewRepository.findByFirstnameAndLastnameAndFixtureDate( firstname, lastname, statname,  fixtureDate);
+    public List<StatCountPlayerFixtureDate> findByFirstnameLastnameFixtureDate(String firstname, String lastname, String fixtureDateStr) {
+        // collect data
+        List<Object> data = statsViewRepository.findByFirstnameAndLastnameAndFixtureDate( firstname, lastname, stringToDate(fixtureDateStr));
+
+
+        // convert the List<Object> to specific class to be returned by the controller
+        List<StatCountPlayerFixtureDate> stats = new ArrayList<>();
+        for(Object o: data){
+            StatCountPlayerFixtureDate stat = new StatCountPlayerFixtureDate((Object[]) o);
+            stats.add(stat);
+        }
+        return stats;
+    }
+
+    public List<StatCountPlayerSeason> findByFirstnameLastnameSeason(String firstname, String lastname, int season) {
+        // collect data
+        List<Object> data = statsViewRepository.findByFirstnameAndLastnameAndSeason( firstname, lastname, season);
+
+
+        // convert the List<Object> to specific class to be returned by the controller
         List<StatCountPlayerSeason> stats = new ArrayList<>();
         for(Object o: data){
             StatCountPlayerSeason stat = new StatCountPlayerSeason((Object[]) o);
             stats.add(stat);
         }
         return stats;
-
     }
 
-    // attempt at generics
 
-//    public <T> List<T> convert(List<Object> data) {
-//        List<T> stats = new ArrayList<>();
-//        for(Object o: data){
-//            T stat = new Stats((Object[]) o);
-//            stats.add(stat);
-//        }
-//        return stats;
-//    }
 }

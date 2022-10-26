@@ -4,6 +4,7 @@ package com.jwt.controllers;
 import com.jwt.models.StatsView;
 
 import com.jwt.models.stats.StatCountPlayerDate;
+import com.jwt.models.stats.StatCountPlayerFixtureDate;
 import com.jwt.models.stats.StatCountPlayerSeason;
 import com.jwt.models.stats.StatCountSeason;
 import com.jwt.services.StatsViewService;
@@ -46,10 +47,21 @@ public class StatsViewController {
         return statsViewService.findByStatnameSeason(statname, season);
     }
 
-    @GetMapping(value={"/findByFirstnameLastnameFixtureDate"} )
+    @GetMapping(value={"/findByPlayerFixtureDate"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountPlayerSeason> findByFirstnameLastnameFixtureDate(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname, @RequestParam("statname") String statname, @RequestParam("fixture_date") Date fixtureDate){
-        return statsViewService.findByFirstnameLastnameFixtureDate(firstname, lastname, statname, fixtureDate);
+    public @ResponseBody List<StatCountPlayerFixtureDate> findByFirstnameLastnameFixtureDate(@RequestParam("firstname") String firstname,
+                                                                                             @RequestParam("lastname") String lastname,
+                                                                                             @RequestParam("fixture_date") String fixtureDateStr){
+        return statsViewService.findByFirstnameLastnameFixtureDate(firstname, lastname,  fixtureDateStr);
     }
+
+    @GetMapping(value={"/findByPlayerSeason"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatCountPlayerSeason> findByFirstnameLastnameSeason(@RequestParam("firstname") String firstname,
+                                                                                   @RequestParam("lastname") String lastname,
+                                                                                   @RequestParam("season") int season){
+        return statsViewService.findByFirstnameLastnameSeason(firstname, lastname, season);
+    }
+
 
 }
