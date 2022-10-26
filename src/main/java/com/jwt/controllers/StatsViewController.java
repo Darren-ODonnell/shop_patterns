@@ -3,10 +3,7 @@ package com.jwt.controllers;
 
 import com.jwt.models.StatsView;
 
-import com.jwt.models.stats.StatCountPlayerDate;
-import com.jwt.models.stats.StatCountPlayerFixtureDate;
-import com.jwt.models.stats.StatCountPlayerSeason;
-import com.jwt.models.stats.StatCountSeason;
+import com.jwt.models.stats.*;
 import com.jwt.services.StatsViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,13 +34,15 @@ public class StatsViewController {
 
     @GetMapping(value={"/findByStatNameFixtureDate"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountPlayerDate> findByStatNameFixtureDate(@RequestParam("statname") String statname, @RequestParam("fixture_date") String fixtureDateStr){
+    public @ResponseBody List<StatCountPlayerDate> findByStatNameFixtureDate(@RequestParam("statname") String statname,
+                                                                             @RequestParam("fixture_date") String fixtureDateStr){
         return statsViewService.findByStatNameFixtureDate(statname, fixtureDateStr);
     }
 
     @GetMapping(value={"/findByStatNameSeason"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountSeason> findByStatnameSeason(@RequestParam("statname") String statname, @RequestParam("season") int season){
+    public @ResponseBody List<StatCountSeason> findByStatnameSeason(@RequestParam("statname") String statname,
+                                                                    @RequestParam("season") int season){
         return statsViewService.findByStatnameSeason(statname, season);
     }
 
@@ -63,5 +62,15 @@ public class StatsViewController {
         return statsViewService.findByFirstnameLastnameSeason(firstname, lastname, season);
     }
 
+    @GetMapping(value={"/findByFixtureDate"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatCountFixtureDate> findByFixtureDate(@RequestParam("fixture_date") String fixtureDateStr) {
+        return statsViewService.findByFixtureDate(fixtureDateStr);
+    }
 
+    @GetMapping(value={"/findBySeason"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatCountSeason> findBySeason(@RequestParam("season") int season) {
+        return statsViewService.findBySeason(season);
+    }
 }

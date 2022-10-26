@@ -19,6 +19,11 @@ public class StatCountFixtureDate extends Stats{
         super(count, statname);
     }
 
+    public StatCountFixtureDate(Object[] obj) {
+        super((BigInteger) obj[2], (String) obj[0] );
+        this.fixtureDate = (Date) obj[1];
+    }
+
     public Date getFixtureDate() {
         return fixtureDate;
     }

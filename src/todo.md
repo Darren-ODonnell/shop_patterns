@@ -12,7 +12,10 @@ SQLx Sql scripts to incorporate into repositories
 # Bugs
     E1 Update and Edit do not work with React
     E2 Add Fixture Date to finhdByPlayerSeason
-    E3 
+    E3 "/stats_view/findByPlayerSeason" error
+        "Required request parameter 'firstname' for method parameter type String is not present
+    E4 "/stats_view/findBySeason"
+        "Index 4 out of bounds for length 3",
 
 # New Code Cx
 
@@ -83,10 +86,11 @@ SQLx Sql scripts to incorporate into repositories
         SELECT season, stat_name, count(*) FROM teamstats.stats_view
         where stat_name = "catchfail"
         group by season;
+
     SQL2: StatByPLayerByFixture
         /stats_view/countAllStatOnePlayersOneGame
         //Count per game
-        SELECT stat_name, count(*) FROM teamstats.stats_view
+        SELECT first_name, last_name, stat_name, fixture_date, count(*) FROM teamstats.stats_view
         where first_name = "laura"
         AND last_name = "corcoran"
         and fixture_date = "22-03-06"
@@ -101,40 +105,34 @@ SQLx Sql scripts to incorporate into repositories
         and season = "2022"
         GROUP BY fixture_date, stat_name
         ORDER BY stat_name, fixture_date;
-# sql scripts to incorporate
-
-
-
-
-    SQL4:
-    /stats_view/countAllStatOnePlayersAllTime
-    
-    //All Time Graph -> List of count per season
-    SELECT stat_name, season, count(*) FROM teamstats.stats_view
-    where first_name = "laura"
-    AND last_name = "corcoran"
-    GROUP BY season, stat_name
-    ORDER BY stat_name, season;
-    
-    All Players, All Stats
-
+    SQL4: - same as 3
+        /stats_view/countAllStatOnePlayersAllTime
+        //All Time Graph -> List of count per season
+        SELECT first_name, last_name, stat_name, season, count(*) FROM teamstats.stats_view
+        where first_name = "laura"
+        AND last_name = "corcoran"
+        GROUP BY season, stat_name
+        ORDER BY stat_name, season;
+        All Players, All Stats
     SQL5:
+        /stats_view/countAllStatAllPlayersOneGame
+        //Count per game
 
-    /stats_view/countAllStatAllPlayersOneGame
-    
-    //Count per game
-    SELECT stat_name, count(*) FROM teamstats.stats_view
-    WHERE fixture_date = "22-03-06"
-    GROUP BY stat_name
-    ORDER BY stat_name;
+        SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
+        WHERE fixture_date = "22-03-06"
+        GROUP BY stat_name
+        ORDER BY stat_name;
+
+
+# sql scripts to incorporate
 
     SQL6:
 
     /stats_view/countAllStatAllPlayersOneSeason
-    
-    
+
     //List of Counts per game-> List for season graph
     SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
+    WHERE season = "2022"
     GROUP BY stat_name, fixture_date
     ORDER BY stat_name, fixture_date;
 
@@ -144,6 +142,5 @@ SQLx Sql scripts to incorporate into repositories
 
     //Count per season -> list for all time graph
     SELECT stat_name, season, count(*) FROM teamstats.stats_view
-    WHERE season = "2022"
     GROUP BY stat_name, season
     ORDER BY stat_name, season;

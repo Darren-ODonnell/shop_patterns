@@ -55,6 +55,20 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
              nativeQuery = true)
     List<Object> findByFirstnameAndLastnameAndSeason(String firstname, String lastname, int season);
 
+    @Query (value =
+            "SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view " +
+            "WHERE fixture_date = :fixtureDate " +
+               "GROUP BY stat_name " +
+               "ORDER BY stat_name ",
+            nativeQuery = true)
+    List<Object> findByFixtureDate(Date fixtureDate);
+
+    @Query( value =
+            "SELECT stat_name, season, count(*) FROM teamstats.stats_view " +
+                "GROUP BY stat_name, season " +
+                "ORDER BY stat_name, season ",
+            nativeQuery = true)
+    List<Object> findBySeason(int season);
 
     List<StatsView> findAll();
     boolean existsById(StatsViewId id);

@@ -103,5 +103,30 @@ public class StatsViewService {
         return stats;
     }
 
+    public List<StatCountFixtureDate> findByFixtureDate(String fixtureDateStr) {
+        // collect data
+        List<Object> data = statsViewRepository.findByFixtureDate( stringToDate(fixtureDateStr));
+
+        // convert the List<Object> to specific class to be returned by the controller
+        List<StatCountFixtureDate> stats = new ArrayList<>();
+        for(Object o: data){
+            StatCountFixtureDate stat = new StatCountFixtureDate((Object[]) o);
+            stats.add(stat);
+        }
+        return stats;
+    }
+
+    public List<StatCountSeason> findBySeason(int season) {
+        // collect data
+        List<Object> data = statsViewRepository.findBySeason( season );
+
+        // convert the List<Object> to specific class to be returned by the controller
+        List<StatCountSeason> stats = new ArrayList<>();
+        for(Object o: data){
+            StatCountSeason stat = new StatCountSeason((Object[]) o);
+            stats.add(stat);
+        }
+        return stats;
+    }
 
 }
