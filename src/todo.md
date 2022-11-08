@@ -18,7 +18,7 @@ SQLx Sql scripts to incorporate into repositories
         "Index 4 out of bounds for length 3",
 
 # New Code Cx
-
+    C2: Add Repo Srvc and cntrl for Statname 
 
 # Database Changes   
 
