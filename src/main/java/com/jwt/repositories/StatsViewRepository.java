@@ -2,16 +2,12 @@ package com.jwt.repositories;
 
 // identify the repo entries for basic crud to begin with.
 
-import com.jwt.models.*;
-import com.jwt.services.StatsViewService;
+import com.jwt.models.StatsView;
+import com.jwt.models.StatsViewId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -64,16 +60,30 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
     List<Object> findByFixtureDate(Date fixtureDate);
 
     @Query( value =
-            "SELECT stat_name, season, count(*) FROM teamstats.stats_view " +
+            "SELECT stat_name, season, first_name, last_name, count(*) FROM teamstats.stats_view " +
                 "GROUP BY stat_name, season " +
                 "ORDER BY stat_name, season ",
             nativeQuery = true)
     List<Object> findBySeason(int season);
 
+    @Query( value =
+            "SELECT fixture_date, count(*) FROM teamstats.stats_view " +
+                    "where stat_name = :statName " +
+                    "GROUP BY stat_name, fixture_date " +
+                    "ORDER BY fixture_date ",
+            nativeQuery = true)
+    List<Object[]> findDistinctByFixtureDate(String statName);
+
     List<StatsView> findAll();
     boolean existsById(StatsViewId id);
     Optional<StatsView> findById(StatsViewId id);
 
-
+    @Query( value =
+            "SELECT season, count(*) FROM teamstats.stats_view " +
+                    "where stat_name = :statName " +
+                    "GROUP BY stat_name, season " +
+                    "ORDER BY season ",
+            nativeQuery = true)
+    List<Object[]> findDistinctBySeason(String statName);
 }
 

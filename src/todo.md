@@ -11,32 +11,38 @@ SQLx Sql scripts to incorporate into repositories
 
 # Bugs
     E1 Update and Edit do not work with React
-    E2 Add Fixture Date to finhdByPlayerSeason
-    E3 "/stats_view/findByPlayerSeason" error
-        "Required request parameter 'firstname' for method parameter type String is not present
-    E4 "/stats_view/findBySeason"
-        "Index 4 out of bounds for length 3",
+    E2 Add Fixture Date to findByPlayerSeason
+    E5: 
+    E6:
+    E7:
 
 # New Code Cx
-    C2: Add Repo Srvc and cntrl for Statname 
+    C5: add code to check jwt token
+    C6:
+    C7:
 
-# Database Changes   
-
+# Database Changes
     D2: Load sample Data
     D3: Add PanelMember Boolean to Player table
     D4: Update data with new Field data
-    D5: Change stats.half to int
+
 
 # Refactoring Rx
     R1 Refactor Stat classes
         Stats (Statname and count)
         Dates (Season and FixtureDate
         Players (Firstname, lastname)
+    R2: 
+    R3: 
+    R4: 
 
 # Investigations Ix
     I1: How to implement Register
     I2: How to implement Change Password
     I3: How to implement forgot password
+    I4: 
+    I5: 
+    I6: 
     
 # Files Unused Ux
 # Ignored for now Ix
@@ -46,8 +52,14 @@ SQLx Sql scripts to incorporate into repositories
         The default attribute used for all endpoints was @ModelAttribute - this is suitable for form-data and not JSON data/objects
         Changes to @RequestBody - this now works with add()
         Need to test with other methods in Competition - then replicate to other controllers.
-    
-
+    C2: Add Repo Srvc and cntrl for Statname 
+        Update needs to be tested 
+    E3 "/stats_view/findByPlayerSeason" error
+        "Required request parameter 'firstname' for method parameter type String is not present
+        Better test data required to test further
+    E4 "/stats_view/findBySeason"
+        "Index 4 out of bounds for length 3",
+        data returns but the figures do not look right
 # Completed
     E2 Vulnerabilities appear in Spring modules
         
@@ -86,7 +98,6 @@ SQLx Sql scripts to incorporate into repositories
         SELECT season, stat_name, count(*) FROM teamstats.stats_view
         where stat_name = "catchfail"
         group by season;
-
     SQL2: StatByPLayerByFixture
         /stats_view/countAllStatOnePlayersOneGame
         //Count per game
@@ -117,30 +128,29 @@ SQLx Sql scripts to incorporate into repositories
     SQL5:
         /stats_view/countAllStatAllPlayersOneGame
         //Count per game
-
         SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
         WHERE fixture_date = "22-03-06"
         GROUP BY stat_name
         ORDER BY stat_name;
-
+    D5: Change stats.half to int
+        config already set to tinyint -> spring classes changed to integer from boolean
 
 # sql scripts to incorporate
 
     SQL6:
-
     /stats_view/countAllStatAllPlayersOneSeason
-
     //List of Counts per game-> List for season graph
     SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
     WHERE season = "2022"
     GROUP BY stat_name, fixture_date
     ORDER BY stat_name, fixture_date;
 
-    SQL7: 
-
+    SQL7:
     /stats_view/countAllStatAllPlayersAllTime
-
     //Count per season -> list for all time graph
     SELECT stat_name, season, count(*) FROM teamstats.stats_view
     GROUP BY stat_name, season
     ORDER BY stat_name, season;
+
+    C3: Query - get count of statname by fixture date - Done
+    C4: Query - get count of statname  by season - Done

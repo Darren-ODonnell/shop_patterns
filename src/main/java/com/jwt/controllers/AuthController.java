@@ -185,4 +185,10 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User record updated"));
     }
 
+    @GetMapping(value="/checkToken" )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody boolean checkToken(@RequestParam("token") String token){
+        return jwtUtils.validateJwtToken(token);
+    }
+
 }

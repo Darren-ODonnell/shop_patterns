@@ -93,7 +93,7 @@ public class StatsView {
         return awayTeam;
     }
 
-    public LocalDate getFixtureDtae() {
+    public LocalDate getFixtureDate() {
         return id.getFixtureDate();
     }
     public BigDecimal getTimeOccurred() {

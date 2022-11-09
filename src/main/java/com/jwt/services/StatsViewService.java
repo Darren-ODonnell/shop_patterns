@@ -6,14 +6,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
-import com.jwt.models.*;
-
+import com.jwt.models.StatsView;
 import com.jwt.models.stats.*;
 import com.jwt.repositories.StatsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +22,9 @@ import java.util.List;
 
 @Service
 public class StatsViewService {
-
+    // array indices
+    final int KEY = 0;
+    final int COUNT = 1;
     StatsViewRepository statsViewRepository;
 
     @Autowired
@@ -129,4 +130,49 @@ public class StatsViewService {
         return stats;
     }
 
+    // get count of statname for each fixture
+    // returns fixturedate,count
+    public List<Key<Date, BigInteger>> chartStatsByFixture(String statName) {
+        List<Object[]> fixtureDates = statsViewRepository.findDistinctByFixtureDate(statName);
+        return mapDataByFixtures(fixtureDates);
+    }
+
+    public List<Key<Integer, BigInteger>> chartStatsBySeason(String statName) {
+        List<Object[]> seasons = statsViewRepository.findDistinctBySeason(statName);
+        return mapDataBySeason(seasons);
+    }
+
+
+
+
+    // Take an Object[] and map to list of key value pairs using the class Key
+    // returns Date / BigInteger
+    private List<Key<Date, BigInteger>>  mapDataByFixtures(List<Object[]> fixtureDates) {
+        List<Key<Date, BigInteger>> stats = new ArrayList<>();
+
+        for(Object[] obj : fixtureDates) {
+            Key<Date, BigInteger> stat = new Key<>();
+
+            stat.setKey((Date) obj[KEY]);
+            stat.setCount((BigInteger) obj[COUNT]);
+
+            stats.add(stat);
+        }
+        return stats;
+    }
+
+    // returns Integer / BigInteger
+    private List<Key<Integer, BigInteger>>  mapDataBySeason(List<Object[]> seasons) {
+        List<Key<Integer, BigInteger>> stats = new ArrayList<>();
+
+        for(Object[] obj : seasons) {
+            Key<Integer, BigInteger> stat = new Key<>();
+
+            stat.setKey((Integer) obj[KEY]);
+            stat.setCount((BigInteger) obj[COUNT]);
+
+            stats.add(stat);
+        }
+        return stats;
+    }
 }
