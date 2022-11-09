@@ -13,7 +13,6 @@ public interface StatNameRepository extends JpaRepository<StatName, String> {
     Optional<StatName> findById(String id);
     Optional<StatName> findByName(String name);
     void deleteById(String id);
-
     boolean existsById(String id);
 
 }

@@ -30,7 +30,7 @@ public class StatsView {
 
     @jakarta.validation.constraints.NotNull
     @Column(name = "half", nullable = false)
-    private Boolean half = false;
+    private Integer half;
 
     @Column(name = "season")
     private Integer season;
@@ -69,7 +69,7 @@ public class StatsView {
         return success;
     }
 
-    public Boolean getHalf() {
+    public Integer getHalf() {
         return half;
     }
 

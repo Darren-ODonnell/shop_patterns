@@ -6,7 +6,7 @@ public class StatModel {
     private Fixture fixture;
     private Player player;
     private Boolean success;
-    private Boolean half = false;
+    private Integer half;
     private PitchGrid location;
 
     private StatName statName;
@@ -35,11 +35,11 @@ public class StatModel {
         this.success = success;
     }
 
-    public Boolean getHalf() {
+    public Integer getHalf() {
         return half;
     }
 
-    public void setHalf(Boolean half) {
+    public void setHalf(Integer half) {
         this.half = half;
     }
 

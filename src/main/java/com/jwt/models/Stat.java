@@ -25,7 +25,7 @@ public class Stat {
     private Boolean success;
 
     @Column(name = "half", nullable = false)
-    private Boolean half = false;
+    private Integer half;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id")
@@ -67,11 +67,11 @@ public class Stat {
         this.success = success;
     }
 
-    public Boolean getHalf() {
+    public Integer getHalf() {
         return half;
     }
 
-    public void setHalf(Boolean half) {
+    public void setHalf(Integer half) {
         this.half = half;
     }
 
