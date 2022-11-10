@@ -7,7 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 
 
 /**
@@ -101,7 +101,7 @@ public class StatsView {
         return location;
     }
 
-    public LocalDate getFixtureDate() {
+    public Date getFixtureDate() {
         return id.getFixtureDate();
     }
     public BigDecimal getTimeOccurred() {

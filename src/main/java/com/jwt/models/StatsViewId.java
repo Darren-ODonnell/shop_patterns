@@ -7,8 +7,7 @@ import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 @Embeddable
@@ -20,13 +19,13 @@ public class StatsViewId implements Serializable {
 
     @Convert(disableConversion = true)
     @Column(name = "fixture_date")
-    private LocalDate fixtureDate;
+    private Date fixtureDate;
 
     public BigDecimal getTimeOccurred() {
         return timeOccurred;
     }
 
-    public LocalDate getFixtureDate() {
+    public Date getFixtureDate() {
         return fixtureDate;
     }
 

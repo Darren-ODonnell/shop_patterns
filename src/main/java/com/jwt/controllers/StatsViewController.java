@@ -1,17 +1,15 @@
 package com.jwt.controllers;
 
 
+import com.jwt.models.StatViewCounts;
 import com.jwt.models.StatsView;
 import com.jwt.models.stats.*;
-import com.jwt.services.Key;
 import com.jwt.services.StatsViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,15 +73,14 @@ public class StatsViewController {
         return statsViewService.findBySeason(season);
     }
 
-    @GetMapping(value={"/chartStatsByFixture"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Key<Date, BigInteger>> chartStatsByFixture(@RequestParam("statname") String statName) {
-        return statsViewService.chartStatsByFixture(statName);
-    }
+//    @GetMapping(value={"/chartStatsByFixture"} )
+//    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+//    public @ResponseBody List<Key<Date, BigInteger>> chartStatsByFixture(@RequestParam("statname") String statName) {
+//        return statsViewService.chartStatsByFixture(statName);
+//    }
     @GetMapping(value={"/chartStatsBySeason"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Key<Integer, BigInteger>> chartStatsBySeason(@RequestParam("statname") String statName) {
+    public @ResponseBody List<StatViewCounts> chartStatsBySeason(@RequestParam("statname") String statName) {
         return statsViewService.chartStatsBySeason(statName);
     }
-
 }
