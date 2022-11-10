@@ -11,7 +11,6 @@ SQLx Sql scripts to incorporate into repositories
 
 # Bugs
     E1 Update and Edit do not work with React
-    E2 Add Fixture Date to findByPlayerSeason
     E6 "/stats_view/findBySeason"
        data returns but the figures do not look right
     E7: 

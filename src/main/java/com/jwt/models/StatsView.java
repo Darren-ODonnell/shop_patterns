@@ -53,6 +53,10 @@ public class StatsView {
     @Column(name = "away_team", length = 45)
     private String awayTeam;
 
+    @jakarta.validation.constraints.Size(max = 5)
+    @Column(name = "location", length = 5)
+    private String location;
+
     public StatsViewId getId() {
         return id;
     }
@@ -91,6 +95,10 @@ public class StatsView {
 
     public String getAwayTeam() {
         return awayTeam;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public LocalDate getFixtureDate() {

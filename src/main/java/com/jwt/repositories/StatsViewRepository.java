@@ -47,7 +47,7 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
                 "AND last_name = :lastname " +
                 "AND season = :season " +
                 "GROUP BY fixture_date, stat_name " +
-                "ORDER BY stat_name, fixture_date",
+                "ORDER BY fixture_date, stat_name",
              nativeQuery = true)
     List<Object> findByFirstnameAndLastnameAndSeason(String firstname, String lastname, int season);
 
@@ -78,12 +78,23 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
     boolean existsById(StatsViewId id);
     Optional<StatsView> findById(StatsViewId id);
 
-    @Query( value =
-            "SELECT season, count(*) FROM teamstats.stats_view " +
+    @Query( value = "SELECT season, count(*) FROM teamstats.stats_view " +
                     "where stat_name = :statName " +
                     "GROUP BY stat_name, season " +
                     "ORDER BY season ",
             nativeQuery = true)
     List<Object[]> findDistinctBySeason(String statName);
+
+
+    // attempt to bring back all data and only use what is needed
+    @Query( value =
+            "SELECT *, count(*) FROM teamstats.stats_view " +
+                    "where stat_name = :statName " +
+                    "GROUP BY stat_name, season " +
+                    "ORDER BY season ",
+            nativeQuery = true)
+    List<Object[]> findDistinctBySeason2(String statName);
+
+
 }
 

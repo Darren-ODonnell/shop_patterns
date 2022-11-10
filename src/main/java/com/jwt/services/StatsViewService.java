@@ -22,6 +22,21 @@ import java.util.List;
 
 @Service
 public class StatsViewService {
+    // indices into stats_view object returned
+    final int ID = 0;
+    final int STAT_NAME = 1;
+    final int SUCCESS = 2;
+    final int HALF = 3;
+    final int TIME_OCCURRED = 4;
+    final int SEASON = 5;
+    final int FIRST_NAME = 6;
+    final int LAST_NAME = 7;
+    final int HOME_TEAM = 8;
+    final int AWAY_TEAM = 9;
+    final int FIXTURE_DATE = 10;
+    final int LOCATION = 11;
+    final int STAT_COUNT = 12;
+
     // array indices
     final int KEY = 0;
     final int COUNT = 1;
@@ -139,6 +154,8 @@ public class StatsViewService {
 
     public List<Key<Integer, BigInteger>> chartStatsBySeason(String statName) {
         List<Object[]> seasons = statsViewRepository.findDistinctBySeason(statName);
+//        List<Object[]> seasons = statsViewRepository.findDistinctBySeason2(statName);
+
         return mapData(seasons, Integer.class);
     }
 
