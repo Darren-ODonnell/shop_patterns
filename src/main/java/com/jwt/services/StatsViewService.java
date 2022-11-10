@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
+import com.jwt.models.StatViewCounts;
 import com.jwt.models.StatsView;
 import com.jwt.models.stats.*;
+import com.jwt.repositories.StatViewCountsRepository;
 import com.jwt.repositories.StatsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,7 @@ public class StatsViewService {
     final int KEY = 0;
     final int COUNT = 1;
     StatsViewRepository statsViewRepository;
+    StatViewCountsRepository statViewCountsRepository;
 
     @Autowired
     public StatsViewService(StatsViewRepository statsViewRepository) {
@@ -153,10 +156,11 @@ public class StatsViewService {
     }
 
     public List<Key<Integer, BigInteger>> chartStatsBySeason(String statName) {
-        List<Object[]> seasons = statsViewRepository.findDistinctBySeason(statName);
-//        List<Object[]> seasons = statsViewRepository.findDistinctBySeason2(statName);
+//        List<Object[]> seasons = statsViewRepository.findDistinctBySeason(statName);
+        List<StatViewCounts> seasons = statViewCountsRepository.findDistinctBySeason(statName);
 
-        return mapData(seasons, Integer.class);
+        return null;
+//        return mapData(seasons, Integer.class);
     }
 
 
