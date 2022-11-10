@@ -17,7 +17,7 @@ SQLx Sql scripts to incorporate into repositories
     E7:
 
 # New Code Cx
-    C5: add code to check jwt token
+
     C6:
     C7:
 
@@ -60,6 +60,25 @@ SQLx Sql scripts to incorporate into repositories
     E4 "/stats_view/findBySeason"
         "Index 4 out of bounds for length 3",
         data returns but the figures do not look right
+
+# sql scripts to incorporate
+
+    SQL6:
+    /stats_view/countAllStatAllPlayersOneSeason
+    //List of Counts per game-> List for season graph
+    SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
+    WHERE season = "2022"
+    GROUP BY stat_name, fixture_date
+    ORDER BY stat_name, fixture_date;
+
+    SQL7:
+    /stats_view/countAllStatAllPlayersAllTime
+    //Count per season -> list for all time graph
+    SELECT stat_name, season, count(*) FROM teamstats.stats_view
+    GROUP BY stat_name, season
+    ORDER BY stat_name, season;
+
+
 # Completed
     E2 Vulnerabilities appear in Spring modules
         
@@ -134,23 +153,10 @@ SQLx Sql scripts to incorporate into repositories
         ORDER BY stat_name;
     D5: Change stats.half to int
         config already set to tinyint -> spring classes changed to integer from boolean
+    C5: add code to check jwt token
+        done /checkToken
 
-# sql scripts to incorporate
 
-    SQL6:
-    /stats_view/countAllStatAllPlayersOneSeason
-    //List of Counts per game-> List for season graph
-    SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view
-    WHERE season = "2022"
-    GROUP BY stat_name, fixture_date
-    ORDER BY stat_name, fixture_date;
-
-    SQL7:
-    /stats_view/countAllStatAllPlayersAllTime
-    //Count per season -> list for all time graph
-    SELECT stat_name, season, count(*) FROM teamstats.stats_view
-    GROUP BY stat_name, season
-    ORDER BY stat_name, season;
 
     C3: Query - get count of statname by fixture date - Done
     C4: Query - get count of statname  by season - Done

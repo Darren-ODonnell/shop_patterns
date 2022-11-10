@@ -134,45 +134,31 @@ public class StatsViewService {
     // returns fixturedate,count
     public List<Key<Date, BigInteger>> chartStatsByFixture(String statName) {
         List<Object[]> fixtureDates = statsViewRepository.findDistinctByFixtureDate(statName);
-        return mapDataByFixtures(fixtureDates);
+        return mapData(fixtureDates, Date.class);
     }
 
     public List<Key<Integer, BigInteger>> chartStatsBySeason(String statName) {
         List<Object[]> seasons = statsViewRepository.findDistinctBySeason(statName);
-        return mapDataBySeason(seasons);
+        return mapData(seasons, Integer.class);
     }
 
 
+    // Take an Object[] and map to list<T, BigInteger>  of key value pairs using generics
+    // returns T / BigInteger, To get T the class is passed as a parameter.
+    // Note the new class Key also uses generics.
 
-
-    // Take an Object[] and map to list of key value pairs using the class Key
-    // returns Date / BigInteger
-    private List<Key<Date, BigInteger>>  mapDataByFixtures(List<Object[]> fixtureDates) {
-        List<Key<Date, BigInteger>> stats = new ArrayList<>();
-
-        for(Object[] obj : fixtureDates) {
-            Key<Date, BigInteger> stat = new Key<>();
-
-            stat.setKey((Date) obj[KEY]);
-            stat.setCount((BigInteger) obj[COUNT]);
-
-            stats.add(stat);
-        }
-        return stats;
-    }
-
-    // returns Integer / BigInteger
-    private List<Key<Integer, BigInteger>>  mapDataBySeason(List<Object[]> seasons) {
-        List<Key<Integer, BigInteger>> stats = new ArrayList<>();
+    private <T> List<Key<T, BigInteger>>  mapData(List<Object[]> seasons, Class T) {
+        List<Key<T, BigInteger>> stats = new ArrayList<>();
 
         for(Object[] obj : seasons) {
-            Key<Integer, BigInteger> stat = new Key<>();
+            Key<T, BigInteger> stat = new Key<>();
 
-            stat.setKey((Integer) obj[KEY]);
+            stat.setKey((T) obj[KEY]);
             stat.setCount((BigInteger) obj[COUNT]);
 
             stats.add(stat);
         }
         return stats;
     }
+
 }
