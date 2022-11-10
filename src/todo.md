@@ -12,9 +12,6 @@ SQLx Sql scripts to incorporate into repositories
 # Bugs
     E1 Update and Edit do not work with React
     E2 Add Fixture Date to findByPlayerSeason
-    E5: Generic class mapData in StatViewService generates compiler warnings
-        Warning:(150, 75) Raw use of parameterized class 'Class'
-        Warning:(156, 25) Unchecked cast: 'java.lang.Object' to 'T'
     E6 "/stats_view/findBySeason"
        data returns but the figures do not look right
     E7: 
@@ -171,3 +168,7 @@ SQLx Sql scripts to incorporate into repositories
     C2: Add Repo Srvc and cntrl for Statname - done 
     D3: Add PanelMember Boolean to Player table - done                
     I1: How to implement Register - coding done and implemented /api/auth/register 
+    E5: Generic class mapData in StatViewService generates compiler warnings
+        Warning:(150, 75) Raw use of parameterized class 'Class'
+        Warning:(156, 25) Unchecked cast: 'java.lang.Object' to 'T'
+        inspections suppressed.
