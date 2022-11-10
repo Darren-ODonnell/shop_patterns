@@ -15,17 +15,20 @@ SQLx Sql scripts to incorporate into repositories
     E5: Generic class mapData in StatViewService generates compiler warnings
         Warning:(150, 75) Raw use of parameterized class 'Class'
         Warning:(156, 25) Unchecked cast: 'java.lang.Object' to 'T'
-    E6: 
-    E7:
+    E6 "/stats_view/findBySeason"
+       data returns but the figures do not look right
+    E7: 
+    E8: 
+    E10: 
 
 # New Code Cx
-
-    C6:
-    C7:
+    C9: 
+    C10: 
+    C11: 
+    C12: 
 
 # Database Changes
     D2: Load sample Data
-    D3: Add PanelMember Boolean to Player table
     D4: Update data with new Field data
 
 
@@ -39,7 +42,6 @@ SQLx Sql scripts to incorporate into repositories
     R4: 
 
 # Investigations Ix
-    I1: How to implement Register
     I2: How to implement Change Password
     I3: How to implement forgot password
     I4: 
@@ -54,14 +56,11 @@ SQLx Sql scripts to incorporate into repositories
         The default attribute used for all endpoints was @ModelAttribute - this is suitable for form-data and not JSON data/objects
         Changes to @RequestBody - this now works with add()
         Need to test with other methods in Competition - then replicate to other controllers.
-    C2: Add Repo Srvc and cntrl for Statname 
-        Update needs to be tested 
-    E3 "/stats_view/findByPlayerSeason" error
-        "Required request parameter 'firstname' for method parameter type String is not present
-        Better test data required to test further
-    E4 "/stats_view/findBySeason"
-        "Index 4 out of bounds for length 3",
-        data returns but the figures do not look right
+
+
+
+
+        
 
 # sql scripts to incorporate
 
@@ -157,8 +156,18 @@ SQLx Sql scripts to incorporate into repositories
         config already set to tinyint -> spring classes changed to integer from boolean
     C5: add code to check jwt token
         done /checkToken
-
-
-
+    E4 "/stats_view/findBySeason"
+        "Index 4 out of bounds for length 3",
+        Fixed obj[] assignments corrected in constructor
     C3: Query - get count of statname by fixture date - Done
     C4: Query - get count of statname  by season - Done
+    E3 "/stats_view/findByPlayerSeason" error
+        "Required request parameter 'firstname' for method parameter type String is not present
+        firstname s/b first_name
+    D5: Standardize all Statname abbrev field values to uppercase - done
+    C6: add Register - done
+    C7: Add Find user by id - done
+    C8: Add delete user by id - done
+    C2: Add Repo Srvc and cntrl for Statname - done 
+    D3: Add PanelMember Boolean to Player table - done                
+    I1: How to implement Register - coding done and implemented /api/auth/register 

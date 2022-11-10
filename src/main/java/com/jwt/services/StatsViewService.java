@@ -147,8 +147,9 @@ public class StatsViewService {
     // returns T / BigInteger, To get T the class is passed as a parameter.
     // Note the new class Key also uses generics.
 
+    @SuppressWarnings({"unchecked", "rawtypes"}) 
     private <T> List<Key<T, BigInteger>>  mapData(List<Object[]> seasons, Class T) {
-        List<Key<T, BigInteger>> stats = new ArrayList<>();
+        ArrayList<Key<T, BigInteger>> stats = new ArrayList<>();
 
         for(Object[] obj : seasons) {
             Key<T, BigInteger> stat = new Key<>();

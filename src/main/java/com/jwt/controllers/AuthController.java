@@ -78,8 +78,14 @@ public class AuthController {
 
     // Register
 
-    @PostMapping("/register/")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody  SignupRequest signupRequest) {
+
+        if(!signupRequest.getPassword().equals(signupRequest.getPasswordConfirm())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Passwords do not match!"));
+        }
 
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
@@ -91,6 +97,7 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
+
         // Create new user's account
         User user = new User(signupRequest.getUsername(),
                 signupRequest.getEmail(),
@@ -124,7 +131,6 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-//        return authService.registerUser(signUpRequest);
 
     }
 
@@ -138,7 +144,7 @@ public class AuthController {
 
     // return user by id
 
-    @GetMapping(value="/findById/")
+    @GetMapping(value="/user/findById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody User findById(@RequestParam("id") Long id){
         return userRepository.findById(id)
@@ -147,7 +153,7 @@ public class AuthController {
 
     // return user by firstname
 
-    @GetMapping(value="/findByUsername/")
+    @GetMapping(value="/user/findByUsername/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody User findByUsername(@RequestParam("username") String username) {
         return userRepository.findByUsername(username)
@@ -156,7 +162,7 @@ public class AuthController {
 
     // delete by id
 
-    @DeleteMapping(value="/deleteById/")
+    @DeleteMapping(value="/user/deleteById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> deleteById(@RequestParam("id") Long id){
 
