@@ -12,8 +12,10 @@ SQLx Sql scripts to incorporate into repositories
 # Bugs
     E1 Update and Edit do not work with React
     E2 Add Fixture Date to findByPlayerSeason
-    E5: 
-    E6:
+    E5: Generic class mapData in StatViewService generates compiler warnings
+        Warning:(150, 75) Raw use of parameterized class 'Class'
+        Warning:(156, 25) Unchecked cast: 'java.lang.Object' to 'T'
+    E6: 
     E7:
 
 # New Code Cx
