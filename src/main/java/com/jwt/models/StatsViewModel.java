@@ -12,6 +12,7 @@ public class StatsViewModel {
 
     @jakarta.validation.constraints.NotNull
     private Integer half;
+
     @jakarta.validation.constraints.NotNull
     private Integer season;
     @jakarta.validation.constraints.NotNull
