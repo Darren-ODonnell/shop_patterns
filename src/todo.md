@@ -18,10 +18,12 @@ SQLx Sql scripts to incorporate into repositories
     E10: 
 
 # New Code Cx
-    C9: 
-    C10: 
-    C11: 
-    C12: 
+    C15:
+    C16:
+    C17:
+    
+
+
 
 # Database Changes
     D2: Load sample Data
@@ -52,11 +54,6 @@ SQLx Sql scripts to incorporate into repositories
         The default attribute used for all endpoints was @ModelAttribute - this is suitable for form-data and not JSON data/objects
         Changes to @RequestBody - this now works with add()
         Need to test with other methods in Competition - then replicate to other controllers.
-
-
-
-
-        
 
 # sql scripts to incorporate
 
@@ -171,3 +168,12 @@ SQLx Sql scripts to incorporate into repositories
         Warning:(150, 75) Raw use of parameterized class 'Class'
         Warning:(156, 25) Unchecked cast: 'java.lang.Object' to 'T'
         inspections suppressed.
+    C9:  findByStatNameFixtureDate - Change to new o/p file
+    C10: findByStatnameSeason - Change to new o/p file
+    C11: findByFirstnameLastnameFixtureDate - Change to new o/p file
+    C12: findByFirstnameLastnameSeason - Change to new o/p file
+    C13: findByFixtureDate - Change to new o/p file
+    C14: findBySeason - Change to new o/p file
+         Repository changed - 2 added to all duplicate names
+         Select fields, count(*) replace with Select *, count(*)
+         Service and Controllers updated - testing required

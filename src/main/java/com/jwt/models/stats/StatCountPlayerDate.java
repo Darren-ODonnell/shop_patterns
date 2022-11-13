@@ -1,24 +1,13 @@
 package com.jwt.models.stats;
 
 import java.math.BigInteger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
+
+
 
 public class StatCountPlayerDate extends StatCountFixtureDate {
     String firstname;
     String lastname;
-
-    public StatCountPlayerDate(BigInteger count, String statname, String firstname, String lastname, Date fixtureDate) {
-        super(count, statname, fixtureDate);
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
-    public StatCountPlayerDate() {
-        super(BigInteger.ZERO, "", null);
-
-    }
-
 
     public StatCountPlayerDate(Object[] obj ) {
         // setup new object from that returned from the repo

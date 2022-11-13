@@ -14,33 +14,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.text.ParseException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 
 @Service
 public class StatsViewService {
-
-
-    // array indices
     final int KEY = 0;
     final int COUNT = 1;
     StatsViewRepository statsViewRepository;
-//    StatViewCountsRepository statViewCountsRepository;
 
     @Autowired
     public StatsViewService(StatsViewRepository statsViewRepository) {
         this.statsViewRepository = statsViewRepository;
 
     }
-//    public StatsViewService(StatsViewRepository statsViewRepository,StatViewCountsRepository statViewCountsRepository) {
-//        this.statsViewRepository = statsViewRepository;
-//        this.statViewCountsRepository =statViewCountsRepository;
-//    }
-
 
     // return all Stats
     @JsonIgnore
@@ -52,20 +41,12 @@ public class StatsViewService {
     }
 
     public Date stringToDate(String date) {
-        SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return formatter.parse(date);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return Date.valueOf(date);
     }
 
     public List<StatCountPlayerDate> findByStatNameFixtureDate(String statname, String fixtureDateStr) {
-
-        List<Object> data  = statsViewRepository.findByStatNameAndFixtureDate(statname,stringToDate(fixtureDateStr));
-        // firstname, lastname, statnate, fixturedate, count
-        // StatCountFixtureDate
-
+        List<Object[]> data  = statsViewRepository.findByStatNameAndFixtureDate(statname,stringToDate(fixtureDateStr));
         List<StatCountPlayerDate> stats = new ArrayList<>();
         for(Object o: data){
             StatCountPlayerDate stat = new StatCountPlayerDate((Object[]) o);
@@ -74,10 +55,8 @@ public class StatsViewService {
         return stats;
     }
 
-
     public List<StatCountSeason> findByStatnameSeason( String statname, int season) {
-        List<Object> data = statsViewRepository.findByStatNameAndSeason( statname,  season);
-
+        List<Object[]> data = statsViewRepository.findByStatNameAndSeason( statname,  season);
         List<StatCountSeason> stats = new ArrayList<>();
         for(Object o: data){
             StatCountSeason stat = new StatCountSeason((Object[]) o);
@@ -87,10 +66,7 @@ public class StatsViewService {
     }
 
     public List<StatCountPlayerFixtureDate> findByFirstnameLastnameFixtureDate(String firstname, String lastname, String fixtureDateStr) {
-        // collect data
-        List<Object> data = statsViewRepository.findByFirstnameAndLastnameAndFixtureDate( firstname, lastname, stringToDate(fixtureDateStr));
-
-
+        List<Object[]> data = statsViewRepository.findByFirstnameAndLastnameAndFixtureDate( firstname, lastname, stringToDate(fixtureDateStr));
         // convert the List<Object> to specific class to be returned by the controller
         List<StatCountPlayerFixtureDate> stats = new ArrayList<>();
         for(Object o: data){
@@ -101,10 +77,7 @@ public class StatsViewService {
     }
 
     public List<StatCountPlayerSeason> findByFirstnameLastnameSeason(String firstname, String lastname, int season) {
-        // collect data
-        List<Object> data = statsViewRepository.findByFirstnameAndLastnameAndSeason( firstname, lastname, season);
-
-
+        List<Object[]> data = statsViewRepository.findByFirstnameAndLastnameAndSeason( firstname, lastname, season);
         // convert the List<Object> to specific class to be returned by the controller
         List<StatCountPlayerSeason> stats = new ArrayList<>();
         for(Object o: data){
@@ -115,9 +88,7 @@ public class StatsViewService {
     }
 
     public List<StatCountFixtureDate> findByFixtureDate(String fixtureDateStr) {
-        // collect data
-        List<Object> data = statsViewRepository.findByFixtureDate( stringToDate(fixtureDateStr));
-
+        List<Object[]> data = statsViewRepository.findByFixtureDate( stringToDate(fixtureDateStr));
         // convert the List<Object> to specific class to be returned by the controller
         List<StatCountFixtureDate> stats = new ArrayList<>();
         for(Object o: data){
@@ -128,9 +99,7 @@ public class StatsViewService {
     }
 
     public List<StatCountSeason> findBySeason(int season) {
-        // collect data
-        List<Object> data = statsViewRepository.findBySeason( season );
-
+        List<Object[]> data = statsViewRepository.findBySeason( season );
         // convert the List<Object> to specific class to be returned by the controller
         List<StatCountSeason> stats = new ArrayList<>();
         for(Object o: data){
@@ -139,31 +108,6 @@ public class StatsViewService {
         }
         return stats;
     }
-
-    // get count of statname for each fixture
-    // returns fixturedate,count
-    public List<Key<Date, BigInteger>> chartStatsByFixture(String statName) {
-        List<Object[]> fixtureDates = statsViewRepository.findDistinctByFixtureDate(statName);
-        return mapData(fixtureDates, Date.class);
-    }
-
-    public List<StatViewCounts> chartStatsBySeason(String statName) {
-        List<Object[]> seasons = statsViewRepository.countDistinctStatName(statName);
-
-        return mapData2(seasons);
-    }
-
-    private List<StatViewCounts> mapData2(List<Object[]> seasons) {
-        List<StatViewCounts> counts = new ArrayList<>();
-
-        for(Object[] record : seasons) {
-            StatViewCounts stat = new StatViewCounts(record);
-            counts.add(stat);
-        }
-
-        return counts;
-    }
-
 
     // Take an Object[] and map to list<T, BigInteger>  of key value pairs using generics
     // returns T / BigInteger, To get T the class is passed as a parameter.
@@ -184,4 +128,65 @@ public class StatsViewService {
         return stats;
     }
 
+    // get count of statname for each fixture
+    // returns fixturedate,count
+    public List<Key<Date, BigInteger>> chartStatsByFixture(String statName) {
+        List<Object[]> fixtureDates = statsViewRepository.findDistinctByFixtureDate(statName);
+        return mapData(fixtureDates, Date.class);
+    }
+
+    // ----------------------------------------------------------------------------------------------------
+    /* Same endpoints as above except using a single class returned rather than one of multiple classes  */
+    // ----------------------------------------------------------------------------------------------------
+
+
+    public List<StatViewCounts> chartStatsByFixture2(String statName) {
+        List<Object[]> fixtureDates = statsViewRepository.findDistinctByFixtureDate2(statName);
+        return mapData2(fixtureDates);
+    }
+
+
+    public List<StatViewCounts> chartStatsBySeason2(String statName) {
+        List<Object[]> seasons = statsViewRepository.countDistinctStatName2(statName);
+        return mapData2(seasons);
+    }
+
+    public List<StatViewCounts> findByStatNameFixtureDate2(String statname, String fixtureDateStr) {
+    List<Object[]> data  = statsViewRepository.findByStatNameAndFixtureDate2(statname,stringToDate(fixtureDateStr));
+    return mapData2(data);
+}
+
+    public List<StatViewCounts> findByStatnameSeason2( String statname, int season) {
+        List<Object[]> data = statsViewRepository.findByStatNameAndSeason2( statname,  season);
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> findByFirstnameLastnameFixtureDate2(String firstname, String lastname, String fixtureDateStr) {
+        List<Object[]> data = statsViewRepository.findByFirstnameAndLastnameAndFixtureDate2( firstname, lastname, stringToDate(fixtureDateStr));
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> findByFirstnameLastnameSeason2(String firstname, String lastname, int season) {
+        List<Object[]> data = statsViewRepository.findByFirstnameAndLastnameAndSeason2( firstname, lastname, season);
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> findByFixtureDate2(String fixtureDateStr) {
+        List<Object[]> data = statsViewRepository.findByFixtureDate2( stringToDate(fixtureDateStr));
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> findBySeason2(int season) {
+        List<Object[]> data = statsViewRepository.findBySeason2( season );
+        return mapData2(data);
+    }
+
+    private List<StatViewCounts> mapData2(List<Object[]> seasons) {
+        List<StatViewCounts> counts = new ArrayList<>();
+        for(Object[] record : seasons) {
+            StatViewCounts stat = new StatViewCounts(record);
+            counts.add(stat);
+        }
+        return counts;
+    }
 }

@@ -11,18 +11,15 @@ public class StatCountSeason extends Stats{
         super(count, statname);
         this.season = season;
     }
-    public StatCountSeason() {
-        super( BigInteger.ZERO, "");
 
-    }
 
     public StatCountSeason(Object[] obj ) {
         // setup new object from that returned from the repo
-        super((BigInteger) obj[4], (String) obj[0]);
+        super((BigInteger) obj[4], (String) obj[2]);
 
-        this.season = (int) obj[1];
-        this.firstname = (String) obj[2];
-        this.lastname = (String) obj[3];
+        this.season = (int) obj[3];
+        this.firstname = (String) obj[0];
+        this.lastname = (String) obj[1];
 
     }
 
