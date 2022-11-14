@@ -8,17 +8,18 @@ public class CompetitionModel {
     public String name;
     public Integer season;
 
-    public Integer getSeason() {
-        return season;
+    public void setName(String name) {
+        this.name = name;
     }
     public void setSeason(Integer season) {
         this.season = season;
     }
+
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
+    public Integer getSeason() {
+        return season;
     }
 
     public Competition translateModelToCompetition(){
@@ -27,8 +28,8 @@ public class CompetitionModel {
         competition.setName(this.name);
         return competition;
     }
-    // used in update operations
 
+    // used in update operations
     public Competition translateModelToCompetition(Long id){
         Competition competition = translateModelToCompetition();
         competition.setId(id);

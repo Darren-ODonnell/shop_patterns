@@ -2,7 +2,6 @@ package com.jwt.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jwt.enums.SVC;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -10,9 +9,9 @@ import java.sql.Date;
 @JsonIgnoreProperties
 public class StatViewCounts extends StatsViewModel {
 
+    private BigInteger count;
 
     public StatViewCounts(Object[] record) {
-        // create new object from data from query
         this.setStatName((String) record[SVC.STAT_NAME]);
         this.setSuccess((Boolean) record[SVC.SUCCESS]);
         this.setHalf((Integer) record[SVC.HALF]);
@@ -27,11 +26,8 @@ public class StatViewCounts extends StatsViewModel {
         this.setCount((BigInteger) record[SVC.STAT_COUNT]);
     }
 
-    private BigInteger count;
-
     public BigInteger getCount() {
         return count;
     }
-
     public void setCount(BigInteger count) {        this.count = count;    }
 }

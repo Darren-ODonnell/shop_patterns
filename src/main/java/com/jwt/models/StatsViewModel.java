@@ -9,10 +9,8 @@ public class StatsViewModel {
     private String statName;
     @jakarta.validation.constraints.NotNull
     private Boolean success;
-
     @jakarta.validation.constraints.NotNull
     private Integer half;
-
     @jakarta.validation.constraints.NotNull
     private Integer season;
     @jakarta.validation.constraints.NotNull

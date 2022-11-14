@@ -9,17 +9,18 @@ public class FirstnameModel {
     private String firstname;
     private String firstnameIrish;
 
-    public String getFirstnameIrish() {
-        return firstnameIrish;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
     public void setFirstnameIrish(String firstnameIrish) {
         this.firstnameIrish = firstnameIrish;
     }
+
     public String getFirstname() {
         return firstname;
     }
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public String getFirstnameIrish() {
+        return firstnameIrish;
     }
 
     public Firstname translateModelToFirstname(){
@@ -30,7 +31,6 @@ public class FirstnameModel {
     }
 
     // used in update operations
-
     public Firstname translateModelToFirstname(Long id){
         Firstname firstname = translateModelToFirstname();
         firstname.setId(id);

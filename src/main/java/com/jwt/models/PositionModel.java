@@ -2,18 +2,15 @@ package com.jwt.models;
 
 public class PositionModel {
 
-
     private String name;
+    private String abbrev;
 
     public String getAbbrev() {
         return abbrev;
     }
-
     public void setAbbrev(String abbrev) {
         this.abbrev = abbrev;
     }
-
-    private String abbrev;
 
     public String getName() {
         return name;
@@ -21,7 +18,6 @@ public class PositionModel {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public Position translateModelToPosition(){
         Position position = new Position();
@@ -34,9 +30,7 @@ public class PositionModel {
 
     public Position translateModelToPosition(Long id){
         Position position = translateModelToPosition();
-
         position.setId(id);
-
         return position;
     }
 

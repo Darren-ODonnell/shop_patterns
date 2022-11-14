@@ -15,21 +15,15 @@ public class PitchGridModel {
         this.name = name;
     }
 
-
     public PitchGrid translateModelToPitchGrid(){
         PitchGrid pitchGrid = new PitchGrid();
-
         pitchGrid.setName(this.name);
-
         return pitchGrid;
     }
 
     public PitchGrid translateModelToPitchGrid(String id){
         PitchGrid pitchGrid = translateModelToPitchGrid();
-
         pitchGrid.setId(id);
-
         return pitchGrid;
     }
-
 }

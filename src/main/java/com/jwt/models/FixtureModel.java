@@ -17,39 +17,40 @@ public class FixtureModel {
     private Integer season;
     private Integer round;
 
-    public Integer getRound() {
-        return round;
-    }
     public void setRound(Integer round) {
         this.round = round;
-    }
-    public Integer getSeason() {
-        return season;
     }
     public void setSeason(Integer season) {
         this.season = season;
     }
-    public Date getFixtureDate() {        return fixtureDate;    }
-    public void setFixtureDate(Date fixtureDate) {        this.fixtureDate = fixtureDate;    }
-    public Time getFixtureTime() {        return fixtureTime;    }
-    public void setFixtureTime(Time fixtureTime) {        this.fixtureTime = fixtureTime;    }
-    public Long getAwayTeam() {
-        return awayTeamId;
-    }
+    public void setFixtureDate(Date fixtureDate) { this.fixtureDate = fixtureDate;    }
+    public void setFixtureTime(Time fixtureTime) { this.fixtureTime = fixtureTime;    }
     public void setAwayTeam(Long awayTeamId) {
         this.awayTeamId = awayTeamId;
-    }
-    public Long getHomeTeam() {
-        return homeTeamId;
     }
     public void setHomeTeam(Long homeTeamId) {
         this.homeTeamId = homeTeamId;
     }
-    public Long getCompetitionId() {
-        return competitionId;
-    }
     public void setCompetitionId(Long competitionId) {
         this.competitionId = competitionId;
+    }
+
+    public Integer getRound() {
+        return round;
+    }
+    public Integer getSeason() {
+        return season;
+    }
+    public Date getFixtureDate() { return fixtureDate;    }
+    public Time getFixtureTime() { return fixtureTime;    }
+    public Long getAwayTeam() {
+        return awayTeamId;
+    }
+    public Long getHomeTeam() {
+        return homeTeamId;
+    }
+    public Long getCompetitionId() {
+        return competitionId;
     }
 
     public Fixture translateModelToFixture(CompetitionRepository competitionRepository, ClubRepository clubRepository) {
@@ -69,7 +70,7 @@ public class FixtureModel {
     }
     // used in update operations
 
-    public Fixture translateModelToFixture(CompetitionRepository competitionRepository, ClubRepository clubRepository, Long id){
+    public Fixture translateModelToFixture(CompetitionRepository competitionRepository, ClubRepository clubRepository, Long id) {
         Fixture fixture = translateModelToFixture(competitionRepository, clubRepository);
         fixture.setId(id);
         return fixture;

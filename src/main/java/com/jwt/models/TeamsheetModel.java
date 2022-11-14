@@ -6,25 +6,25 @@ public class TeamsheetModel {
     private Player player;
     private Position position;
 
-    public Position getPosition() {
-        return position;
-    }
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-    public Player getPlayer() {
-        return player;
-    }
     public void setPlayer(Player player) {
         this.player = player;
-    }
-    public Fixture getFixture() {
-        return fixture;
     }
     public void setFixture(Fixture fixture) {
         this.fixture = fixture;
     }
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 
+    public Player getPlayer() {
+        return player;
+    }
+    public Fixture getFixture() {
+        return fixture;
+    }
+    public Position getPosition() {
+        return position;
+    }
 
     public Teamsheet translateModelToTeamsheet(){
         Teamsheet teamsheet = new Teamsheet();

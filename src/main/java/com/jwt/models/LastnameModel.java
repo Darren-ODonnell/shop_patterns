@@ -5,17 +5,18 @@ public class LastnameModel {
     private String lastname;
     private String lastnameIrish;
 
-    public String getLastnameIrish() {
-        return lastnameIrish;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
     public void setLastnameIrish(String lastnameIrish) {
         this.lastnameIrish = lastnameIrish;
     }
+
     public String getLastname() {
         return lastname;
     }
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public String getLastnameIrish() {
+        return lastnameIrish;
     }
 
     public Lastname translateModelToLastname(){

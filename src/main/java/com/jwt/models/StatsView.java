@@ -60,7 +60,6 @@ public class StatsView {
     public StatsViewId getId() {
         return id;
     }
-
     public void setId(StatsViewId id) {
         this.id = id;
     }
@@ -68,39 +67,30 @@ public class StatsView {
     public String getStatName() {
         return statName;
     }
-
     public Boolean getSuccess() {
         return success;
     }
-
     public Integer getHalf() {
         return half;
     }
-
     public Integer getSeason() {
         return season;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getHomeTeam() {
         return homeTeam;
     }
-
     public String getAwayTeam() {
         return awayTeam;
     }
-
     public String getLocation() {
         return location;
     }
-
     public Date getFixtureDate() {
         return id.getFixtureDate();
     }

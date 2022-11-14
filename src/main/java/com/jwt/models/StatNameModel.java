@@ -3,25 +3,20 @@ package com.jwt.models;
 import javax.persistence.Column;
 
 public class StatNameModel {
-
-
+    
     @Column(name = "name", nullable = false, length = 45)
     private String name;
-
     private String abbrev;
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getAbbrev() {
         return abbrev;
     }
-
     public void setAbbrev(String abbrev) {
         this.abbrev = abbrev;
     }

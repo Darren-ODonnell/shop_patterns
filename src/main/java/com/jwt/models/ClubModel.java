@@ -9,46 +9,42 @@ public class ClubModel {
     private String pitches;
     private String colours;
 
-    public String getColours() {
-                return colours;
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+    public void setPitches(String pitches) {
+        this.pitches = pitches;
     }
     public void setColours(String colours) {
         this.colours = colours;
     }
 
+    public String getColours() {
+        return colours;
+    }
     public String getPitches() {
         return pitches;
     }
-    public void setPitches(String pitches) {
-        this.pitches = pitches;
-    }
-
     public String getContactPhone() {
         return contactPhone;
     }
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
-
     public String getContactEmail() {
         return contactEmail;
     }
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
     public String getContactName() {
         return contactName;
     }
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
     public String getName() {
         return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Club translateModelToClub(){
@@ -61,8 +57,8 @@ public class ClubModel {
         club.setColours(this.colours);
         return club;
     }
-    // used in update operations
 
+    // used in update operations
     public Club translateModelToClub(Long id){
         Club club = translateModelToClub();
         club.setId(id);
