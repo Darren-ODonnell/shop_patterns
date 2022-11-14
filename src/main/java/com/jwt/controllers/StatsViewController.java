@@ -90,16 +90,16 @@ public class StatsViewController {
     // ----------------------------------------------------------------------------------------------------
 
 
-    @GetMapping(value={"/chartStatsByFixture2"} )
+    @GetMapping(value={"/countStatsByFixture2"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatViewCounts> chartStatsByFixture2(@RequestParam("statname") String statName) {
-        return statsViewService.chartStatsByFixture2(statName);
+    public @ResponseBody List<StatViewCounts> countStatsByFixture2(@RequestParam("statname") String statName) {
+        return statsViewService.countStatsByFixture2(statName);
     }
 
-    @GetMapping(value={"/chartStatsBySeason2"} )
+    @GetMapping(value={"/countStatsBySeason2"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatViewCounts> chartStatsBySeason2(@RequestParam("statname") String statName) {
-        return statsViewService.chartStatsBySeason2(statName);
+    public @ResponseBody List<StatViewCounts> countStatsBySeason2(@RequestParam("statname") String statName) {
+        return statsViewService.countStatsBySeason2(statName);
     }
 
 

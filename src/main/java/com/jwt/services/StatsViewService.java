@@ -143,13 +143,13 @@ public class StatsViewService {
     // ----------------------------------------------------------------------------------------------------
 
 
-    public List<StatViewCounts> chartStatsByFixture2(String statName) {
+    public List<StatViewCounts> countStatsByFixture2(String statName) {
         List<Object[]> fixtureDates = statsViewRepository.countDistinctByFixtureDate2(statName);
         return mapData2(fixtureDates);
     }
 
 
-    public List<StatViewCounts> chartStatsBySeason2(String statName) {
+    public List<StatViewCounts> countStatsBySeason2(String statName) {
         List<Object[]> seasons = statsViewRepository.countDistinctStatName2(statName);
         return mapData2(seasons);
     }
