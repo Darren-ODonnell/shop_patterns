@@ -14,3 +14,4 @@ public class SVC {
     public static final int LOCATION        = 10;
     public static final int STAT_COUNT      = 11;
 }
+

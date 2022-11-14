@@ -12,6 +12,7 @@ public class StatViewCounts extends StatsViewModel {
     private BigInteger count;
 
     public StatViewCounts(Object[] record) {
+
         this.setStatName((String) record[SVC.STAT_NAME]);
         this.setSuccess((Boolean) record[SVC.SUCCESS]);
         this.setHalf((Integer) record[SVC.HALF]);

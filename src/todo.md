@@ -35,7 +35,7 @@ SQLx Sql scripts to incorporate into repositories
         Stats (Statname and count)
         Dates (Season and FixtureDate
         Players (Firstname, lastname)
-    R2: 
+    R2: In Stat_View change find to count in calls controller/services/repos -> postman 
     R3: 
     R4: 
 

@@ -62,6 +62,14 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             nativeQuery = true)
     List<Object[]> findDistinctByFixtureDate(String statName);
 
+    @Query (value = "SELECT season, count(*) FROM teamstats.stats_view " +
+                    "where stat_name = :statName " +
+                    "GROUP BY stat_name, season " +
+                    "ORDER BY season ",
+            nativeQuery = true)
+    List<Object[]> findDistinctBySeason(String statName);
+
+
     boolean existsById(StatsViewId id);
     Optional<StatsView> findById(StatsViewId id);
     List<StatsView> findAll();
@@ -70,12 +78,9 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
     /* Same endpoints as above except using a single class returned rather than one of multiple classes  */
     // ----------------------------------------------------------------------------------------------------
 
-
-
-
-
     // attempt to bring back all data and only use what is needed
-    @Query (value = "SELECT *, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
                     "where stat_name = :statName " +
                     "GROUP BY stat_name, season " +
                     "ORDER BY season ",
@@ -83,55 +88,62 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
     List<Object[]> countDistinctStatName2(String statName);
 
 
-    @Query (value = "SELECT *, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
                     "WHERE stat_name = :statname AND fixture_date= :fixtureDate " +
                     "GROUP by first_name, last_name",
             nativeQuery = true )
-    List<Object[]> findByStatNameAndFixtureDate2(String statname, Date fixtureDate);
+    List<Object[]> countByStatNameAndFixtureDate2(String statname, Date fixtureDate);
 
-    @Query (value = "SELECT *, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
                     "WHERE stat_name = :statname AND season = :season " +
                     "GROUP BY fixture_date, first_name, last_name " +
                     "ORDER BY last_name, first_name, fixture_date;",
             nativeQuery = true )
-    List<Object[]> findByStatNameAndSeason2(String statname, int season);
+    List<Object[]> countByStatNameAndSeason2(String statname, int season);
 
-    @Query (value = "SELECT *, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
                     "where first_name = :firstname " +
                     "AND last_name = :lastname " +
                     "AND fixture_date = :fixtureDate " +
                     "GROUP BY stat_name",
             nativeQuery = true)
-    List<Object[]> findByFirstnameAndLastnameAndFixtureDate2(String firstname, String lastname, Date fixtureDate);
+    List<Object[]> countByFirstnameAndLastnameAndFixtureDate2(String firstname, String lastname, Date fixtureDate);
 
-    @Query (value = "SELECT *, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
                     "WHERE first_name = :firstname " +
                     "AND last_name = :lastname " +
                     "AND season = :season " +
                     "GROUP BY fixture_date, stat_name " +
                     "ORDER BY fixture_date, stat_name",
             nativeQuery = true)
-    List<Object[]> findByFirstnameAndLastnameAndSeason2(String firstname, String lastname, int season);
+    List<Object[]> countByFirstnameAndLastnameAndSeason2(String firstname, String lastname, int season);
 
-    @Query (value = "SELECT *, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
                     "WHERE fixture_date = :fixtureDate " +
                     "GROUP BY stat_name " +
                     "ORDER BY stat_name ",
             nativeQuery = true)
-    List<Object[]> findByFixtureDate2(Date fixtureDate);
+    List<Object[]> countByFixtureDate2(Date fixtureDate);
 
-    @Query( value = "SELECT *, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
                     "GROUP BY stat_name, season " +
                     "ORDER BY stat_name, season ",
             nativeQuery = true)
-    List<Object[]> findBySeason2(int season);
+    List<Object[]> countBySeason2(int season);
 
-    @Query (value = "SELECT *, count(*) FROM teamstats.stats_view " +
-            "where stat_name = :statName " +
-            "GROUP BY stat_name, fixture_date " +
-            "ORDER BY fixture_date ",
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+                    ", count(*) FROM teamstats.stats_view " +
+                    "where stat_name = :statName " +
+                    "GROUP BY stat_name, fixture_date " +
+                    "ORDER BY fixture_date ",
             nativeQuery = true)
-    List<Object[]> findDistinctByFixtureDate2(String statName);
+    List<Object[]> countDistinctByFixtureDate2(String statName);
 
 
 }
