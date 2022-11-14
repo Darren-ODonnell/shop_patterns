@@ -33,62 +33,62 @@ public class StatsViewController {
         return statsViewService.list();
     }
 
-    @GetMapping(value={"/findByStatNameFixtureDate"} )
+    @GetMapping(value={"/countByStatNameFixtureDate"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountPlayerDate> findByStatNameFixtureDate(@RequestParam("statname") String statname,
+    public @ResponseBody List<StatCountPlayerDate> countByStatNameFixtureDate(@RequestParam("statname") String statname,
                                                                              @RequestParam("fixture_date") String fixtureDateStr){
-        return statsViewService.findByStatNameFixtureDate(statname, fixtureDateStr);
+        return statsViewService.countByStatNameFixtureDate(statname, fixtureDateStr);
     }
 
-    @GetMapping(value={"/findByStatNameSeason"} )
+    @GetMapping(value={"/countByStatNameSeason"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountSeason> findByStatnameSeason(@RequestParam("statname") String statname,
+    public @ResponseBody List<StatCountSeason> countByStatnameSeason(@RequestParam("statname") String statname,
                                                                     @RequestParam("season") int season){
-        return statsViewService.findByStatnameSeason(statname, season);
+        return statsViewService.countByStatnameSeason(statname, season);
     }
 
-    @GetMapping(value={"/findByPlayerFixtureDate"} )
+    @GetMapping(value={"/countByPlayerFixtureDate"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountPlayerFixtureDate> findByFirstnameLastnameFixtureDate(@RequestParam("firstname") String firstname,
+    public @ResponseBody List<StatCountPlayerFixtureDate> countByFirstnameLastnameFixtureDate(@RequestParam("firstname") String firstname,
                                                                                              @RequestParam("lastname") String lastname,
                                                                                              @RequestParam("fixture_date") String fixtureDateStr){
-        return statsViewService.findByFirstnameLastnameFixtureDate(firstname, lastname,  fixtureDateStr);
+        return statsViewService.countByFirstnameLastnameFixtureDate(firstname, lastname,  fixtureDateStr);
     }
 
-    @GetMapping(value={"/findByPlayerSeason"} )
+    @GetMapping(value={"/countByPlayerSeason"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountPlayerSeason> findByFirstnameLastnameSeason(@RequestParam("firstname") String firstname,
+    public @ResponseBody List<StatCountPlayerSeason> countByFirstnameLastnameSeason(@RequestParam("firstname") String firstname,
                                                                                    @RequestParam("lastname") String lastname,
                                                                                    @RequestParam("season") int season){
-        return statsViewService.findByFirstnameLastnameSeason(firstname, lastname, season);
+        return statsViewService.countByFirstnameLastnameSeason(firstname, lastname, season);
     }
 
-    @GetMapping(value={"/findByFixtureDate"} )
+    @GetMapping(value={"/countByFixtureDate"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountFixtureDate> findByFixtureDate(@RequestParam("fixture_date") String fixtureDateStr) {
-        return statsViewService.findByFixtureDate(fixtureDateStr);
+    public @ResponseBody List<StatCountFixtureDate> countByFixtureDate(@RequestParam("fixture_date") String fixtureDateStr) {
+        return statsViewService.countByFixtureDate(fixtureDateStr);
     }
 
-    @GetMapping(value={"/findBySeason"} )
+    @GetMapping(value={"/countBySeason"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountSeason> findBySeason(@RequestParam("season") int season) {
-        return statsViewService.findBySeason(season);
+    public @ResponseBody List<StatCountSeason> countBySeason(@RequestParam("season") int season) {
+        return statsViewService.countBySeason(season);
     }
 
-    @GetMapping(value={"/chartStatsByFixture"} )
+    @GetMapping(value={"/countStatsByFixture"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Key<Date, BigInteger>> chartStatsByFixture(@RequestParam("statname") String statName) {
-        return statsViewService.chartStatsByFixture(statName);
+    public @ResponseBody List<Key<Date, BigInteger>> countStatsByFixture(@RequestParam("statname") String statName) {
+        return statsViewService.countStatsByFixture(statName);
     }
-    @GetMapping(value={"/chartStatsBySeason"} )
+    @GetMapping(value={"/countStatsBySeason"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Key<Date, BigInteger>> chartStatsBySeason(@RequestParam("statname") String statName) {
-        return statsViewService.chartStatsBySeason(statName);
+    public @ResponseBody List<Key<Date, BigInteger>> countStatsBySeason(@RequestParam("statname") String statName) {
+        return statsViewService.countStatsBySeason(statName);
     }
+
     // ----------------------------------------------------------------------------------------------------
     /* Same endpoints as above except using a single class returned rather than one of multiple classes  */
     // ----------------------------------------------------------------------------------------------------
-
 
     @GetMapping(value={"/countStatsByFixture2"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
@@ -106,22 +106,22 @@ public class StatsViewController {
     @GetMapping(value={"/countByStatNameFixtureDate2"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatViewCounts> countByStatNameFixtureDate2(@RequestParam("statname") String statname,
-                                                                             @RequestParam("fixture_date") String fixtureDateStr){
+                                                                          @RequestParam("fixture_date") String fixtureDateStr){
         return statsViewService.countByStatNameFixtureDate2(statname, fixtureDateStr);
     }
 
     @GetMapping(value={"/countByStatNameSeason2"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatViewCounts> countByStatnameSeason2(@RequestParam("statname") String statname,
-                                                                    @RequestParam("season") int season){
+                                                                     @RequestParam("season") int season){
         return statsViewService.countByStatnameSeason2(statname, season);
     }
 
     @GetMapping(value={"/countByPlayerFixtureDate2"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatViewCounts> countByFirstnameLastnameFixtureDate2(@RequestParam("firstname") String firstname,
-                                                                                             @RequestParam("lastname") String lastname,
-                                                                                             @RequestParam("fixture_date") String fixtureDateStr){
+                                                                                   @RequestParam("lastname") String lastname,
+                                                                                   @RequestParam("fixture_date") String fixtureDateStr){
         return statsViewService.countByFirstnameLastnameFixtureDate2(firstname, lastname,  fixtureDateStr);
     }
 

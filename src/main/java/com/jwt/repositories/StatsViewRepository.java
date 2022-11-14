@@ -16,58 +16,55 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
                     "WHERE stat_name = :statname AND fixture_date= :fixtureDate " +
                     "GROUP by first_name, last_name",
             nativeQuery = true )
-    List<Object[]> findByStatNameAndFixtureDate(String statname, Date fixtureDate);
+    List<Object[]> countByStatNameAndFixtureDate(String statname, Date fixtureDate);
 
     @Query (value = "SELECT first_name, last_name, stat_name, season, count(*) FROM teamstats.stats_view " +
                     "WHERE stat_name = :statname AND season = :season " +
                     "GROUP BY fixture_date, first_name, last_name " +
                     "ORDER BY last_name, first_name, fixture_date;",
             nativeQuery = true )
-    List<Object[]> findByStatNameAndSeason(String statname, int season);
+    List<Object[]> countByStatNameAndSeason(String statname, int season);
 
-    @Query (value =  "SELECT first_name, last_name,fixture_date,stat_name, count(*) FROM teamstats.stats_view " +
-                    "where first_name = :firstname " +
-                    "AND last_name = :lastname " +
+    @Query (value = "SELECT first_name, last_name,fixture_date,stat_name, count(*) FROM teamstats.stats_view " +
+                    "where first_name = :firstname AND last_name = :lastname " +
                     "AND fixture_date = :fixtureDate " +
                     "GROUP BY stat_name",
             nativeQuery = true)
-    List<Object[]> findByFirstnameAndLastnameAndFixtureDate(String firstname, String lastname, Date fixtureDate);
+    List<Object[]> countByFirstnameAndLastnameAndFixtureDate(String firstname, String lastname, Date fixtureDate);
 
     @Query (value = "SELECT first_name, last_name, stat_name, fixture_date, season, count(*) FROM teamstats.stats_view " +
-                   "WHERE first_name = :firstname " +
-                   "AND last_name = :lastname " +
-                   "AND season = :season " +
+                   "WHERE first_name = :firstname AND last_name = :lastname AND season = :season " +
                    "GROUP BY fixture_date, stat_name " +
                    "ORDER BY fixture_date, stat_name",
              nativeQuery = true)
-    List<Object[]> findByFirstnameAndLastnameAndSeason(String firstname, String lastname, int season);
+    List<Object[]> countByFirstnameAndLastnameAndSeason(String firstname, String lastname, int season);
 
     @Query (value = "SELECT stat_name, fixture_date, count(*) FROM teamstats.stats_view " +
                     "WHERE fixture_date = :fixtureDate " +
                     "GROUP BY stat_name " +
                     "ORDER BY stat_name ",
             nativeQuery = true)
-    List<Object[]> findByFixtureDate(Date fixtureDate);
+    List<Object[]> countByFixtureDate(Date fixtureDate);
 
     @Query (value = "SELECT stat_name, season, first_name, last_name, count(*) FROM teamstats.stats_view " +
                     "GROUP BY stat_name, season " +
                     "ORDER BY stat_name, season ",
             nativeQuery = true)
-    List<Object[]> findBySeason(int season);
+    List<Object[]> countBySeason(int season);
 
     @Query (value = "SELECT fixture_date, count(*) FROM teamstats.stats_view " +
                     "where stat_name = :statName " +
                     "GROUP BY stat_name, fixture_date " +
                     "ORDER BY fixture_date ",
             nativeQuery = true)
-    List<Object[]> findDistinctByFixtureDate(String statName);
+    List<Object[]> countDistinctByFixtureDate(String statName);
 
     @Query (value = "SELECT season, count(*) FROM teamstats.stats_view " +
                     "where stat_name = :statName " +
                     "GROUP BY stat_name, season " +
                     "ORDER BY season ",
             nativeQuery = true)
-    List<Object[]> findDistinctBySeason(String statName);
+    List<Object[]> countDistinctBySeason(String statName);
 
 
     boolean existsById(StatsViewId id);
@@ -144,6 +141,4 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
                     "ORDER BY fixture_date ",
             nativeQuery = true)
     List<Object[]> countDistinctByFixtureDate2(String statName);
-
-
-}
+    }
