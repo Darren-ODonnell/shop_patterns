@@ -21,13 +21,13 @@ SQLx Sql scripts to incorporate into repositories
     C15:
     C16:
     C17:
-    
-
-
 
 # Database Changes
     D2: Load sample Data
     D4: Update data with new Field data
+    D5: 
+    D6: 
+    D7: 
 
 
 # Refactoring Rx
@@ -35,9 +35,9 @@ SQLx Sql scripts to incorporate into repositories
         Stats (Statname and count)
         Dates (Season and FixtureDate
         Players (Firstname, lastname)
-    R2: In Stat_View change find to count in calls controller/services/repos -> postman 
     R3: 
     R4: 
+    R5: 
 
 # Investigations Ix
     I2: How to implement Change Password
@@ -56,7 +56,6 @@ SQLx Sql scripts to incorporate into repositories
         Need to test with other methods in Competition - then replicate to other controllers.
 
 # sql scripts to incorporate
-
     SQL6:
     /stats_view/countAllStatAllPlayersOneSeason
     //List of Counts per game-> List for season graph
@@ -72,6 +71,9 @@ SQLx Sql scripts to incorporate into repositories
     GROUP BY stat_name, season
     ORDER BY stat_name, season;
 
+    SQL11:
+    SQL12:
+    SQL13:
 
 # Completed
     E2 Vulnerabilities appear in Spring modules
@@ -177,3 +179,8 @@ SQLx Sql scripts to incorporate into repositories
          Repository changed - 2 added to all duplicate names
          Select fields, count(*) replace with Select *, count(*)
          Service and Controllers updated - testing required
+    R2: In Stat_View change find to count in calls controller/services/repos -> postman 
+        Both sets of endpoints changed , chart changed to count also.
+    SQL8: replicate first set - this time using * instead of individuial fields
+    SQL9: replace '*' with individual attribute names.
+    SQL10: Stats - change table contents to uppercase(abbrev)
