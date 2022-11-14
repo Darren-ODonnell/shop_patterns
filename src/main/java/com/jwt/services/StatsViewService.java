@@ -109,6 +109,17 @@ public class StatsViewService {
         return stats;
     }
 
+    // get count of statname for each fixture
+    // returns fixturedate,count
+    public List<Key<Date, BigInteger>> countStatsByFixture(String statName) {
+        List<Object[]> fixtureDates = statsViewRepository.countDistinctByFixtureDate(statName);
+        return mapData(fixtureDates, Date.class);
+    }
+    public List<Key<Integer, BigInteger>> countStatsBySeason(String statName) {
+        List<Object[]> seasons = statsViewRepository.countDistinctBySeason(statName);
+        return mapData(seasons, Integer.class);
+    }
+
     // Take an Object[] and map to list<T, BigInteger>  of key value pairs using generics
     // returns T / BigInteger, To get T the class is passed as a parameter.
     // Note the new class Key also uses generics.
@@ -126,17 +137,6 @@ public class StatsViewService {
             stats.add(stat);
         }
         return stats;
-    }
-
-    // get count of statname for each fixture
-    // returns fixturedate,count
-    public List<Key<Date, BigInteger>> countStatsByFixture(String statName) {
-        List<Object[]> fixtureDates = statsViewRepository.countDistinctByFixtureDate(statName);
-        return mapData(fixtureDates, Date.class);
-    }
-    public List<Key<Date, BigInteger>> countStatsBySeason(String statName) {
-        List<Object[]> fixtureDates = statsViewRepository.countDistinctBySeason(statName);
-        return mapData(fixtureDates, Date.class);
     }
     // ----------------------------------------------------------------------------------------------------
     /* Same endpoints as above except using a single class returned rather than one of multiple classes  */

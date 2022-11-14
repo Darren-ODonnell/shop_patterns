@@ -57,9 +57,6 @@ public class StatsView {
     @Column(name = "location", length = 5)
     private String location;
 
-//    public StatsViewId getId() {
-//        return id;
-//    }
     public void setId(StatsViewId id) {
         this.id = id;
     }
