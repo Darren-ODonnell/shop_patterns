@@ -10,6 +10,7 @@ import com.jwt.models.StatViewCounts;
 import com.jwt.models.StatsView;
 import com.jwt.models.stats.*;
 import com.jwt.repositories.StatsViewRepository;
+import org.hibernate.validator.internal.util.privilegedactions.NewInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

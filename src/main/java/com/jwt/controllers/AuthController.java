@@ -192,7 +192,7 @@ public class AuthController {
     }
 
     @GetMapping(value="/checkToken" )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody boolean checkToken(@RequestParam("token") String token){
         return jwtUtils.validateJwtToken(token);
     }

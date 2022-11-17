@@ -30,4 +30,5 @@ public class StatCountPlayerSeason extends StatCountSeason {
     public String getLastname() {
         return lastname;
     }
+
 }
