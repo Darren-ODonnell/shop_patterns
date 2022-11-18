@@ -23,4 +23,5 @@ public class StatCountPlayerFixtureDate extends StatCountFixtureDate {
     public String getLastname() {
         return lastname;
     }
+
 }

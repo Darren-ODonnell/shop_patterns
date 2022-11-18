@@ -11,8 +11,6 @@ SQLx Sql scripts to incorporate into repositories
 
 # Bugs
     E1 Update and Edit do not work with React
-    E6 "/stats_view/findBySeason"
-       data returns but the figures do not look right
     E7: 
     E8: 
     E10: 
@@ -184,3 +182,5 @@ SQLx Sql scripts to incorporate into repositories
     SQL8: replicate first set - this time using * instead of individuial fields
     SQL9: replace '*' with individual attribute names.
     SQL10: Stats - change table contents to uppercase(abbrev)
+    E6 "/stats_view/findBySeason" - updated
+       
