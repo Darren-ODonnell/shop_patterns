@@ -138,10 +138,10 @@ public class StatsViewService {
         }
         return stats;
     }
+
     // ----------------------------------------------------------------------------------------------------
     /* Same endpoints as above except using a single class returned rather than one of multiple classes  */
     // ----------------------------------------------------------------------------------------------------
-
 
     public List<StatViewCounts> countStatsByFixture2(String statName) {
         List<Object[]> fixtureDates = statsViewRepository.countDistinctByFixtureDate2(statName);
@@ -192,4 +192,9 @@ public class StatsViewService {
         }
         return counts;
     }
+
+    class Adaptor {
+
+    }
+
 }
