@@ -46,7 +46,7 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             nativeQuery = true)
     List<Object[]> countByFixtureDate(Date fixtureDate);
 
-    @Query (value = "SELECT stat_name, season, first_name, last_name, count(*) FROM teamstats.stats_view " +
+    @Query (value = "SELECT first_name, last_name, stat_name, season,  count(*) FROM teamstats.stats_view " +
                     "GROUP BY stat_name, season " +
                     "ORDER BY stat_name, season ",
             nativeQuery = true)
