@@ -71,8 +71,8 @@ public class StatsViewController {
 
     @GetMapping(value={"/countBySeason"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<StatCountSeason> countBySeason(@RequestParam("season") int season) {
-        return statsViewService.countBySeason(season);
+    public @ResponseBody List<StatCountSeason> countBySeason() {
+        return statsViewService.countBySeason();
     }
 
     @GetMapping(value={"/countStatsByFixture"} )

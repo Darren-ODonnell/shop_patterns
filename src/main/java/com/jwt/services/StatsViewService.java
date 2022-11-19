@@ -10,7 +10,6 @@ import com.jwt.models.StatViewCounts;
 import com.jwt.models.StatsView;
 import com.jwt.models.stats.*;
 import com.jwt.repositories.StatsViewRepository;
-import org.hibernate.validator.internal.util.privilegedactions.NewInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +46,8 @@ public class StatsViewService {
     }
 
     public List<StatCountPlayerDate> countByStatNameFixtureDate(String statname, String fixtureDateStr) {
-        List<Object[]> data  = statsViewRepository.countByStatNameAndFixtureDate(statname,stringToDate(fixtureDateStr));
+        Date date = stringToDate(fixtureDateStr);
+        List<Object[]> data  = statsViewRepository.countByStatNameAndFixtureDate(statname, date);
         List<StatCountPlayerDate> stats = new ArrayList<>();
         for(Object o: data){
             StatCountPlayerDate stat = new StatCountPlayerDate((Object[]) o);
@@ -99,8 +99,8 @@ public class StatsViewService {
         return stats;
     }
 
-    public List<StatCountSeason> countBySeason(int season) {
-        List<Object[]> data = statsViewRepository.countBySeason( season );
+    public List<StatCountSeason> countBySeason() {
+        List<Object[]> data = statsViewRepository.countBySeason();
         // convert the List<Object> to specific class to be returned by the controller
         List<StatCountSeason> stats = new ArrayList<>();
         for(Object o: data){
