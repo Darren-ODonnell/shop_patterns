@@ -194,8 +194,45 @@ public class StatsViewService {
         return counts;
     }
 
-    class Adaptor {
+    // --------------------------------------------------------------------------------------------------------
 
+    public List<StatViewCounts> countAllPlayerStatFixture() {
+        List<Object[]> data = statsViewRepository.countAllPlayerStatFixture();
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> countAllPlayerFixtureByStatName(String statName) {
+        List<Object[]> data = statsViewRepository.countAllPlayerFixtureByStatName(statName);
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> countAllPlayerStatNameByFixtureDate(String fixtureDate) {
+        List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDate(fixtureDate);
+        return mapData2(data);
+    }
+    public List<StatViewCounts> countAllStatNameFixtureByPlayer(String firstname, String lastname) {
+        List<Object[]> data = statsViewRepository.countAllStatNameFixtureByPlayer(firstname, lastname);
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> countAllPlayerByFixtureStatName(String fixtureDate, String statName) {
+        List<Object[]> data = statsViewRepository.countAllPlayerByFixtureStatName(fixtureDate, statName);
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> countAllFixtureByPlayerStatName(String firstname, String lastname, String statName) {
+        List<Object[]> data = statsViewRepository.countAllFixtureByPlayerStatName(firstname, lastname, statName);
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> countAllStatsByPlayerFixtureDate(String firstname, String lastname, String fixtureDate) {
+        List<Object[]> data = statsViewRepository.countAllStatsByPlayerFixtureDate(firstname, lastname, fixtureDate);
+        return mapData2(data);
+    }
+
+    public List<StatViewCounts> countStat(String firstname, String lastname, String fixtureDate, String statName) {
+        List<Object[]> data = statsViewRepository.countStat(firstname, lastname, fixtureDate, statName);
+        return mapData2(data);
     }
 
 }
