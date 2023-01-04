@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +39,18 @@ public class CompetitionService {
         return competition.orElse(new Competition());
     }
 
-    // return Competition by name
+    // return Competition by Season
 
+    public List<Competition> findBySeason(CompetitionModel competitionModel) {
+        Optional<List<Competition>> competitions = competitionRepository.findBySeason(competitionModel.getSeason());
+        if(competitions.isEmpty())
+            new MyMessageResponse( "Competition Season does not exist : " + competitionModel.getName(),MessageTypes.WARN);
+
+        return competitions.orElse(new ArrayList<>());
+
+    }
+
+    // return Competition by Name
 
     public Competition findByName(CompetitionModel competitionModel) {
         Optional<Competition> competition = competitionRepository.findByName(competitionModel.getName());
@@ -85,4 +96,6 @@ public class CompetitionService {
         competitionRepository.deleteById(id);
         return ResponseEntity.ok(new MyMessageResponse("Competition deleted with id: " + id, MessageTypes.INFO));
     }
+
+
 }

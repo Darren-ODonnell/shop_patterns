@@ -51,6 +51,16 @@ public class CompetitionController {
         return competitionService.findByName(competitionModel);
     }
 
+    // return Competition by name
+
+    @GetMapping(value="/findBySeason")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public @ResponseBody List<Competition> findBySeason(@ModelAttribute CompetitionModel competitionModel) {
+        return competitionService.findBySeason(competitionModel);
+    }
+
+
+
     // add new Competition
 
     @PutMapping(value="/add")

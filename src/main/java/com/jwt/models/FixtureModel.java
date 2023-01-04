@@ -8,12 +8,11 @@ import java.sql.Time;
 import java.util.Optional;
 
 public class FixtureModel {
-
     private Long competitionId;
     private Long homeTeamId;
     private Long awayTeamId;
     private Date fixtureDate;
-    private Time fixtureTime;
+    private Long fixtureTime;
     private Integer season;
     private Integer round;
 
@@ -24,11 +23,11 @@ public class FixtureModel {
         this.season = season;
     }
     public void setFixtureDate(Date fixtureDate) { this.fixtureDate = fixtureDate;    }
-    public void setFixtureTime(Time fixtureTime) { this.fixtureTime = fixtureTime;    }
-    public void setAwayTeam(Long awayTeamId) {
+    public void setFixtureTime(Long fixtureTime) { this.fixtureTime = fixtureTime;    }
+    public void setAwayTeamId(Long awayTeamId) {
         this.awayTeamId = awayTeamId;
     }
-    public void setHomeTeam(Long homeTeamId) {
+    public void setHomeTeamId(Long homeTeamId) {
         this.homeTeamId = homeTeamId;
     }
     public void setCompetitionId(Long competitionId) {
@@ -42,11 +41,11 @@ public class FixtureModel {
         return season;
     }
     public Date getFixtureDate() { return fixtureDate;    }
-    public Time getFixtureTime() { return fixtureTime;    }
-    public Long getAwayTeam() {
+    public Long getFixtureTime() { return fixtureTime;    }
+    public Long getAwayTeamId() {
         return awayTeamId;
     }
-    public Long getHomeTeam() {
+    public Long getHomeTeamId() {
         return homeTeamId;
     }
     public Long getCompetitionId() {
@@ -63,6 +62,7 @@ public class FixtureModel {
         fixture.setAwayTeam(club.orElse(new Club()));
         fixture.setFixtureDate(this.fixtureDate);
         fixture.setFixtureTime(this.fixtureTime);
+        fixture.setSqlTime(new Time(this.fixtureTime));
         fixture.setSeason(this.season);
         fixture.setRound(this.round);
 

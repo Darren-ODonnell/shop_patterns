@@ -3,6 +3,7 @@ package com.jwt.models;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "fixtures", indexes = {
@@ -31,8 +32,13 @@ public class Fixture {
     @Column(name = "fixture_date")
     private Date fixtureDate;
 
+    // time is moved around as milliseconds between server and client, but stored in the db and display as actual time.
+    // this annotation stops jpa from persisting this value to the db.
+    @Transient
+    private Long fixtureTime;
+
     @Column(name = "fixture_time")
-    private Time fixtureTime;
+    private Time sqlTime;
 
     @Column(name = "season")
     private Integer season;
@@ -46,6 +52,18 @@ public class Fixture {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Time getSqlTime() {
+        return sqlTime;
+    }
+
+    public void setSqlTime(Time sqlTime) {
+        this.sqlTime = sqlTime;
+    }
+
+    public void setSqlTime(Long time) {
+        this.sqlTime = new Time(time);
     }
 
     public Competition getCompetition() {
@@ -80,11 +98,11 @@ public class Fixture {
         this.fixtureDate = fixtureDate;
     }
 
-    public Time getFixtureTime() {
+    public Long getFixtureTime() {
         return fixtureTime;
     }
 
-    public void setFixtureTime(Time fixtureTime) {
+    public void setFixtureTime(Long fixtureTime) {
         this.fixtureTime = fixtureTime;
     }
 

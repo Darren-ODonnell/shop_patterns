@@ -109,8 +109,8 @@ public class FixtureService {
 
         Optional<Fixture> fixture = fixtureRepository.findByCompetitionIdAndHomeTeamIdAndAwayTeamIdAndFixtureDateAndSeason(
                 fixtureModel.getCompetitionId(),
-                fixtureModel.getHomeTeam(),
-                fixtureModel.getAwayTeam(),
+                fixtureModel.getHomeTeamId(),
+                fixtureModel.getAwayTeamId(),
                 fixtureModel.getFixtureDate(),
                 fixtureModel.getSeason()
         );
@@ -125,8 +125,8 @@ public class FixtureService {
 
     public ResponseEntity<MessageResponse> add(FixtureModel fixtureModel){
 
-        Club homeTeam = clubRepository.getById(fixtureModel.getHomeTeam());
-        Club awayTeam = clubRepository.getById(fixtureModel.getAwayTeam());
+        Club homeTeam = clubRepository.getById(fixtureModel.getHomeTeamId());
+        Club awayTeam = clubRepository.getById(fixtureModel.getAwayTeamId());
         Competition competition = competitionRepository.getById(fixtureModel.getCompetitionId());
 
         if(fixtureRepository.existsByHomeTeamAndAwayTeamAndCompetitionAndSeason(homeTeam, awayTeam, competition, fixtureModel.getSeason()))

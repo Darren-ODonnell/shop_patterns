@@ -19,10 +19,5 @@ public interface TeamsheetRepository extends JpaRepository<Teamsheet, TeamsheetI
     Optional<Teamsheet> findById(TeamsheetId id);
     List<Teamsheet> findByPlayerId(Long id);
 
-
-
-
-
-
     void deleteById(TeamsheetId id);
 }
