@@ -148,10 +148,10 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
 
     @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
             ", count(*) FROM teamstats.stats_view " +
-            "GROUP BY first_name, last_name, stat_name, fixture_date " +
-            "ORDER BY first_name, last_name, stat_name, fixture_date ",
+            "GROUP BY first_name, last_name, stat_name " +
+            "ORDER BY first_name, last_name, stat_name ",
             nativeQuery = true)
-    List<Object[]> countAllPlayerStatFixture();
+    List<Object[]> countAllPlayerStat();
 
     @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
             ", count(*) FROM teamstats.stats_view " +

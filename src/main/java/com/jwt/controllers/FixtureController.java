@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -86,8 +88,22 @@ public class FixtureController {
     // add new fixture
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add(@RequestBody FixtureModel fixtureModel) {
+        return fixtureService.add(fixtureModel);
+    }
+
+    @PutMapping(value="/add2")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<MessageResponse> add2(@ModelAttribute FixtureModel fixtureModel,
+                                                @RequestParam("date_str") String date_str,
+                                                @RequestParam("time_str") String time_str) {
+
+        Date date = Date.valueOf(date_str);
+        Time time = Time.valueOf(time_str);
+        fixtureModel.setFixtureDate(date);
+        fixtureModel.setFixtureTime(time);
+
         return fixtureService.add(fixtureModel);
     }
 

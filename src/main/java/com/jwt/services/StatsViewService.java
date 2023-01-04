@@ -196,8 +196,8 @@ public class StatsViewService {
 
     // --------------------------------------------------------------------------------------------------------
 
-    public List<StatViewCounts> countAllPlayerStatFixture() {
-        List<Object[]> data = statsViewRepository.countAllPlayerStatFixture();
+    public List<StatViewCounts> countAllPlayerStat() {
+        List<Object[]> data = statsViewRepository.countAllPlayerStat();
         return mapData2(data);
     }
 
