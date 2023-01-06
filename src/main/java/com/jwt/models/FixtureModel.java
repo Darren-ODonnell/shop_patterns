@@ -62,7 +62,8 @@ public class FixtureModel {
         fixture.setAwayTeam(club.orElse(new Club()));
         fixture.setFixtureDate(this.fixtureDate);
         fixture.setFixtureTime(this.fixtureTime);
-        fixture.setSqlTime(new Time(this.fixtureTime));
+        Time time = new Time(this.fixtureTime);
+        fixture.setSqlTime(time);
         fixture.setSeason(this.season);
         fixture.setRound(this.round);
 
