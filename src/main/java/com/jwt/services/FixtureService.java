@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Service
 public class FixtureService {
+
     private final FixtureRepository fixtureRepository;
     private final ClubRepository clubRepository;
     private final CompetitionRepository competitionRepository;
@@ -32,8 +33,17 @@ public class FixtureService {
 
     // return all fixtures
 
-    public List<Fixture> findAll() {
-        return fixtureRepository.findAll();
+    public List<Fixture> findAll() {  return fixtureRepository.findAll();    }
+
+    // return all fixtures
+
+    public List<Fixture> findUpcoming() {
+        // the upcoming fixtures will pick up all fixtures after todays date
+        // but they should include todays fixture also
+        // to ensure we get todays fixture the date after is todays date - 1 day
+        long day = 1000 * 60 * 60 * 24;
+        Date date = new Date(System.currentTimeMillis() - day);
+        return fixtureRepository.findByFixtureDateAfterOrderByFixtureDate(date).orElse(new ArrayList<>());
     }
 
     // Return all fixture for a given club
@@ -53,7 +63,6 @@ public class FixtureService {
             new MyMessageResponse("No Home fixtures found for Club: " + clubModel.getName(), MessageTypes.WARN);
             return new ArrayList<>();
         }
-
         Optional<List<Fixture>> fixtures = fixtureRepository.findByHomeTeamId(id);
         return fixtures.orElse(new ArrayList<>());
     }
@@ -118,7 +127,6 @@ public class FixtureService {
             new MyMessageResponse("Error: Fixture does not exist", MessageTypes.WARN);
 
         return fixture.orElse(new Fixture());
-
     }
 
     // Add Fixture

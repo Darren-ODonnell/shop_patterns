@@ -13,6 +13,8 @@ import java.util.Optional;
 @Repository
 public interface FixtureRepository extends JpaRepository<Fixture, Long> {
     List<Fixture> findAll();
+    Optional<List<Fixture>> findByFixtureDateAfterOrderByFixtureDate(Date date);
+
     Optional<Fixture> findById(Long id);
     Optional<List<Fixture>> findByAwayTeamId(Long id);
     Optional<List<Fixture>> findByHomeTeamId(Long id);
@@ -20,4 +22,6 @@ public interface FixtureRepository extends JpaRepository<Fixture, Long> {
     Optional<Fixture> findByCompetitionIdAndHomeTeamIdAndAwayTeamIdAndFixtureDateAndSeason(Long compId, Long homeId, Long awayId, Date fixtureDate, int season);
 
     boolean existsByHomeTeamAndAwayTeamAndCompetitionAndSeason(Club home, Club away, Competition comp, int season);
+
+
 }

@@ -4,6 +4,7 @@ import com.jwt.models.ClubModel;
 import com.jwt.models.Fixture;
 import com.jwt.models.FixtureModel;
 import com.jwt.payload.response.MessageResponse;
+import com.jwt.repositories.FixtureRepository;
 import com.jwt.services.FixtureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,14 @@ public class FixtureController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Fixture> list(){
         return fixtureService.findAll();
+    }
+
+    // return all Upcoming Fixtures
+
+    @GetMapping(value={"/","/findUpcoming" ,""})
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<Fixture> listUpcoming(){
+        return fixtureService.findUpcoming();
     }
 
     // return Fixture by id
@@ -89,7 +98,8 @@ public class FixtureController {
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add(@RequestBody FixtureModel fixtureModel) {
-        return fixtureService.add(fixtureModel);
+        ResponseEntity<MessageResponse> response = fixtureService.add(fixtureModel);
+        return response;
     }
 
     // update record

@@ -12,7 +12,7 @@ public class FixtureModel {
     private Long homeTeamId;
     private Long awayTeamId;
     private Date fixtureDate;
-    private Long fixtureTime;
+    private Time fixtureTime;
     private Integer season;
     private Integer round;
 
@@ -23,7 +23,7 @@ public class FixtureModel {
         this.season = season;
     }
     public void setFixtureDate(Date fixtureDate) { this.fixtureDate = fixtureDate;    }
-    public void setFixtureTime(Long fixtureTime) { this.fixtureTime = fixtureTime;    }
+    public void setFixtureTime(Time fixtureTime) { this.fixtureTime = fixtureTime;    }
     public void setAwayTeamId(Long awayTeamId) {
         this.awayTeamId = awayTeamId;
     }
@@ -41,7 +41,7 @@ public class FixtureModel {
         return season;
     }
     public Date getFixtureDate() { return fixtureDate;    }
-    public Long getFixtureTime() { return fixtureTime;    }
+    public Time getFixtureTime() { return fixtureTime;    }
     public Long getAwayTeamId() {
         return awayTeamId;
     }
@@ -62,8 +62,8 @@ public class FixtureModel {
         fixture.setAwayTeam(club.orElse(new Club()));
         fixture.setFixtureDate(this.fixtureDate);
         fixture.setFixtureTime(this.fixtureTime);
-        Time time = new Time(this.fixtureTime);
-        fixture.setSqlTime(time);
+//        Time time = new Time(this.fixtureTime);
+//        fixture.setSqlTime(time);
         fixture.setSeason(this.season);
         fixture.setRound(this.round);
 

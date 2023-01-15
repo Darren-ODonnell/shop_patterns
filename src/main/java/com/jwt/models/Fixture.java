@@ -34,11 +34,8 @@ public class Fixture {
 
     // time is moved around as milliseconds between server and client, but stored in the db and display as actual time.
     // this annotation stops jpa from persisting this value to the db.
-    @Transient
-    private Long fixtureTime;
-
     @Column(name = "fixture_time")
-    private Time sqlTime;
+    private Time fixtureTime;
 
     @Column(name = "season")
     private Integer season;
@@ -54,17 +51,17 @@ public class Fixture {
         this.id = id;
     }
 
-    public Time getSqlTime() {
-        return sqlTime;
-    }
-
-    public void setSqlTime(Time sqlTime) {
-        this.sqlTime = sqlTime;
-    }
-
-    public void setSqlTime(Long time) {
-        this.sqlTime = new Time(time);
-    }
+//    public Time getSqlTime() {
+//        return sqlTime;
+//    }
+//
+//    public void setSqlTime(Time sqlTime) {
+//        this.sqlTime = sqlTime;
+//    }
+//
+//    public void setSqlTime(Long time) {
+//        this.sqlTime = new Time(time);
+//    }
 
     public Competition getCompetition() {
         return competition;
@@ -98,11 +95,11 @@ public class Fixture {
         this.fixtureDate = fixtureDate;
     }
 
-    public Long getFixtureTime() {
+    public Time getFixtureTime() {
         return fixtureTime;
     }
 
-    public void setFixtureTime(Long fixtureTime) {
+    public void setFixtureTime(Time fixtureTime) {
         this.fixtureTime = fixtureTime;
     }
 
