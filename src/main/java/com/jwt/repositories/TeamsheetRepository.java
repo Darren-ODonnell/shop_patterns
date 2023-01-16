@@ -16,6 +16,7 @@ public interface TeamsheetRepository extends JpaRepository<Teamsheet, TeamsheetI
     boolean existsById(TeamsheetId id);
 
     List<Teamsheet> findByFixtureId(Long id);
+    List<Teamsheet> findByFixtureIdOrderByPosition(Long id);
     Optional<Teamsheet> findById(TeamsheetId id);
     List<Teamsheet> findByPlayerId(Long id);
 

@@ -61,7 +61,7 @@ public class TeamsheetService {
     public List<Player> findPlayersByFixtureId( Long id){
         // get teamsheet by fixture id.
         // extract and return the list of players from this list
-        List<Teamsheet> teamsheets = teamsheetRepository.findByFixtureId(id);
+        List<Teamsheet> teamsheets = teamsheetRepository.findByFixtureIdOrderByPosition(id);
         List<Player> players = new ArrayList<>();
         for(Teamsheet ts : teamsheets)
             players.add(ts.getPlayer());
