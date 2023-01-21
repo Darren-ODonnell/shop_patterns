@@ -216,4 +216,13 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             nativeQuery = true)
     List<Object[]> countStat(@Param("firstname")String firstname, @Param("lastname")String lastname, @Param("fixtureDate")String fixtureDate, @Param("statName")String statName);
 
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where fixture_date = :fixtureDate " +
+            "GROUP BY stat_name, success " +
+            "ORDER BY stat_name, success",
+            nativeQuery = true)
+    List<Object[]> countAllPlayerStatNameByFixtureDateGroupSuccess(@Param("fixtureDate")String fixtureDate);
+
 }

@@ -235,4 +235,10 @@ public class StatsViewService {
         return mapData2(data);
     }
 
+    public List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(String fixtureDate) {
+        List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDateGroupSuccess(fixtureDate);
+        return mapData2(data);
+    }
+
+
 }

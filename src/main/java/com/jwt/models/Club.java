@@ -28,6 +28,9 @@ public class Club {
     @Column(name = "colours", length = 45)
     private String colours;
 
+    @Column(name = "abbrev", length = 10)
+    private String abbrev;
+
     public Long getId() {
         return id;
     }
@@ -84,4 +87,11 @@ public class Club {
         this.colours = colours;
     }
 
+    public String getAbbrev() {
+        return abbrev;
+    }
+
+    public void setAbbrev(String abbrev) {
+        this.abbrev = abbrev;
+    }
 }

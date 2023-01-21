@@ -196,4 +196,12 @@ public class StatsViewController {
         return statsViewService.countStat(firstname, lastname, fixtureDate, statName);
     }
 
+    @PostMapping(value={"/countAllPlayerStatNameByFixtureDateGroupSuccess"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(@RequestParam("fixtureDate") String fixtureDate) {
+        return statsViewService.countAllPlayerStatNameByFixtureDateGroupSuccess(fixtureDate);
+    }
+
+
+
 }

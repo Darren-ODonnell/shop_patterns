@@ -43,17 +43,17 @@ public class StatController {
     }
 
     // return Club by name
-
-    @GetMapping(value="/findByName")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody  Stat findByName(@ModelAttribute StatModel statModel) {
-        return statService.findByName(statModel);
-    }
+//
+//    @GetMapping(value="/findByName")
+//    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+//    public @ResponseBody  Stat findByName(@ModelAttribute StatModel statModel) {
+//        return statService.findByName(statModel);
+//    }
 
     // add new Club
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add(@RequestBody StatModel statModel){
         return statService.add(statModel);
     }

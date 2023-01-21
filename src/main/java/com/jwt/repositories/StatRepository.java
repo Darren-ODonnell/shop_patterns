@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface StatRepository extends JpaRepository<Stat, Long> {
-    Boolean existsById(StatId id);
-    Boolean deleteById(StatId id);
+public interface StatRepository extends JpaRepository<Stat, StatId> {
+    boolean existsById(StatId id);
+    void deleteById(StatId id);
     Optional<Stat> findByStatName(StatName statName);
     boolean existsByStatName(StatName statName);
     Optional<Stat> findById(StatId id);

@@ -1,30 +1,37 @@
 package com.jwt.models;
 
+import com.jwt.repositories.FixtureRepository;
+import com.jwt.repositories.PitchGridRepository;
+import com.jwt.repositories.PlayerRepository;
+import com.jwt.repositories.StatNameRepository;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
 public class StatModel {
 
-
-    private Fixture fixture;
-    private Player player;
+    private Long fixtureId;
+    private Long playerId;
     private Boolean success;
     private Integer half;
-    private PitchGrid location;
+    private String locationId;
+    private String statNameId;
+    private BigDecimal timeOccurred;
 
-    private StatName statName;
-
-    public Fixture getFixture() {
-        return fixture;
+    public Long getFixtureId() {
+        return fixtureId;
     }
 
-    public void setFixture(Fixture fixture) {
-        this.fixture = fixture;
+    public void setFixtureId(Long fixtureId) {
+        this.fixtureId = fixtureId;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Long getPlayerId() {
+        return playerId;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 
     public Boolean getSuccess() {
@@ -43,40 +50,51 @@ public class StatModel {
         this.half = half;
     }
 
-    public PitchGrid getLocation() {
-        return location;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(PitchGrid location) {
-        this.location = location;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
     }
 
-    public StatName getStatName() {
-        return statName;
+    public String getStatNameId() {
+        return statNameId;
     }
 
-    public void setStatName(StatName statName) {
-        this.statName = statName;
+    public void setStatNameId(String statNameId) {
+        this.statNameId = statNameId;
     }
 
+    public BigDecimal getTimeOccurred() {
+        return timeOccurred;
+    }
 
-    public Stat translateModelToStat(){
+    public void setTimeOccurred(BigDecimal timeOccurred) {
+        this.timeOccurred = timeOccurred;
+    }
+
+    public Stat translateModelToStat(FixtureRepository fixtureRepository, PlayerRepository playerRepository,
+                                     PitchGridRepository pitchGridRepository, StatNameRepository statNameRepository){
         Stat stat = new Stat();
-        stat.setFixture(this.fixture);
-        stat.setPlayer(this.player);
+        stat.setFixture(fixtureRepository.getById(fixtureId));
+        stat.setPlayer(playerRepository.getById(playerId));
         stat.setSuccess(this.success);
         stat.setHalf(this.half);
-        stat.setLocation(this.location);
+        Optional<PitchGrid> location = pitchGridRepository.findById(locationId);
+        stat.setLocation(location.orElse(new PitchGrid()));
+        stat.setStatName(statNameRepository.getById(statNameId));
+
         return stat;
     }
 
     // used in update operations
-    public Stat translateModelToStat(StatId id){
-        Stat stat = translateModelToStat();
+    public Stat translateModelToStat(FixtureRepository fixtureRepository, PlayerRepository playerRepository,
+                                     PitchGridRepository pitchGridRepository, StatNameRepository statNameRepository, StatId id){
+        Stat stat = translateModelToStat(fixtureRepository, playerRepository, pitchGridRepository, statNameRepository);
         stat.setId(id);
         return stat;
     }
-    
-    
-    
+
+
 }

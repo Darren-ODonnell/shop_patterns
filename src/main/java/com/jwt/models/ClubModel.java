@@ -8,6 +8,7 @@ public class ClubModel {
     private String contactPhone;
     private String pitches;
     private String colours;
+    private String abbrev;
 
     public void setName(String name) {
         this.name = name;
@@ -26,6 +27,9 @@ public class ClubModel {
     }
     public void setColours(String colours) {
         this.colours = colours;
+    }
+    public void setAbbrev(String abbrev) {
+        this.abbrev = abbrev;
     }
 
     public String getColours() {
@@ -46,6 +50,9 @@ public class ClubModel {
     public String getName() {
         return name;
     }
+    public String getAbbrev() {
+        return abbrev;
+    }
 
     public Club translateModelToClub(){
         Club club = new Club();
@@ -55,6 +62,7 @@ public class ClubModel {
         club.setContactPhone(this.contactPhone);
         club.setPitches(this.pitches);
         club.setColours(this.colours);
+        club.setAbbrev(this.abbrev);
         return club;
     }
 

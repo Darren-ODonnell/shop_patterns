@@ -8,7 +8,7 @@ import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
-import com.jwt.repositories.StatRepository;
+import com.jwt.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,10 +21,19 @@ import java.util.Optional;
 public class StatService {
 
     StatRepository statRepository;
+    PitchGridRepository pitchGridRepository;
+    PlayerRepository playerRepository;
+    StatNameRepository statNameRepository;
+    FixtureRepository fixtureRepository;
 
     @Autowired
-    public StatService(StatRepository statRepository) {
+    public StatService(StatRepository statRepository, PitchGridRepository pitchGridRepository, PlayerRepository playerRepository, StatNameRepository statNameRepository, FixtureRepository fixtureRepository) {
         this.statRepository = statRepository;
+        this.pitchGridRepository = pitchGridRepository;
+        this.playerRepository = playerRepository;
+        this.statNameRepository = statNameRepository;
+        this.fixtureRepository = fixtureRepository;
+
     }
 
     // return all Stats
@@ -47,20 +56,37 @@ public class StatService {
 
     // return Stat by name
 
-    public Stat findByName( StatModel statModel) {
-        Optional<Stat> stat = statRepository.findByStatName(statModel.getStatName());
-        if(stat.isEmpty()) new MyMessageResponse(String.format("Stat name: %s not found", statModel.getStatName()), MessageTypes.INFO);
-        return stat.orElse(new Stat());
-    }
+//    public Stat findByName( StatModel statModel) {
+//        Optional<Stat> stat = statRepository.findByStatName(statModel.getStatName());
+//        if(stat.isEmpty()) new MyMessageResponse(String.format("Stat name: %s not found", statModel.getStatName()), MessageTypes.INFO);
+//        return stat.orElse(new Stat());
+//    }
 
     // add new Stat
 
     public ResponseEntity<MessageResponse> add(StatModel statModel){
 
-        if(statRepository.existsByStatName(statModel.getStatName()))
+        Optional<Player> player = playerRepository.findById(statModel.getPlayerId());
+        Long id = statModel.getFixtureId();
+        Optional<Fixture> fixture = fixtureRepository.findById(id);
+        Optional<StatName> statName = statNameRepository.findById(statModel.getStatNameId());
+        Optional<PitchGrid> location = pitchGridRepository.findById(statModel.getLocationId());
+
+//        StatId statId = new StatId();
+//        statId.setFixtureId(fixture.get().getId());
+//        statId.setTimeOccurred(statModel.getTimeOccurred());
+
+
+        StatId statId = new StatId();
+        statId.setFixtureId(statModel.getFixtureId());
+        statId.setTimeOccurred(statModel.getTimeOccurred());
+
+        if(statRepository.existsById(statId))
             return ResponseEntity.ok(new MyMessageResponse("Error: Stat already exists", MessageTypes.WARN));
 
-        statRepository.save(statModel.translateModelToStat());
+        Stat stat = statModel.translateModelToStat( fixtureRepository,  playerRepository, pitchGridRepository,  statNameRepository);
+        stat.setId(statId);
+        statRepository.save(stat);
         return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));
     }
 
