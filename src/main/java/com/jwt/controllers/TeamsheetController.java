@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping({"/teamsheet","/teamsheets",""})
+@RequestMapping({"/teamsheet","/teamsheets"})
 public class TeamsheetController {
 
     public final TeamsheetService teamsheetService;
@@ -34,7 +34,7 @@ public class TeamsheetController {
 
     // return all Teamsheets
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Teamsheet> list(){
 

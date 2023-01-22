@@ -31,7 +31,7 @@ public class LastnameController {
 
     // return all lastnames
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Lastname> list(){
         return lastnameService.list();

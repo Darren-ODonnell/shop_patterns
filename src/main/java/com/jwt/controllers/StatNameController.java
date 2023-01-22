@@ -28,7 +28,7 @@ public class StatNameController {
 
     // return all StatNames
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatName> list(){
         return statNameService.list();

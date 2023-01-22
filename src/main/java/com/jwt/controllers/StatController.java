@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping({"/stat","/stats",""})
+@RequestMapping({"/stat","/stats"})
 public class StatController {
 
     public final StatService statService;
@@ -28,7 +28,7 @@ public class StatController {
 
     // return all Stats
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Stat> list(){
         return statService.list();

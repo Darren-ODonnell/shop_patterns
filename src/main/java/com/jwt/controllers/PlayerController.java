@@ -29,7 +29,7 @@ public class PlayerController {
 
     // return all players - done
 
-    @GetMapping(value={"/", "/list",""} )
+    @GetMapping(value={"/", "/list"} )
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Player> list() {
         return playerService.list();

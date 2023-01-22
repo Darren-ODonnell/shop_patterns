@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/club")
+@RequestMapping({"/club","/clubs"})
 public class ClubController {
     public final ClubService clubService;
 
@@ -28,7 +28,7 @@ public class ClubController {
 
     // return all Clubs
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Club> list(){
         return clubService.list();

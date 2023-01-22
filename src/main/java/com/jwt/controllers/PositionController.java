@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping({"/position","/positions",""})
+@RequestMapping({"/position","/positions"})
 public class PositionController {
     public final PositionService positionService;
 
@@ -28,7 +28,7 @@ public class PositionController {
 
     // return all Positions
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Position> list(){
         return positionService.list();

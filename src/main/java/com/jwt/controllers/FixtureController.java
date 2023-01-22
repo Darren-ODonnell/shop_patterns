@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/fixture")
+@RequestMapping({"/fixture","/fixtures"})
 public class FixtureController {
     public final FixtureService fixtureService;
 
@@ -31,7 +31,7 @@ public class FixtureController {
 
     // return all Fixtures
 
-    @GetMapping(value={"/","/list" ,""})
+    @GetMapping(value={"/","/list" })
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Fixture> list(){
         return fixtureService.findAll();
@@ -39,7 +39,7 @@ public class FixtureController {
 
     // return all Upcoming Fixtures
 
-    @GetMapping(value={"/","/findUpcoming" ,""})
+    @GetMapping(value={"/findUpcoming" })
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Fixture> listUpcoming(){
         return fixtureService.findUpcoming();

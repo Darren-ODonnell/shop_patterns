@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/competition")
+@RequestMapping({"/competition","/competitions"})
 public class CompetitionController {
     CompetitionService competitionService;
 
@@ -28,7 +28,7 @@ public class CompetitionController {
 
     // return all Competitions - done
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody   List<Competition> list(){
         return competitionService.list();

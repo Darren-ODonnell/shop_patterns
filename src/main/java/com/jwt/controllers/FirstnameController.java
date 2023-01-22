@@ -29,7 +29,7 @@ public class FirstnameController {
 
     // return all Firstnames - done
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody
     List<Firstname> list(){

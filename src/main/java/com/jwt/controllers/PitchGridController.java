@@ -28,7 +28,7 @@ public class PitchGridController {
 
     // return all PitchGrids
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<PitchGrid> list(){
         return pitchGridService.list();

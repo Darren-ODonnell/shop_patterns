@@ -27,7 +27,7 @@ public class StatsViewController {
     @Autowired
     public StatsViewController(StatsViewService statsViewService) {        this.statsViewService = statsViewService;    }
 
-    @GetMapping(value={"/","/list",""} )
+    @GetMapping(value={"/","/list"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatsView> list(){
         return statsViewService.list();
