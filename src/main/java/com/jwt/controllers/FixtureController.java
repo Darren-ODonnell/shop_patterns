@@ -4,7 +4,6 @@ import com.jwt.models.ClubModel;
 import com.jwt.models.Fixture;
 import com.jwt.models.FixtureModel;
 import com.jwt.payload.response.MessageResponse;
-import com.jwt.repositories.FixtureRepository;
 import com.jwt.services.FixtureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -96,7 +94,7 @@ public class FixtureController {
     // add new fixture
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> add(@RequestBody FixtureModel fixtureModel) {
         ResponseEntity<MessageResponse> response = fixtureService.add(fixtureModel);
         return response;
@@ -105,7 +103,7 @@ public class FixtureController {
     // update record
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MessageResponse> update(@RequestBody Fixture fixture){
         return fixtureService.update(fixture.getId(), fixture);
     }
