@@ -56,7 +56,7 @@ public class TeamsheetController {
     public @ResponseBody List<Teamsheet> findByFixtureId(@RequestParam("id") Long fixtureId){
         return teamsheetService.findByFixtureId(fixtureId);
     }
-    @PostMapping(value="/findPlayersByFixtureId")
+    @GetMapping(value="/findPlayersByFixtureId")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Player> findPlayersByFixtureId(@RequestParam("id") Long id){
         return teamsheetService.findPlayersByFixtureId(id);
