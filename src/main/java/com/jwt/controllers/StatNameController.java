@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Firstname;
 import com.jwt.models.StatName;
 import com.jwt.models.StatNameModel;
 import com.jwt.payload.response.MessageResponse;
@@ -46,7 +47,7 @@ public class StatNameController {
 
     @GetMapping(value="/findByName")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public @ResponseBody  StatName findByName(@ModelAttribute StatNameModel statNameModel) {
+    public @ResponseBody  StatName findByName(@RequestBody StatNameModel statNameModel) {
         return statNameService.findByName(statNameModel);
     }
 
