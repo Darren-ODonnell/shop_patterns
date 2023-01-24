@@ -47,6 +47,11 @@ public class ClubService {
         if(club.isEmpty()) new MyMessageResponse(String.format("Club name: %s not found", clubModel.getName()), MessageTypes.INFO);
         return club.orElse(new Club());
     }
+    public Club findByName( String name) {
+        Optional<Club> club = clubRepository.findByName(name);
+        if(club.isEmpty()) new MyMessageResponse(String.format("Club name: %s not found", name), MessageTypes.INFO);
+        return club.orElse(new Club());
+    }
 
     // add new Club
 
