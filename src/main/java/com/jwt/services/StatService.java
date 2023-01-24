@@ -121,7 +121,7 @@ public class StatService {
         if(goals.isPresent()) {
             oppGoals = goals.get()
                     .stream()
-                    .filter(g -> g.getPlayer().getId() == oppositionID) // 0 = opposition
+                    .filter(g -> g.getPlayer().getId() == oppositionID)
                     .count();
             ownGoals = goals.get()
                     .stream()
@@ -131,7 +131,7 @@ public class StatService {
         if(points.isPresent()) {
             oppPoints = points.get()
                     .stream()
-                    .filter(p -> p.getPlayer().getId() == oppositionID) // 0 = opposition
+                    .filter(p -> p.getPlayer().getId() == oppositionID)
                     .count();
             ownPoints = points.get()
                     .stream()

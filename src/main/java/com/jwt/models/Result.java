@@ -8,23 +8,36 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Result {
-    String homeTeam = "";
-    String awayTeam = "";
+    String homeTeam ;
+    String awayTeam ;
     // individual breakdown of home/away goals/points
-    long homePoints = 0;
-    long homeGoals = 0;
-    long awayPoints = 0;
-    long awayGoals = 0;
+    long homePoints ;
+    long homeGoals ;
+    long awayPoints ;
+    long awayGoals ;
 
-    // all scores converted to points - so winnert can be easily determined
-    long awayScorePoints = 0;
-    long homeScorePoints = 0;
+    // all scores converted to points - so winner can be easily determined
+    long awayScorePoints ;
+    long homeScorePoints ;
 
     // display result as string for easy display.
-    String homeScoreString = "0 - 0";
-    String awayScoreString = "0 - 0";
+    String homeScoreString ;
+    String awayScoreString ;
 
     // as above but with points tally shown
-    String homeScoreStringWithPointsTotal = "0 - 0 (0)";
-    String awayScoreStringWithPointsTotal = "0 - 0 (0)";
+    String homeScoreStringWithPointsTotal ;
+    String awayScoreStringWithPointsTotal ;
+
+    public String getHomeScore() {
+        return String.format("%d - %d", homeGoals, homePoints);
+    }
+    public String getAwayScore() {
+        return String.format("%d - %d", awayGoals, awayPoints);
+    }
+    public String getHomeScoreWithPointsTotal() {
+        return String.format("%d - %d (%d)", homeGoals, homePoints, homeGoals * 3 + homePoints);
+    }
+    public String getAwayScoreWithPointsTotal() {
+        return String.format("%d - %d (%d)", awayGoals, awayPoints, awayGoals * 3 + awayPoints);
+    }
 }
