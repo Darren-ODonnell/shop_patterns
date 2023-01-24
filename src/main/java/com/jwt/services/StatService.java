@@ -80,8 +80,6 @@ public class StatService {
        StatName point = statNameRepository.findById("SCPT").get();
        StatName goal = statNameRepository.findById("SCG").get();
 
-
-
         long oppositionID = playerRepository.findByLastname("Opposition").get().get(0).getId();
 
         long ownGoals = 0;
@@ -110,24 +108,24 @@ public class StatService {
 //        Optional<List<Stat>> points = statRepository.findByFixtureIdAndSuccessAndStatNameOrStatName(fixture.getId(), SUCCESS, FreeScore, Point);
 
 
-        if(!goals.isEmpty()) {
+        if(goals.isPresent()) {
             oppGoals = goals.get()
                     .stream()
-                    .filter(goal -> goal.getPlayer().getId() == oppositionID) // 0 = opposition
+                    .filter(g -> g.getPlayer().getId() == oppositionID) // 0 = opposition
                     .count();
             ownGoals = goals.get()
                     .stream()
-                    .filter(goal -> goal.getPlayer().getId() != oppositionID)
+                    .filter(g -> g.getPlayer().getId() != oppositionID)
                     .count();
         }
-        if(!points.isEmpty()) {
-            oppPoints = goals.get()
+        if(points.isPresent()) {
+            oppPoints = points.get()
                     .stream()
-                    .filter(goal -> goal.getPlayer().getId() == oppositionID) // 0 = opposition
+                    .filter(p -> p.getPlayer().getId() == oppositionID) // 0 = opposition
                     .count();
-            ownPoints = goals.get()
+            ownPoints = points.get()
                     .stream()
-                    .filter(goal -> goal.getPlayer().getId() != oppositionID)
+                    .filter(p -> p.getPlayer().getId() != oppositionID)
                     .count();
         }
         // determine who was playing home/away
