@@ -23,5 +23,9 @@ public interface FixtureRepository extends JpaRepository<Fixture, Long> {
 
     boolean existsByHomeTeamAndAwayTeamAndCompetitionAndSeason(Club home, Club away, Competition comp, int season);
 
+//    List<Fixture> findByFixtureDateAndHomeTeamIdOrAwayTeamId(Date fixtureDate, Long homeClubId, Long awayClubId);
 
+    List<Fixture> findByFixtureDate(Date fixtureDate);
+
+    List<Fixture> findByFixtureDateAndHomeTeamIdOrFixtureDateAndAwayTeamId(Date fixtureDate, Long clubId, Date fixtureDate1, Long clubId1);
 }
