@@ -24,11 +24,8 @@ public class TeamsheetController {
 
     public final TeamsheetService teamsheetService;
 
-
-
     @Autowired
     public TeamsheetController( TeamsheetService teamsheetService) {
-
         this.teamsheetService = teamsheetService;
     }
 
