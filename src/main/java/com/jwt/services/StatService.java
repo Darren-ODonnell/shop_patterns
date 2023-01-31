@@ -114,6 +114,7 @@ public class StatService {
 
         Optional<List<Stat>> goals = statRepository.findByFixtureIdAndSuccessAndStatNameOrFixtureIdAndSuccessAndStatName(
                 fixture.getId(), SUCCESS, freeScore, fixture.getId(), SUCCESS, goal);
+
         Optional<List<Stat>> points = statRepository.findByFixtureIdAndSuccessAndStatNameOrFixtureIdAndSuccessAndStatName(
                 fixture.getId(), SUCCESS, freeScore, fixture.getId(), SUCCESS, point);
 

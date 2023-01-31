@@ -11,7 +11,7 @@ SQLx Sql scripts to incorporate into repositories
 
 # Bugs
     E1 Update and Edit do not work with React
-    E7: 
+    E7: java errors appear when database is not available - check availability and repond with message as necessary.
     E8: 
     E10: 
 
