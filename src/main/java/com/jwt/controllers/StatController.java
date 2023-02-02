@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping({"/stat","/stats"})
 public class StatController {

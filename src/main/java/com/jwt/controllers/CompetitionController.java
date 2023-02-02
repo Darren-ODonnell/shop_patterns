@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Darren O'Donnell
  */
-@Controller
+@RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping({"/competition","/competitions"})
 public class CompetitionController {
