@@ -65,9 +65,11 @@ public class StatNameService {
     // delete by name
 
     public ResponseEntity<MessageResponse> delete( StatName statName){
-        String id = statName.getId();
-        if(!statNameRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete StatName with abbrev: "+id, MessageTypes.WARN));
+        Optional<StatName> statname = statNameRepository.getByName(statName.getName());
+
+        String id = statname.get().getId();
+        if(!statNameRepository.existsByName(statName.getName()))
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete StatName with name: "+statName.getName(), MessageTypes.WARN));
 
         statNameRepository.deleteById(id);
         return ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + id, MessageTypes.INFO));

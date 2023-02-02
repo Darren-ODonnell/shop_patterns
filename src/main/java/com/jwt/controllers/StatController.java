@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Result;
 import com.jwt.models.Stat;
 import com.jwt.models.StatId;
 import com.jwt.models.StatModel;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -33,6 +35,23 @@ public class StatController {
     public @ResponseBody List<Stat> list(){
         return statService.list();
     }
+
+    // return Score by Fixture Date
+
+    @GetMapping(value="/scoreByFixtureDate")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody Result scoreByFixtureDateById(@RequestParam("fixture_date") Date fixtureDate){
+        return statService.scoreByFixtureDate(fixtureDate);
+    }
+
+    // return Score by Fixture Id
+
+    @GetMapping(value="/findByFixtureId")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<Stat> findByFixtureDateById(@RequestParam("fixture_id") Long fixtureId){
+        return statService.findByFixtureId(fixtureId);
+    }
+
 
     // return Club by id
 
@@ -74,4 +93,7 @@ public class StatController {
     public ResponseEntity<MessageResponse> delete(@RequestBody Stat stat){
         return statService.delete(stat);
     }
+
+
+
 }

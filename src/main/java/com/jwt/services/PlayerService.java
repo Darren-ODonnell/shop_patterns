@@ -60,6 +60,14 @@ public class PlayerService {
         return players.orElse(new ArrayList<>());
     }
 
+    public  List<Player> findByLastname(String lastname) {
+        Optional<List<Player>> players = playerRepository.findByLastname(lastname);
+        if(players.isEmpty())
+            new MyMessageResponse("Player not found with lastname: " + lastname, MessageTypes.WARN);
+
+        return players.orElse(new ArrayList<>());
+    }
+
     // return players with same firstname
 
     public List<Player> findByFirstname(PlayerModel playerModel) {
