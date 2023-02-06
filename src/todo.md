@@ -12,11 +12,15 @@ SQLx Sql scripts to incorporate into repositories
 # Bugs
     E1 Update and Edit do not work with React
     E7: java errors appear when database is not available - check availability and repond with message as necessary.
-    E8: 
+    E8: Add endpoint for change password
+        React end is complete. need matching element here.
     E10: 
 
 # New Code Cx
-    C15:
+    C15: Allow database updates via csv files
+        Concentrating on new records for now
+        Clubs, Players, Firstnames, Lastname, Competitions, Statnames
+        pass file from react. or pass array of records where the files is read into react and passed to Spring
     C16:
     C17:
 
