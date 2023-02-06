@@ -1,6 +1,7 @@
 package com.jwt.controllers;
 
 import com.jwt.exceptions.NotFoundException;
+import com.jwt.payload.request.ChangePasswordRequest;
 import com.jwt.payload.request.LoginRequest;
 import com.jwt.payload.request.SignupRequest;
 import com.jwt.payload.response.JwtResponse;
@@ -194,6 +195,13 @@ public class AuthController {
     @GetMapping(value="/checkToken" )
     public @ResponseBody boolean checkToken(@RequestParam("token") String token){
         return jwtUtils.validateJwtToken(token);
+    }
+
+    @PostMapping(value="/changePassword" )
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest){
+        // Validate the input and perform the password change operation
+        // ...
+        return ResponseEntity.ok("Password changed successfully");
     }
 
 }
