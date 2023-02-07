@@ -13,6 +13,9 @@ public class Club {
     @Column(name = "name", length = 45)
     private String name;
 
+    @Column(name = "irish_name", length = 45)
+    private String irishName;
+
     @Column(name = "contact_name", length = 45)
     private String contactName;
 
@@ -45,6 +48,14 @@ public class Club {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIrishName() {
+        return irishName;
+    }
+
+    public void setIrishName(String irishName) {
+        this.irishName = irishName;
     }
 
     public String getContactName() {

@@ -1,8 +1,11 @@
 package com.jwt.models;
 
+import javax.persistence.Column;
+
 public class ClubModel {
 
     private String name;
+    private String irishName;
     private String contactName;
     private String contactEmail;
     private String contactPhone;
@@ -12,6 +15,9 @@ public class ClubModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public void setIrishName(String irishName) {
+        this.irishName = irishName;
     }
     public void setContactName(String contactName) {
         this.contactName = contactName;
@@ -50,6 +56,9 @@ public class ClubModel {
     public String getName() {
         return name;
     }
+    public String getIrishName() {
+        return irishName;
+    }
     public String getAbbrev() {
         return abbrev;
     }
@@ -57,6 +66,7 @@ public class ClubModel {
     public Club translateModelToClub(){
         Club club = new Club();
         club.setName(this.name);
+        club.setIrishName(this.irishName);
         club.setContactName(this.contactName);
         club.setContactEmail(this.contactEmail);
         club.setContactPhone(this.contactPhone);
