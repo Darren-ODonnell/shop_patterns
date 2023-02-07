@@ -25,7 +25,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -208,8 +207,10 @@ public class AuthController {
 
         // check that a user exists
         Optional<User> userObj = userRepository.findByUsername(changePasswordRequest.getUsername());
-        if(!userObj.isPresent())
+        if(userObj.isEmpty())
             return ResponseEntity.ok("User Details do not exist");
+
+        // encode oldPassword and check with db
         BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
         User user = userObj.get();
         boolean passwordOk = bc.matches(changePasswordRequest.getOldPassword(), user.getPassword());

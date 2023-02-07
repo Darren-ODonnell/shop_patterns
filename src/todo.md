@@ -12,8 +12,7 @@ SQLx Sql scripts to incorporate into repositories
 # Bugs
     E1 Update and Edit do not work with React
     E7: java errors appear when database is not available - check availability and repond with message as necessary.
-    E8: Add endpoint for change password
-        React end is complete. need matching element here.
+
     E10: 
 
 # New Code Cx
@@ -189,4 +188,5 @@ SQLx Sql scripts to incorporate into repositories
     SQL9: replace '*' with individual attribute names.
     SQL10: Stats - change table contents to uppercase(abbrev)
     E6 "/stats_view/findBySeason" - updated
-       
+    E8: Add endpoint for change password
+        React end is complete. need matching element here.
