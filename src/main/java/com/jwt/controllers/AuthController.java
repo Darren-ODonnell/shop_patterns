@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -198,10 +199,31 @@ public class AuthController {
     }
 
     @PostMapping(value="/changePassword" )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest){
-        // Validate the input and perform the password change operation
-        // ...
+
+        // verify new password and passwordConfirm are the same
+        if(!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getPasswordConfirm()))
+            return ResponseEntity.ok("New Password and Confirm Password do not match");
+
+        // check that a user exists
+        Optional<User> userObj = userRepository.findByUsername(changePasswordRequest.getUsername());
+        if(!userObj.isPresent())
+            return ResponseEntity.ok("User Details do not exist");
+        BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+        User user = userObj.get();
+        boolean passwordOk = bc.matches(changePasswordRequest.getOldPassword(), user.getPassword());
+
+        // verify that the oldPassword and the password in the db are the same
+
+        if (!passwordOk) {
+            return ResponseEntity.ok("Old Password does not match");
+        }
+
+        // set the new password and save to the db
+        user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
+        userRepository.save(user);
+
         return ResponseEntity.ok("Password changed successfully");
     }
-
 }
