@@ -26,7 +26,7 @@ SQLx Sql scripts to incorporate into repositories
 # Database Changes
     D2: Load sample Data
     D4: Update data with new Field data
-    D5: 
+
     D6: 
     D7: 
 
@@ -190,3 +190,5 @@ SQLx Sql scripts to incorporate into repositories
     E6 "/stats_view/findBySeason" - updated
     E8: Add endpoint for change password
         React end is complete. need matching element here.
+    D5: Extra Competitions to be added
+        DB updated from previous teamsheets - Adult 7s, Challenge Games
