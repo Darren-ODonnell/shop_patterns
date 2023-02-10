@@ -2,31 +2,34 @@ package com.jwt.services;
 
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
-import com.jwt.models.Player;
-import com.jwt.models.Teamsheet;
-import com.jwt.models.TeamsheetId;
-import com.jwt.models.TeamsheetModel;
+import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
 
+import com.jwt.repositories.ClubRepository;
+import com.jwt.repositories.FixtureRepository;
 import com.jwt.repositories.TeamsheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
 public class TeamsheetService {
-
     TeamsheetRepository teamsheetRepository;
-
+    FixtureRepository fixtureRepository;
+    ClubService clubService;
     @Autowired
-    public TeamsheetService(TeamsheetRepository teamsheetRepository) {
+    public TeamsheetService(TeamsheetRepository teamsheetRepository,FixtureRepository fixtureRepository, ClubService clubService) {
         this.teamsheetRepository = teamsheetRepository;
+        this.fixtureRepository = fixtureRepository;
+        this.clubService = clubService;
     }
 
     // return all Teamsheets
@@ -46,7 +49,7 @@ public class TeamsheetService {
         return teamsheet.orElse(new Teamsheet());
     }
     public List<Teamsheet> findByFixtureId( Long id){
-        Optional<List<Teamsheet>> teamsheets = Optional.ofNullable(teamsheetRepository.findByFixtureId(id));
+        Optional<List<Teamsheet>> teamsheets = teamsheetRepository.findByFixtureId(id);
         if(teamsheets.isEmpty())
             new MyMessageResponse(String.format("Fixture id: %d not found", id), MessageTypes.ERROR);
         return teamsheets.orElse(new ArrayList<>());
@@ -105,5 +108,14 @@ public class TeamsheetService {
     }
 
 
+    public List<Teamsheet> findPlayersByFixtureDate(Date fixtureDate) {
+        String team = "Naomh Jude";
+        Long teamId = clubService.getIdByName(team);
+        List<Fixture> fixtures = fixtureRepository.findByFixtureDate(fixtureDate).orElse(new ArrayList());
 
+        return  fixtures.stream()
+                .filter(f -> f.getHomeTeam().getId().equals(teamId)  || f.getAwayTeam().getId().equals(teamId))
+                .flatMap(f -> teamsheetRepository.findByFixtureId(f.getId()).orElse(new ArrayList<Teamsheet>()).stream())
+                .collect(Collectors.toList());
+    }
 }

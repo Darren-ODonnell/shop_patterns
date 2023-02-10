@@ -20,13 +20,12 @@ SQLx Sql scripts to incorporate into repositories
         Concentrating on new records for now
         Clubs, Players, Firstnames, Lastname, Competitions, Statnames
         pass file from react. or pass array of records where the files is read into react and passed to Spring
-    C16:
+
     C17:
 
 # Database Changes
     D2: Load sample Data
     D4: Update data with new Field data
-
     D6: 
     D7: 
 
@@ -192,3 +191,5 @@ SQLx Sql scripts to incorporate into repositories
         React end is complete. need matching element here.
     D5: Extra Competitions to be added
         DB updated from previous teamsheets - Adult 7s, Challenge Games
+    C16: Add endpoint findPlayersByFixtureDate (returning list of teamsheets (containing players) buy fixtureDate
+        Client will need to extract players from the teamsheets for this fixtureDate

@@ -31,6 +31,14 @@ public class ClubService {
         return clubs;
     }
 
+    public Long getIdByName(String name){
+        Club club = clubRepository.getByName(name).orElse(new Club());
+        if (!club.getName().equals(name))
+            new MyMessageResponse(String.format("Club name: %d not found", name), MessageTypes.ERROR);
+        return club.getId();
+    }
+
+
     // return Club by id
 
     public Club findById( Long id){

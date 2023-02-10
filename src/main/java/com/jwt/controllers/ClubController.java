@@ -67,7 +67,6 @@ public class ClubController {
         return clubService.update( club.getId(), club );
     }
 
-
     // delete by id
 
     @DeleteMapping(value="/delete")
