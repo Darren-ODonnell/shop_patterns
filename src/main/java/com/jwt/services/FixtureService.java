@@ -21,14 +21,15 @@ import java.util.Optional;
 public class FixtureService {
 
     private final FixtureRepository fixtureRepository;
-    private final ClubRepository clubRepository;
-    private final CompetitionRepository competitionRepository;
+
+    private final ClubService clubService;
+    private final CompetitionService competitionService;
 
     @Autowired
-    public FixtureService(FixtureRepository fixtureRepository, ClubRepository clubRepository, CompetitionRepository competitionRepository) {
+    public FixtureService(FixtureRepository fixtureRepository, ClubService clubService, CompetitionService competitionService) {
         this.fixtureRepository = fixtureRepository;
-        this.clubRepository = clubRepository;
-        this.competitionRepository = competitionRepository;
+        this.clubService = clubService;
+        this.competitionService = competitionService;
     }
 
     // return all fixtures
@@ -156,14 +157,14 @@ public class FixtureService {
 
     public ResponseEntity<MessageResponse> add(FixtureModel fixtureModel){
 
-        Club homeTeam = clubRepository.getById(fixtureModel.getHomeTeamId());
-        Club awayTeam = clubRepository.getById(fixtureModel.getAwayTeamId());
-        Competition competition = competitionRepository.getById(fixtureModel.getCompetitionId());
+        Club homeTeam = clubService.findById(fixtureModel.getHomeTeamId());
+        Club awayTeam = clubService.findById(fixtureModel.getAwayTeamId());
+        Competition competition = competitionService.findById(fixtureModel.getCompetitionId());
 
         if(fixtureRepository.existsByHomeTeamAndAwayTeamAndCompetitionAndSeason(homeTeam, awayTeam, competition, fixtureModel.getSeason()))
             return ResponseEntity.ok(new MyMessageResponse("Error: Fixture already exists", MessageTypes.WARN));
 
-        fixtureRepository.save(fixtureModel.translateModelToFixture(competitionRepository, clubRepository));
+        fixtureRepository.save(fixtureModel.translateModelToFixture(competitionService, clubService));
         return ResponseEntity.ok(new MyMessageResponse("new Fixture added", MessageTypes.INFO));
     }
 
@@ -192,14 +193,7 @@ public class FixtureService {
     // get clubid from name
 
     private Long getClubId(String name) {
-        Long id = null;
-
-        Optional<Club> club = clubRepository.findByName(name);
-        if(club.isEmpty())
-            new MyMessageResponse("Club name does not exists: " + name, MessageTypes.WARN);
-        else
-            id = club.get().getId();
-        return id;
+        return clubService.getIdByName(name);
     }
 
     // retrieve fixture by date where one of the clubs is St Judes

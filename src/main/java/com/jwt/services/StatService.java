@@ -21,26 +21,23 @@ import java.util.Optional;
 @Service
 public class StatService {
 
+
     StatRepository statRepository;
 
-    PitchGridRepository pitchGridRepository;
-    PlayerRepository playerRepository;
-    StatNameRepository statNameRepository;
+    PitchGridService pitchGridService;
     FixtureService fixtureService;
-
     StatNameService statNameService;
     PlayerService playerService;
     ClubService clubService;
 
 
     @Autowired
-    public StatService( StatRepository statRepository, PitchGridRepository pitchGridRepository, PlayerRepository playerRepository,
-                        StatNameRepository statNameRepository, FixtureService fixtureService,
+    public StatService( StatRepository statRepository, PitchGridService pitchGridService,
+                         FixtureService fixtureService,
                         StatNameService statNameService, PlayerService playerService, ClubService clubService ) {
         this.statRepository = statRepository;
-        this.pitchGridRepository = pitchGridRepository;
-        this.playerRepository = playerRepository;
-        this.statNameRepository = statNameRepository;
+        this.pitchGridService = pitchGridService;
+
         this.fixtureService = fixtureService;
         this.clubService = clubService;
         this.playerService = playerService;
@@ -97,7 +94,7 @@ public class StatService {
         long oppPoints = 0;
 
         // get club id
-        // get fixture ID - Judes must have played either a home or away fixture
+        // get fixture ID - Judes must have played either a home or away fixture on this date
         Long clubId = clubService.findByName(clubName).getId();
         // find the fixture on a specific date for the club team - St Judes
         // ie on a specific date, the team, is either playing at home or away hence the longer than usual repo call.
@@ -108,15 +105,11 @@ public class StatService {
             new MyMessageResponse(String.format("Score: No Fixture with [%s] found for this date: [%s]", clubName, fixtureDate.toString()), MessageTypes.ERROR);
         }
 
-
-//        Optional<List<Stat>> stats = statRepository.findByFixtureId(fixture.getId());
-
         Optional<List<Stat>> goals = statRepository.findByFixtureIdAndSuccessAndStatNameOrFixtureIdAndSuccessAndStatName(
                 fixture.getId(), SUCCESS, freeScore, fixture.getId(), SUCCESS, goal);
 
         Optional<List<Stat>> points = statRepository.findByFixtureIdAndSuccessAndStatNameOrFixtureIdAndSuccessAndStatName(
                 fixture.getId(), SUCCESS, freeScore, fixture.getId(), SUCCESS, point);
-
 
         if(goals.isPresent()) {
             oppGoals = goals.get()
@@ -193,7 +186,7 @@ public class StatService {
         if(statRepository.existsById(statId))
             return ResponseEntity.ok(new MyMessageResponse("Error: Stat already exists", MessageTypes.WARN));
 
-        Stat stat = statModel.translateModelToStat( fixtureService,  playerRepository, pitchGridRepository,  statNameRepository);
+        Stat stat = statModel.translateModelToStat( fixtureService,  playerService, pitchGridService,  statNameService);
         stat.setId(statId);
         statRepository.save(stat);
         return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));
@@ -223,7 +216,4 @@ public class StatService {
         statRepository.save(stat);
         return ResponseEntity.ok(new MyMessageResponse("Stat record updated", MessageTypes.INFO));
     }
-
-
-
 }

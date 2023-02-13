@@ -5,6 +5,9 @@ import com.jwt.repositories.PitchGridRepository;
 import com.jwt.repositories.PlayerRepository;
 import com.jwt.repositories.StatNameRepository;
 import com.jwt.services.FixtureService;
+import com.jwt.services.PitchGridService;
+import com.jwt.services.PlayerService;
+import com.jwt.services.StatNameService;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -75,24 +78,24 @@ public class StatModel {
         this.timeOccurred = timeOccurred;
     }
 
-    public Stat translateModelToStat(FixtureService fixtureService, PlayerRepository playerRepository,
-                                     PitchGridRepository pitchGridRepository, StatNameRepository statNameRepository){
+    public Stat translateModelToStat(FixtureService fixtureService, PlayerService playerService,
+                                     PitchGridService pitchGridService, StatNameService statNameService){
         Stat stat = new Stat();
         stat.setFixture(fixtureService.getById(fixtureId));
-        stat.setPlayer(playerRepository.getById(playerId));
+        stat.setPlayer(playerService.findById(playerId));
         stat.setSuccess(this.success);
         stat.setHalf(this.half);
-        Optional<PitchGrid> location = pitchGridRepository.findById(locationId);
-        stat.setLocation(location.orElse(new PitchGrid()));
-        stat.setStatName(statNameRepository.getById(statNameId));
+        PitchGrid location = pitchGridService.findById(locationId);
+        stat.setLocation(location);
+        stat.setStatName(statNameService.findById(statNameId));
 
         return stat;
     }
 
     // used in update operations
-    public Stat translateModelToStat(FixtureService fixtureService, PlayerRepository playerRepository,
-                                     PitchGridRepository pitchGridRepository, StatNameRepository statNameRepository, StatId id){
-        Stat stat = translateModelToStat(fixtureService, playerRepository, pitchGridRepository, statNameRepository);
+    public Stat translateModelToStat(FixtureService fixtureService, PlayerService playerService,
+                                     PitchGridService pitchGridService, StatNameService statNameService, StatId id){
+        Stat stat = translateModelToStat(fixtureService, playerService, pitchGridService, statNameService);
         stat.setId(id);
         return stat;
     }

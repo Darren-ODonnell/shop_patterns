@@ -2,6 +2,8 @@ package com.jwt.models;
 
 import com.jwt.repositories.ClubRepository;
 import com.jwt.repositories.CompetitionRepository;
+import com.jwt.services.ClubService;
+import com.jwt.services.CompetitionService;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -52,14 +54,14 @@ public class FixtureModel {
         return competitionId;
     }
 
-    public Fixture translateModelToFixture(CompetitionRepository competitionRepository, ClubRepository clubRepository) {
+    public Fixture translateModelToFixture(CompetitionService competitionService, ClubService clubService) {
         Fixture fixture = new Fixture();
 
-        fixture.setCompetition(competitionRepository.getById(this.competitionId));
-        Optional<Club> club = clubRepository.findById(this.homeTeamId);
-        fixture.setHomeTeam(club.orElse(new Club()));
-        club = clubRepository.findById(this.awayTeamId);
-        fixture.setAwayTeam(club.orElse(new Club()));
+        fixture.setCompetition(competitionService.findById(this.competitionId));
+        Club club = clubService.findById(this.homeTeamId);
+        fixture.setHomeTeam(club);
+        club = clubService.findById(this.awayTeamId);
+        fixture.setAwayTeam(club);
         fixture.setFixtureDate(this.fixtureDate);
         fixture.setFixtureTime(this.fixtureTime);
 //        Time time = new Time(this.fixtureTime);
@@ -71,8 +73,8 @@ public class FixtureModel {
     }
     // used in update operations
 
-    public Fixture translateModelToFixture(CompetitionRepository competitionRepository, ClubRepository clubRepository, Long id) {
-        Fixture fixture = translateModelToFixture(competitionRepository, clubRepository);
+    public Fixture translateModelToFixture(CompetitionService competitionService, ClubService clubService, Long id) {
+        Fixture fixture = translateModelToFixture(competitionService, clubService);
         fixture.setId(id);
         return fixture;
     }

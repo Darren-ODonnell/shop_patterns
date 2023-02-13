@@ -22,9 +22,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamsheetService {
+
     TeamsheetRepository teamsheetRepository;
     FixtureRepository fixtureRepository;
+
     ClubService clubService;
+
     @Autowired
     public TeamsheetService(TeamsheetRepository teamsheetRepository,FixtureRepository fixtureRepository, ClubService clubService) {
         this.teamsheetRepository = teamsheetRepository;

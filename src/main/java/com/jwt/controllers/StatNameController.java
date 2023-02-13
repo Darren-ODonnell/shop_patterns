@@ -1,6 +1,5 @@
 package com.jwt.controllers;
 
-import com.jwt.models.Firstname;
 import com.jwt.models.StatName;
 import com.jwt.models.StatNameModel;
 import com.jwt.payload.response.MessageResponse;
@@ -8,7 +7,7 @@ import com.jwt.services.StatNameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
