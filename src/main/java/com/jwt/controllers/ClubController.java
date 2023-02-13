@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Darren O'Donnell
  */
-@Controller
+@RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping({"/club","/clubs"})
 public class ClubController {
@@ -66,7 +66,6 @@ public class ClubController {
     public ResponseEntity<MessageResponse> update(@RequestBody Club club) {
         return clubService.update( club.getId(), club );
     }
-
 
     // delete by id
 

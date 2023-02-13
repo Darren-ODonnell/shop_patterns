@@ -4,6 +4,7 @@ import com.jwt.repositories.FixtureRepository;
 import com.jwt.repositories.PitchGridRepository;
 import com.jwt.repositories.PlayerRepository;
 import com.jwt.repositories.StatNameRepository;
+import com.jwt.services.FixtureService;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -74,10 +75,10 @@ public class StatModel {
         this.timeOccurred = timeOccurred;
     }
 
-    public Stat translateModelToStat(FixtureRepository fixtureRepository, PlayerRepository playerRepository,
+    public Stat translateModelToStat(FixtureService fixtureService, PlayerRepository playerRepository,
                                      PitchGridRepository pitchGridRepository, StatNameRepository statNameRepository){
         Stat stat = new Stat();
-        stat.setFixture(fixtureRepository.getById(fixtureId));
+        stat.setFixture(fixtureService.getById(fixtureId));
         stat.setPlayer(playerRepository.getById(playerId));
         stat.setSuccess(this.success);
         stat.setHalf(this.half);
@@ -89,9 +90,9 @@ public class StatModel {
     }
 
     // used in update operations
-    public Stat translateModelToStat(FixtureRepository fixtureRepository, PlayerRepository playerRepository,
+    public Stat translateModelToStat(FixtureService fixtureService, PlayerRepository playerRepository,
                                      PitchGridRepository pitchGridRepository, StatNameRepository statNameRepository, StatId id){
-        Stat stat = translateModelToStat(fixtureRepository, playerRepository, pitchGridRepository, statNameRepository);
+        Stat stat = translateModelToStat(fixtureService, playerRepository, pitchGridRepository, statNameRepository);
         stat.setId(id);
         return stat;
     }

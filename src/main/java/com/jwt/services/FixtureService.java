@@ -46,6 +46,29 @@ public class FixtureService {
         return fixtureRepository.findByFixtureDateAfterOrderByFixtureDate(date).orElse(new ArrayList<>());
     }
 
+
+    // list fixtures by date
+
+    public List<Fixture> getByFixtureDate(Date fixtureDate) {
+        List<Fixture> fixtures = fixtureRepository.findByFixtureDate(fixtureDate).orElse(new ArrayList<>());
+
+        if(fixtures.isEmpty()) {
+            new MyMessageResponse("No Fixtures found for this date: " + fixtureDate, MessageTypes.WARN);
+        }
+        return fixtures;
+    }
+
+    // list fixtures by date
+
+    public Fixture getById(Long fixtureId) {
+        Fixture fixture = fixtureRepository.findById(fixtureId).orElse(new Fixture());
+
+        if(fixture.getId()==null) {
+            new MyMessageResponse("No Fixtures found for this Id: " + fixtureId, MessageTypes.WARN);
+        }
+        return fixture;
+    }
+
     // Return all fixture for a given club
 
     public List<Fixture> getClubFixtures(ClubModel clubModel)  {
@@ -177,5 +200,17 @@ public class FixtureService {
         else
             id = club.get().getId();
         return id;
+    }
+
+    // retrieve fixture by date where one of the clubs is St Judes
+
+    public Fixture findByFixtureDateAndHomeTeamIdOrFixtureDateAndAwayTeamId(Date fixtureDate, Long clubId, Date fixtureDate1, Long clubId1) {
+        List<Fixture> fixtures = fixtureRepository.findByFixtureDateAndHomeTeamIdOrFixtureDateAndAwayTeamId(fixtureDate, clubId, fixtureDate, clubId).orElse(new ArrayList<>());
+
+        if(fixtures.size() > 1)
+            new MyMessageResponse("Unique Fixture Does not exist",MessageTypes.WARN);
+        else if(fixtures.size() == 0)
+            new MyMessageResponse("No Fixture Found for this date" + fixtureDate,MessageTypes.WARN);
+        return fixtures.get(0);
     }
 }

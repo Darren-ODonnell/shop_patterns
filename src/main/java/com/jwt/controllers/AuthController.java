@@ -1,6 +1,7 @@
 package com.jwt.controllers;
 
 import com.jwt.exceptions.NotFoundException;
+import com.jwt.payload.request.ChangePasswordRequest;
 import com.jwt.payload.request.LoginRequest;
 import com.jwt.payload.request.SignupRequest;
 import com.jwt.payload.response.JwtResponse;
@@ -24,16 +25,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Controller
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -196,4 +197,34 @@ public class AuthController {
         return jwtUtils.validateJwtToken(token);
     }
 
+    @PostMapping(value="/changePassword" )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest){
+
+        // verify new password and passwordConfirm are the same
+        if(!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getPasswordConfirm()))
+            return ResponseEntity.ok("New Password and Confirm Password do not match");
+
+        // check that a user exists
+        Optional<User> userObj = userRepository.findByUsername(changePasswordRequest.getUsername());
+        if(userObj.isEmpty())
+            return ResponseEntity.ok("User Details do not exist");
+
+        // encode oldPassword and check with db
+        BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+        User user = userObj.get();
+        boolean passwordOk = bc.matches(changePasswordRequest.getOldPassword(), user.getPassword());
+
+        // verify that the oldPassword and the password in the db are the same
+
+        if (!passwordOk) {
+            return ResponseEntity.ok("Old Password does not match");
+        }
+
+        // set the new password and save to the db
+        user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Password changed successfully");
+    }
 }
