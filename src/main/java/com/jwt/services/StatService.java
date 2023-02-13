@@ -26,7 +26,7 @@ public class StatService {
     PitchGridRepository pitchGridRepository;
     PlayerRepository playerRepository;
     StatNameRepository statNameRepository;
-    FixtureRepository fixtureRepository;
+    FixtureService fixtureService;
 
     StatNameService statNameService;
     PlayerService playerService;
@@ -35,13 +35,13 @@ public class StatService {
 
     @Autowired
     public StatService( StatRepository statRepository, PitchGridRepository pitchGridRepository, PlayerRepository playerRepository,
-                        StatNameRepository statNameRepository, FixtureRepository fixtureRepository,
+                        StatNameRepository statNameRepository, FixtureService fixtureService,
                         StatNameService statNameService, PlayerService playerService, ClubService clubService ) {
         this.statRepository = statRepository;
         this.pitchGridRepository = pitchGridRepository;
         this.playerRepository = playerRepository;
         this.statNameRepository = statNameRepository;
-        this.fixtureRepository = fixtureRepository;
+        this.fixtureService = fixtureService;
         this.clubService = clubService;
         this.playerService = playerService;
         this.statNameService = statNameService;
@@ -75,7 +75,7 @@ public class StatService {
     // return Stat by id
 
     public Result scoreByFixtureDate( Date fixtureDate){
-        String clubName   = "Naomh Jude";
+        String clubName   = "St Judes";
         String FREESCORE  = "FS";
         String POINT      = "SCPT";
         String GOAL       = "SCG";
@@ -99,11 +99,10 @@ public class StatService {
         // get club id
         // get fixture ID - Judes must have played either a home or away fixture
         Long clubId = clubService.findByName(clubName).getId();
-        // find the fixture on a specific date for the club team - Naomh Jude
+        // find the fixture on a specific date for the club team - St Judes
         // ie on a specific date, the team, is either playing at home or away hence the longer than usual repo call.
-        List<Fixture> fixtures = fixtureRepository.findByFixtureDateAndHomeTeamIdOrFixtureDateAndAwayTeamId(fixtureDate, clubId, fixtureDate, clubId);
 
-        Fixture fixture = fixtures.get(0);
+        Fixture fixture = fixtureService.findByFixtureDateAndHomeTeamIdOrFixtureDateAndAwayTeamId(fixtureDate, clubId, fixtureDate, clubId);
 
         if (fixture.getId() == null) {
             new MyMessageResponse(String.format("Score: No Fixture with [%s] found for this date: [%s]", clubName, fixtureDate.toString()), MessageTypes.ERROR);
@@ -194,7 +193,7 @@ public class StatService {
         if(statRepository.existsById(statId))
             return ResponseEntity.ok(new MyMessageResponse("Error: Stat already exists", MessageTypes.WARN));
 
-        Stat stat = statModel.translateModelToStat( fixtureRepository,  playerRepository, pitchGridRepository,  statNameRepository);
+        Stat stat = statModel.translateModelToStat( fixtureService,  playerRepository, pitchGridRepository,  statNameRepository);
         stat.setId(statId);
         statRepository.save(stat);
         return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));

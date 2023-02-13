@@ -109,7 +109,7 @@ public class TeamsheetService {
 
 
     public List<Teamsheet> findPlayersByFixtureDate(Date fixtureDate) {
-        String team = "Naomh Jude";
+        String team = "St Judes";
         Long teamId = clubService.getIdByName(team);
         List<Fixture> fixtures = fixtureRepository.findByFixtureDate(fixtureDate).orElse(new ArrayList());
 

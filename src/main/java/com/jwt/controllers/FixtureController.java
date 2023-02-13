@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -89,6 +90,12 @@ public class FixtureController {
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Fixture> findByAwayByClub(@ModelAttribute ClubModel clubModel)  {
         return fixtureService.getClubAwayFixtures(clubModel.getName());
+    }
+
+    @GetMapping(value="/findByFixtureDate")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<Fixture> findByAwayByClub(@ModelAttribute FixtureModel fixtureModel)  {
+        return fixtureService.getByFixtureDate(fixtureModel.getFixtureDate());
     }
 
     // add new fixture
