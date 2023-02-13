@@ -93,7 +93,7 @@ public class FixtureController {
     @GetMapping(value="/findByFixtureDate")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Fixture> findByAwayByClub(@ModelAttribute FixtureModel fixtureModel)  {
-        return fixtureService.getByFixtureDate(fixtureModel.getFixtureDate());
+        return fixtureService.findByFixtureDate(fixtureModel.getFixtureDate());
     }
 
     // add new fixture

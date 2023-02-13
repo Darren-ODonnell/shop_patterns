@@ -5,8 +5,7 @@ import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
 
-import com.jwt.repositories.ClubRepository;
-import com.jwt.repositories.FixtureRepository;
+
 import com.jwt.repositories.TeamsheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +23,13 @@ import java.util.stream.Collectors;
 public class TeamsheetService {
 
     TeamsheetRepository teamsheetRepository;
-    FixtureRepository fixtureRepository;
-
+    FixtureService fixtureService;
     ClubService clubService;
 
     @Autowired
-    public TeamsheetService(TeamsheetRepository teamsheetRepository,FixtureRepository fixtureRepository, ClubService clubService) {
+    public TeamsheetService(TeamsheetRepository teamsheetRepository,FixtureService fixtureService, ClubService clubService) {
         this.teamsheetRepository = teamsheetRepository;
-        this.fixtureRepository = fixtureRepository;
+        this.fixtureService = fixtureService;
         this.clubService = clubService;
     }
 
@@ -114,7 +112,7 @@ public class TeamsheetService {
     public List<Teamsheet> findPlayersByFixtureDate(Date fixtureDate) {
         String team = "St Judes";
         Long teamId = clubService.getIdByName(team);
-        List<Fixture> fixtures = fixtureRepository.findByFixtureDate(fixtureDate).orElse(new ArrayList());
+        List<Fixture> fixtures = fixtureService.findByFixtureDate(fixtureDate);
 
         return  fixtures.stream()
                 .filter(f -> f.getHomeTeam().getId().equals(teamId)  || f.getAwayTeam().getId().equals(teamId))

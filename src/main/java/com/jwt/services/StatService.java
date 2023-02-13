@@ -23,7 +23,6 @@ public class StatService {
 
 
     StatRepository statRepository;
-
     PitchGridService pitchGridService;
     FixtureService fixtureService;
     StatNameService statNameService;

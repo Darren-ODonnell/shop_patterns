@@ -51,7 +51,6 @@ public class StatController {
         return statService.findByFixtureId(fixtureId);
     }
 
-
     // return Club by id
 
     @GetMapping(value="/findById")
@@ -84,7 +83,6 @@ public class StatController {
         return statService.update( stat.getId(), stat );
     }
 
-
     // delete by id
 
     @DeleteMapping(value="/delete")
@@ -92,7 +90,4 @@ public class StatController {
     public ResponseEntity<MessageResponse> delete(@RequestBody Stat stat){
         return statService.delete(stat);
     }
-
-
-
 }

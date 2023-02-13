@@ -37,7 +37,6 @@ SQLx Sql scripts to incorporate into repositories
         Players (Firstname, lastname)
         refactoring done - original clases and supporting code left in for now!
 
-    R3: 
     R4: 
     R5: 
 
@@ -193,3 +192,5 @@ SQLx Sql scripts to incorporate into repositories
         DB updated from previous teamsheets - Adult 7s, Challenge Games
     C16: Add endpoint findPlayersByFixtureDate (returning list of teamsheets (containing players) buy fixtureDate
         Client will need to extract players from the teamsheets for this fixtureDate
+    R3: Refactor foreign Repo entries in services with services
+        Stat, Fixture, and Teamsheet

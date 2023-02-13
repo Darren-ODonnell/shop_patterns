@@ -1,16 +1,11 @@
 package com.jwt.models;
 
-import com.jwt.repositories.FixtureRepository;
-import com.jwt.repositories.PitchGridRepository;
-import com.jwt.repositories.PlayerRepository;
-import com.jwt.repositories.StatNameRepository;
 import com.jwt.services.FixtureService;
 import com.jwt.services.PitchGridService;
 import com.jwt.services.PlayerService;
 import com.jwt.services.StatNameService;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class StatModel {
 

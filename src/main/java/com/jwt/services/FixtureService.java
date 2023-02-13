@@ -4,8 +4,6 @@ import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
-import com.jwt.repositories.ClubRepository;
-import com.jwt.repositories.CompetitionRepository;
 import com.jwt.repositories.FixtureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +48,7 @@ public class FixtureService {
 
     // list fixtures by date
 
-    public List<Fixture> getByFixtureDate(Date fixtureDate) {
+    public List<Fixture> findByFixtureDate(Date fixtureDate) {
         List<Fixture> fixtures = fixtureRepository.findByFixtureDate(fixtureDate).orElse(new ArrayList<>());
 
         if(fixtures.isEmpty()) {

@@ -1,13 +1,11 @@
 package com.jwt.models;
 
-import com.jwt.repositories.ClubRepository;
-import com.jwt.repositories.CompetitionRepository;
 import com.jwt.services.ClubService;
 import com.jwt.services.CompetitionService;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Optional;
+
 
 public class FixtureModel {
     private Long competitionId;
@@ -64,8 +62,6 @@ public class FixtureModel {
         fixture.setAwayTeam(club);
         fixture.setFixtureDate(this.fixtureDate);
         fixture.setFixtureTime(this.fixtureTime);
-//        Time time = new Time(this.fixtureTime);
-//        fixture.setSqlTime(time);
         fixture.setSeason(this.season);
         fixture.setRound(this.round);
 
