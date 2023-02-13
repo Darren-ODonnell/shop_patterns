@@ -12,12 +12,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
  * @author Darren O'Donnell
- */git
-@Controller
+ */
+
+@RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping({"/teamsheet","/teamsheets"})
 public class TeamsheetController {
@@ -58,6 +60,14 @@ public class TeamsheetController {
     public @ResponseBody List<Player> findPlayersByFixtureId(@RequestParam("id") Long id){
         return teamsheetService.findPlayersByFixtureId(id);
     }
+
+    @GetMapping(value="/findPlayersByFixtureDate")
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<Teamsheet> findPlayersByFixtureDate(@RequestParam("fixture_date") Date fixtureDate){
+        return teamsheetService.findPlayersByFixtureDate(fixtureDate);
+    }
+
+
     @GetMapping(value="/findByPlayerId")
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Teamsheet> findByPlayerId(@RequestParam("id") Long playerId){
