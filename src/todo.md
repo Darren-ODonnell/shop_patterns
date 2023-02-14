@@ -11,9 +11,10 @@ SQLx Sql scripts to incorporate into repositories
 
 # Bugs
     E1 Update and Edit do not work with React
-    E7: java errors appear when database is not available - check availability and repond with message as necessary.
+    E11:
+    E12:
+    E13:
 
-    E10: 
 
 # New Code Cx
     C15: Allow database updates via csv files
@@ -37,6 +38,7 @@ SQLx Sql scripts to incorporate into repositories
         Players (Firstname, lastname)
         refactoring done - original clases and supporting code left in for now!
 
+    R3: 
     R4: 
     R5: 
 
@@ -192,5 +194,11 @@ SQLx Sql scripts to incorporate into repositories
         DB updated from previous teamsheets - Adult 7s, Challenge Games
     C16: Add endpoint findPlayersByFixtureDate (returning list of teamsheets (containing players) buy fixtureDate
         Client will need to extract players from the teamsheets for this fixtureDate
-    R3: Refactor foreign Repo entries in services with services
-        Stat, Fixture, and Teamsheet
+    R1 Refactor Stat classes
+        Stats (Statname and count)
+        Dates (Season and FixtureDate
+        Players (Firstname, lastname)
+        refactoring done - original clases and supporting code left in for now!
+    E10: Remove hard coded clubname into application properties file
+        Two files affected Stat services and teamsheet service
+    E7: java errors appear when database is not available - check availability and repond with message as necessary.

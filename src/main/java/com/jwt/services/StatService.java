@@ -10,6 +10,7 @@ import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,8 @@ import java.util.Optional;
 
 @Service
 public class StatService {
-
+    @Value("${club.name}")
+    private String clubName;
 
     StatRepository statRepository;
     PitchGridService pitchGridService;
@@ -71,7 +73,6 @@ public class StatService {
     // return Stat by id
 
     public Result scoreByFixtureDate( Date fixtureDate){
-        String clubName   = "St Judes";
         String FREESCORE  = "FS";
         String POINT      = "SCPT";
         String GOAL       = "SCG";

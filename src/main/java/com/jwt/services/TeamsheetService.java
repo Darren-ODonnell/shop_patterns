@@ -8,6 +8,7 @@ import com.jwt.payload.response.MessageResponse;
 
 import com.jwt.repositories.TeamsheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamsheetService {
+    @Value("${club.name}")
+    private String clubName;
 
     TeamsheetRepository teamsheetRepository;
     FixtureService fixtureService;
@@ -110,8 +113,8 @@ public class TeamsheetService {
 
 
     public List<Teamsheet> findPlayersByFixtureDate(Date fixtureDate) {
-        String team = "St Judes";
-        Long teamId = clubService.getIdByName(team);
+
+        Long teamId = clubService.getIdByName(clubName);
         List<Fixture> fixtures = fixtureService.findByFixtureDate(fixtureDate);
 
         return  fixtures.stream()
