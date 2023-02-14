@@ -51,6 +51,9 @@ SQLx Sql scripts to incorporate into repositories
     
 # Files Unused Ux
 # Ignored for now Ix
+    E7: java errors appear when database is not available - check availability and repond with message as necessary.
+    Trued multiple methods but failed @EventListener, @PostConstruct @Bean etc 
+    The problem centres around the HikariPool initilaisation. A manual way of loading the db may work better.
 
 # In Progress    
     E1: Update and Edit do not work with React
@@ -201,4 +204,4 @@ SQLx Sql scripts to incorporate into repositories
         refactoring done - original clases and supporting code left in for now!
     E10: Remove hard coded clubname into application properties file
         Two files affected Stat services and teamsheet service
-    E7: java errors appear when database is not available - check availability and repond with message as necessary.
+ 
