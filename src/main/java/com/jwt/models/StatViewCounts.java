@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jwt.enums.SVC;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.sql.Date;
 
 @JsonIgnoreProperties
@@ -30,14 +32,14 @@ public class StatViewCounts extends StatsViewModel {
         BigInteger value = null;
         if (object instanceof Float) {
             Float floatValue = (Float) object;
-            BigDecimal decimal = BigDecimal.valueOf(floatValue);
+            BigDecimal decimal = BigDecimal.valueOf(Math.round(floatValue));
             value = decimal.toBigInteger();
         } else if (object instanceof Double) {
             Double doubleValue = (Double) object;
-            BigDecimal decimalValue = BigDecimal.valueOf(doubleValue);
+            BigDecimal decimalValue = BigDecimal.valueOf(Math.round(doubleValue));
             value =  decimalValue.toBigInteger();
         } else if (object instanceof BigDecimal) {
-            value =  ((BigDecimal) object).toBigInteger();
+            value =  ((BigDecimal) object).round(new MathContext(0, RoundingMode.HALF_UP)).toBigInteger();
         } else if (object instanceof Integer) {
             value =  (BigInteger) object;
         }
