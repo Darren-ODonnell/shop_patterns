@@ -90,4 +90,12 @@ public class StatsViewController {
     public @ResponseBody List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(@RequestParam("fixtureDate") String fixtureDate) {
         return statsViewService.countAllPlayerStatNameByFixtureDateGroupSuccess(fixtureDate);
     }
+
+    @GetMapping(value={"/averageScoreByOpposition"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> averageScoreByOpposition(@RequestParam("club_name") String clubName) {
+        return statsViewService.averageScoreByOpposition(clubName);
+    }
+
+
 }

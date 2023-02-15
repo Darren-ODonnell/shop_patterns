@@ -24,7 +24,24 @@ public class StatViewCounts extends StatsViewModel {
         this.setAwayTeam((String) record[SVC.AWAY_TEAM]);
         this.setFixtureDate((Date) record[SVC.FIXTURE_DATE]);
         this.setLocation((String) record[SVC.LOCATION]);
-        this.setCount((BigInteger) record[SVC.STAT_COUNT]);
+        this.setCount(convertToBigInteger(record[SVC.STAT_COUNT]));
+    }
+    private BigInteger convertToBigInteger(Object object) {
+        BigInteger value = null;
+        if (object instanceof Float) {
+            Float floatValue = (Float) object;
+            BigDecimal decimal = BigDecimal.valueOf(floatValue);
+            value = decimal.toBigInteger();
+        } else if (object instanceof Double) {
+            Double doubleValue = (Double) object;
+            BigDecimal decimalValue = BigDecimal.valueOf(doubleValue);
+            value =  decimalValue.toBigInteger();
+        } else if (object instanceof BigDecimal) {
+            value =  ((BigDecimal) object).toBigInteger();
+        } else if (object instanceof Integer) {
+            value =  (BigInteger) object;
+        }
+        return value;
     }
 
     public BigInteger getCount() {
