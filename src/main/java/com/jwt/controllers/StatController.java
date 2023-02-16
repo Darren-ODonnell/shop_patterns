@@ -36,12 +36,12 @@ public class StatController {
     }
 
     // return Score by Fixture Date
-
-    @GetMapping(value="/scoreByFixtureDate")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody Result scoreByFixtureDateById(@RequestParam("fixture_date") Date fixtureDate){
-        return statService.scoreByFixtureDate(fixtureDate);
-    }
+//
+//    @GetMapping(value="/scoreByFixtureDate")
+//    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+//    public @ResponseBody Result scoreByFixtureDateById(@RequestParam("fixture_date") Date fixtureDate){
+//        return statService.scoreByFixtureDate(fixtureDate);
+//    }
 
     // return Score by Fixture Id
 

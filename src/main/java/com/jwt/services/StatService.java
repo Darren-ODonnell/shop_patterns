@@ -34,12 +34,9 @@ public class StatService {
 
     @Autowired
     public StatService( StatRepository statRepository, PitchGridService pitchGridService,
-                         FixtureService fixtureService,
                         StatNameService statNameService, PlayerService playerService, ClubService clubService ) {
         this.statRepository = statRepository;
         this.pitchGridService = pitchGridService;
-
-        this.fixtureService = fixtureService;
         this.clubService = clubService;
         this.playerService = playerService;
         this.statNameService = statNameService;
@@ -53,6 +50,13 @@ public class StatService {
         if(stats.isEmpty()) new MyMessageResponse("Error: No Stats listed", MessageTypes.WARN);
         return stats;
     }
+
+    // setter injection used to avoid circular dependencies
+    @Autowired
+    public void setFixtureService(FixtureService fixtureService) {
+        this.fixtureService = fixtureService;
+    }
+
 
     // return Stat by id
 
@@ -169,11 +173,9 @@ public class StatService {
 
     // return Stat by name
 
-//    public Stat findByName( StatModel statModel) {
-//        Optional<Stat> stat = statRepository.findByStatName(statModel.getStatName());
-//        if(stat.isEmpty()) new MyMessageResponse(String.format("Stat name: %s not found", statModel.getStatName()), MessageTypes.INFO);
-//        return stat.orElse(new Stat());
-//    }
+    public String findByName( StatModel statModel) {
+        return statNameService.findById(statModel.getStatNameId()).getName();
+    }
 
     // add new Stat
 
@@ -186,7 +188,7 @@ public class StatService {
         if(statRepository.existsById(statId))
             return ResponseEntity.ok(new MyMessageResponse("Error: Stat already exists", MessageTypes.WARN));
 
-        Stat stat = statModel.translateModelToStat( fixtureService,  playerService, pitchGridService,  statNameService);
+        Stat stat = statModel.translateModelToStat();
         stat.setId(statId);
         statRepository.save(stat);
         return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));

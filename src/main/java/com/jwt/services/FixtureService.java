@@ -5,6 +5,7 @@ import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.FixtureRepository;
+import com.jwt.repositories.StatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +20,21 @@ public class FixtureService {
     String clubName;
 
     private final FixtureRepository fixtureRepository;
-
-    private final ClubService clubService;
-    private final StatService statService;
-    private final CompetitionService competitionService;
+    StatService statService;
+    ClubService clubService;
+    CompetitionService competitionService;
 
     @Autowired
-    public FixtureService(FixtureRepository fixtureRepository, ClubService clubService, CompetitionService competitionService, StatService statService) {
+    public FixtureService(FixtureRepository fixtureRepository, ClubService clubService, CompetitionService competitionService) {
         this.fixtureRepository = fixtureRepository;
         this.clubService = clubService;
-        this.statService = statService;
         this.competitionService = competitionService;
+    }
+
+    // setter injection used to avoid circular dependencies
+    @Autowired
+    public void setStatService(StatService statService)  {
+        this.statService = statService;
     }
 
     // return all fixtures
@@ -61,7 +66,6 @@ public class FixtureService {
 
     public List<Fixture> findByHomeTeamAndAwayTeamOrHomeTeamAndAwayTeam(Club club, Club opposition) {
         return fixtureRepository.findByHomeTeamAndAwayTeamOrHomeTeamAndAwayTeam(club, opposition, opposition, club).orElse(new ArrayList<>());
-
     }
 
     // find fixtures by opposition id
@@ -145,13 +149,6 @@ public class FixtureService {
 
         return fixture.orElse(new Fixture());
     }
-
-
-
-
-
-
-
 
     // return fixture by id
 
