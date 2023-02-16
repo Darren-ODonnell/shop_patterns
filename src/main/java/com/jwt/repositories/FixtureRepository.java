@@ -27,5 +27,9 @@ public interface FixtureRepository extends JpaRepository<Fixture, Long> {
 
     Optional<List<Fixture>> findByFixtureDate(Date fixtureDate);
 
+
     Optional<List<Fixture>> findByFixtureDateAndHomeTeamIdOrFixtureDateAndAwayTeamId(Date fixtureDate, Long clubId, Date fixtureDate1, Long clubId1);
+
+    Optional<List<Fixture>> findByHomeTeamAndAwayTeamOrHomeTeamAndAwayTeam(Club club1, Club opposition1, Club opposition2, Club club2);
 }
+

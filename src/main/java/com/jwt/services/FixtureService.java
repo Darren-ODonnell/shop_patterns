@@ -6,27 +6,29 @@ import com.jwt.models.*;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.FixtureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FixtureService {
+    @Value("$(club.name)")
+    String clubName;
 
     private final FixtureRepository fixtureRepository;
 
     private final ClubService clubService;
+    private final StatService statService;
     private final CompetitionService competitionService;
 
     @Autowired
-    public FixtureService(FixtureRepository fixtureRepository, ClubService clubService, CompetitionService competitionService) {
+    public FixtureService(FixtureRepository fixtureRepository, ClubService clubService, CompetitionService competitionService, StatService statService) {
         this.fixtureRepository = fixtureRepository;
         this.clubService = clubService;
+        this.statService = statService;
         this.competitionService = competitionService;
     }
 
@@ -53,6 +55,26 @@ public class FixtureService {
 
         if(fixtures.isEmpty()) {
             new MyMessageResponse("No Fixtures found for this date: " + fixtureDate, MessageTypes.WARN);
+        }
+        return fixtures;
+    }
+
+    public List<Fixture> findByHomeTeamAndAwayTeamOrHomeTeamAndAwayTeam(Club club, Club opposition) {
+        return fixtureRepository.findByHomeTeamAndAwayTeamOrHomeTeamAndAwayTeam(club, opposition, opposition, club).orElse(new ArrayList<>());
+
+    }
+
+    // find fixtures by opposition id
+
+    public List<Fixture> findByOppositionId(Long clubId) {
+        Long id = getClubId(clubName);
+        Club club = clubService.findById(id);
+        Club opposition = clubService.findById(clubId);
+
+        List<Fixture> fixtures = findByHomeTeamAndAwayTeamOrHomeTeamAndAwayTeam(club, opposition);
+
+        if(fixtures.isEmpty()) {
+            new MyMessageResponse("No Fixtures found for this clubId: " + clubId, MessageTypes.WARN);
         }
         return fixtures;
     }
@@ -123,6 +145,13 @@ public class FixtureService {
 
         return fixture.orElse(new Fixture());
     }
+
+
+
+
+
+
+
 
     // return fixture by id
 
@@ -204,5 +233,24 @@ public class FixtureService {
         else if(fixtures.size() == 0)
             new MyMessageResponse("No Fixture Found for this date" + fixtureDate,MessageTypes.WARN);
         return fixtures.get(0);
+    }
+
+    private List<Result> findWinsByOpposition(String team) {
+        //Get all fixtures where judes are playing against opposition where home/ opposition is judes AND home/opposition is team
+        Long clubId = clubService.getIdByName(team);
+        List<Fixture> fixturesVsOpponent = findByOppositionId(clubId);
+
+        List<Result> results = new ArrayList<>();
+        for(Fixture fixture : fixturesVsOpponent) {
+            Result result = statService.scoreByFixtureDate(fixture.getFixtureDate());
+            long homeScore = result.getHomeScorePoints();
+            long awayScore = result.getAwayScorePoints();
+            if (Objects.equals(clubId, fixture.getHomeTeam().getId()) && homeScore < awayScore)
+                results.add(result);
+            if(Objects.equals(clubId, fixture.getAwayTeam().getId()) && awayScore > homeScore)
+                results.add(result);
+
+        }
+        return results;
     }
 }

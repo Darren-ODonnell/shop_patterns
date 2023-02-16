@@ -216,4 +216,24 @@ public class StatService {
         statRepository.save(stat);
         return ResponseEntity.ok(new MyMessageResponse("Stat record updated", MessageTypes.INFO));
     }
+
+    public ResponseEntity<MessageResponse> findStatsForGamesWonAgainst(StatId id, Stat stat){
+
+        // check if exists first
+        // then update
+
+        if(!statRepository.existsById(id))
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
+
+        statRepository.save(stat);
+        return ResponseEntity.ok(new MyMessageResponse("Stat record updated", MessageTypes.INFO));
+    }
+
+
+
 }
+
+
+
+
+

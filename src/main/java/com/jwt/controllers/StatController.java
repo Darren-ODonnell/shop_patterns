@@ -90,4 +90,7 @@ public class StatController {
     public ResponseEntity<MessageResponse> delete(@RequestBody Stat stat){
         return statService.delete(stat);
     }
+
+
+
 }
