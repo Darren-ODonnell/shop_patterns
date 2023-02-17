@@ -47,7 +47,7 @@ public class StatNameController {
     @GetMapping(value="/findByName")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody  StatName findByName(@RequestBody StatNameModel statNameModel) {
-        return statNameService.findByName(statNameModel);
+        return statNameService.findByStatName(statNameModel);
     }
 
     // add new StatName

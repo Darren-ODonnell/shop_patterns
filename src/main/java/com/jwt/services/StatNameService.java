@@ -42,12 +42,16 @@ public class StatNameService {
 
     // return StatName by name
 
-    public StatName findByName( StatNameModel statNameModel) {
+    public StatName findByStatName( StatNameModel statNameModel) {
         Optional<StatName> statName = statNameRepository.findByName(statNameModel.getName());
         if(statName.isEmpty()) new MyMessageResponse(String.format("StatName name: %s not found", statNameModel.getName()), MessageTypes.INFO);
         return statName.orElse(new StatName());
     }
-
+    public String findByStatName( String statName) {
+        StatName name = statNameRepository.findByName(statName).orElse(new StatName());
+        if(name.getId().equals(null)) new MyMessageResponse(String.format("StatName name: %s not found", statName), MessageTypes.INFO);
+        return name.getId();
+    }
 
 
 
@@ -90,4 +94,7 @@ public class StatNameService {
     }
 
 
+//    public String getIdByStatName(String statName) {
+//         String id = statNameRepository.findIdByStatName(String statName);
+//    }
 }

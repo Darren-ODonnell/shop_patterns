@@ -9,6 +9,7 @@ import com.jwt.repositories.StatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -16,7 +17,7 @@ import java.util.*;
 
 @Service
 public class FixtureService {
-    @Value("$(club.name)")
+    @Value("${club.name}")
     String clubName;
 
     private final FixtureRepository fixtureRepository;
@@ -232,22 +233,24 @@ public class FixtureService {
         return fixtures.get(0);
     }
 
-    private List<Result> findWinsByOpposition(String team) {
-        //Get all fixtures where judes are playing against opposition where home/ opposition is judes AND home/opposition is team
-        Long clubId = clubService.getIdByName(team);
-        List<Fixture> fixturesVsOpponent = findByOppositionId(clubId);
+//    private List<Fixture> findWinsByOpposition(String team) {
+//        //Get all fixtures where judes are playing against opposition where home/ opposition is judes AND home/opposition is team
+//        Long clubId = clubService.getIdByName(team);
+//        List<Fixture> fixturesVsOpponent = findByOppositionId(clubId);
+//
+//        List<Fixture> fixturesWon = new ArrayList<>();
+//        for(Fixture fixture : fixturesVsOpponent) {
+//            Result result = statService.scoreByFixtureDate(fixture.getFixtureDate());
+//            long homeScore = result.getHomeScorePoints();
+//            long awayScore = result.getAwayScorePoints();
+//            if (Objects.equals(clubId, fixture.getHomeTeam().getId()) && homeScore < awayScore)
+//                fixturesWon.add(fixture);
+//            if(Objects.equals(clubId, fixture.getAwayTeam().getId()) && awayScore > homeScore)
+//                fixturesWon.add(fixture);
+//
+//        }
+//        return fixturesWon;
+//    }
 
-        List<Result> results = new ArrayList<>();
-        for(Fixture fixture : fixturesVsOpponent) {
-            Result result = statService.scoreByFixtureDate(fixture.getFixtureDate());
-            long homeScore = result.getHomeScorePoints();
-            long awayScore = result.getAwayScorePoints();
-            if (Objects.equals(clubId, fixture.getHomeTeam().getId()) && homeScore < awayScore)
-                results.add(result);
-            if(Objects.equals(clubId, fixture.getAwayTeam().getId()) && awayScore > homeScore)
-                results.add(result);
 
-        }
-        return results;
-    }
 }

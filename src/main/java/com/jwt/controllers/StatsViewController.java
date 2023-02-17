@@ -1,5 +1,6 @@
 package com.jwt.controllers;
 
+import com.jwt.models.Fixture;
 import com.jwt.models.StatViewCounts;
 import com.jwt.models.StatsView;
 import com.jwt.services.StatsViewService;
@@ -96,6 +97,20 @@ public class StatsViewController {
     public @ResponseBody List<StatViewCounts> averageScoreByOpposition(@RequestParam("club_name") String clubName) {
         return statsViewService.averageScoreByOpposition(clubName);
     }
+
+    @GetMapping(value={"/averageByStatNameByOpposition"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> averageByStatNameByOpposition( @RequestParam("club_name") String opposition) {
+        return statsViewService.averageByStatNameByOpposition( opposition);
+    }
+
+
+    @GetMapping(value={"/findWinsByOpposition"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<Fixture> findWinsByOpposition(@RequestParam("club_name") String opposition) {
+        return statsViewService.findWinsByOpposition( opposition);
+    }
+
 
 
 }

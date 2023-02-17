@@ -109,4 +109,15 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             nativeQuery = true)
     List<Object[]> averageScoreByOpposition(String clubName);
 
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", AVG(stat_count) AS count FROM " +
+            "( SELECT stat_name, COUNT(*) AS stat_count, success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location " +
+            "FROM teamstats.stats_view " +
+            "WHERE (away_team = :clubName OR home_team =:clubName) " +
+            "AND (away_team = :opposition OR home_team =:opposition) " +
+            "GROUP BY stat_name, fixture_date) MyQuery " +
+            "GROUP BY stat_name ",
+            nativeQuery = true)
+    List<Object[]> averageByStatNameByOpposition(String clubName, String opposition);
+
 }

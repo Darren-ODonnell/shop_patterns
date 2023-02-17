@@ -9,25 +9,48 @@ import java.math.RoundingMode;
 import java.sql.Date;
 
 @JsonIgnoreProperties
-public class StatViewCounts extends StatsViewModel {
+public class StatViewCounts extends StatsViewModel implements Comparable<StatViewCounts>{
 
     private BigInteger count;
 
+    // for each attribute an empty , false or zero value is returned if no value or null is passed in
     public StatViewCounts(Object[] record) {
+        this.setStatName( ((String) record[SVC.STAT_NAME]).length() > 0  ? (String) record[SVC.STAT_NAME]  : "");
+        this.setSuccess( ((Boolean) record[SVC.SUCCESS]).booleanValue()  ? (Boolean) record[SVC.SUCCESS]   : false);
+        this.setHalf( ((Integer)    record[SVC.HALF]).equals(null)       ? (Integer)  record[SVC.HALF]     : 0);
 
-        this.setStatName((String) record[SVC.STAT_NAME]);
-        this.setSuccess((Boolean) record[SVC.SUCCESS]);
-        this.setHalf((Integer) record[SVC.HALF]);
-        this.setTime_occurred((BigDecimal) record[SVC.TIME_OCCURRED]);
-        this.setSeason((Integer) record[SVC.SEASON]);
-        this.setFirstName((String) record[SVC.FIRST_NAME]);
-        this.setLastName((String) record[SVC.LAST_NAME]);
-        this.setHomeTeam((String) record[SVC.HOME_TEAM]);
-        this.setAwayTeam((String) record[SVC.AWAY_TEAM]);
-        this.setFixtureDate((Date) record[SVC.FIXTURE_DATE]);
-        this.setLocation((String) record[SVC.LOCATION]);
-        this.setCount(convertToBigInteger(record[SVC.STAT_COUNT]));
+        this.setFirstName( ( (String) record[SVC.FIRST_NAME]).equals("") ? (String) record[SVC.FIRST_NAME] : "");
+        this.setLastName(  ( (String) record[SVC.LAST_NAME]).equals("")  ? (String) record[SVC.LAST_NAME]  : "");
+        this.setHomeTeam(  ( (String) record[SVC.HOME_TEAM]).equals("")  ? (String) record[SVC.HOME_TEAM]  : "");
+        this.setAwayTeam(  ( (String) record[SVC.AWAY_TEAM]).equals("")  ? (String) record[SVC.AWAY_TEAM]  : "");
+        this.setLocation(  ( (String) record[SVC.LOCATION]).equals("")   ? (String) record[SVC.LOCATION]   : "");
+
+        this.setSeason( ((Integer) record[SVC.SEASON]).equals(null)                   ? 0 : (Integer) record[SVC.SEASON]);
+        this.setFixtureDate( ((Date) record[SVC.FIXTURE_DATE]).equals(null)           ? new Date(System.currentTimeMillis()) : (Date) record[SVC.FIXTURE_DATE] );
+        this.setTime_occurred( ((BigDecimal)  record[SVC.TIME_OCCURRED]).equals(null) ? new BigDecimal(0) : (BigDecimal)  record[SVC.TIME_OCCURRED] );
+        this.setCount( convertToBigInteger( !record[SVC.STAT_COUNT].equals(null)      ? 0 : record[SVC.STAT_COUNT] ));
     }
+
+    public StatViewCounts(String statName, BigInteger count) {
+        this.setStatName(  statName);
+        this.setCount( count );
+
+        // set defaults for all the rest
+        this.setSuccess( false);
+        this.setHalf( 1);
+
+        this.setFirstName( "" );
+        this.setLastName( "" );
+        this.setHomeTeam( "" );
+        this.setAwayTeam( "" );
+        this.setLocation( "" );
+
+        this.setSeason( new Date(System.currentTimeMillis()).getYear() );
+        this.setFixtureDate( new Date(System.currentTimeMillis()));
+        this.setTime_occurred( new BigDecimal(1.0 ));
+
+    }
+
     private BigInteger convertToBigInteger(Object object) {
         BigInteger value = null;
         if (object instanceof Float) {
@@ -50,4 +73,9 @@ public class StatViewCounts extends StatsViewModel {
         return count;
     }
     public void setCount(BigInteger count) {        this.count = count;    }
+
+    @Override
+    public int compareTo(StatViewCounts other) {
+        return this.count.compareTo(other.getCount());
+    }
 }
