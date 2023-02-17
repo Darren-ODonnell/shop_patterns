@@ -112,5 +112,13 @@ public class StatsViewController {
     }
 
 
+    @GetMapping(value={"/getAvgStatsForWinsByOpponent"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> getAvgStatsForWinsByOpponent(@RequestParam("club_name") String team) {
+        return statsViewService.getAvgStatsForWinsByOpponent( team);
+    }
+
+
+
 
 }

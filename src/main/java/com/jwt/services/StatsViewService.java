@@ -169,7 +169,7 @@ public class StatsViewService {
         return fixturesWon;
     }
 
-    private List<StatViewCounts> getAvgStatsForWinsByOpponent(String team){
+    public List<StatViewCounts> getAvgStatsForWinsByOpponent(String team){
         List<Fixture> fixturesWon = findWinsByOpposition(team);
 
         List<List<Stat>> statsForEachWin = new ArrayList<>();
@@ -199,5 +199,4 @@ public class StatsViewService {
         Collections.sort(statViewCounts, Comparator.comparing(StatViewCounts::getCount).reversed());
         return statViewCounts;
     }
-
 }
