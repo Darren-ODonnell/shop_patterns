@@ -54,23 +54,24 @@ public class PitchGridService {
     // add new PitchGrid
 
     public ResponseEntity<MessageResponse> add(PitchGridModel pitchGridModel){
-
-//        if(pitchGridRepository.existsById(pitchGridModel.getId()))
-//            return ResponseEntity.ok(new MyMessageResponse("Error: PitchGrid already exists", MessageTypes.WARN));
-
-        pitchGridRepository.save(pitchGridModel.translateModelToPitchGrid());
-        return ResponseEntity.ok(new MyMessageResponse("new PitchGrid added", MessageTypes.INFO));
+        if(!pitchGridRepository.existsById(pitchGridModel.getName())) {
+            pitchGridRepository.save(pitchGridModel.translateModelToPitchGrid());
+            return ResponseEntity.ok(new MyMessageResponse("new PitchGrid added", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: PitchGrid already exists", MessageTypes.WARN));
+        }
     }
 
     // delete by name
 
     public ResponseEntity<MessageResponse> delete( PitchGrid pitchGrid){
         String id = pitchGrid.getId();
-        if(!pitchGridRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: "+id, MessageTypes.WARN));
-
-        pitchGridRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("PitchGrid deleted with id: " + id, MessageTypes.INFO));
+        if(pitchGridRepository.existsById(id)) {
+            pitchGridRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("PitchGrid deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: " + id, MessageTypes.WARN));
+        }
     }
 
     // edit/update a PitchGrid record - only if record with id exists
@@ -80,13 +81,11 @@ public class PitchGridService {
         // check if exists first
         // then update
 
-        if(!pitchGridRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
-
-        pitchGridRepository.save(pitchGrid);
-        return ResponseEntity.ok(new MyMessageResponse("PitchGrid record updated", MessageTypes.INFO));
+        if(pitchGridRepository.existsById(id)) {
+            pitchGridRepository.save(pitchGrid);
+            return ResponseEntity.ok(new MyMessageResponse("PitchGrid record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
     }
-
-
-
 }

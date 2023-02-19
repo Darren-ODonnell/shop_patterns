@@ -15,9 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StatService {
@@ -68,10 +67,10 @@ public class StatService {
     }
 
     public List<Stat> findByFixtureId(Long fixtureId) {
-        Optional<List<Stat>> stats = statRepository.findByFixtureId(fixtureId);
+        List<Stat> stats = statRepository.findByFixtureId(fixtureId).orElse(new ArrayList<>());
         if(stats.isEmpty())
             new MyMessageResponse(String.format("Warning: Stats: No stats found for this fixture Id: %d", fixtureId), MessageTypes.WARN);
-        return stats.orElse(new ArrayList<>());
+        return stats;
     }
 
     // return Stat by id
@@ -185,53 +184,69 @@ public class StatService {
         statId.setFixtureId(statModel.getFixtureId());
         statId.setTimeOccurred(statModel.getTimeOccurred());
 
-        if(statRepository.existsById(statId))
+        if(!statRepository.existsById(statId)) {
+            Stat stat = statModel.translateModelToStat();
+            stat.setId(statId);
+            statRepository.save(stat);
+            return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Stat already exists", MessageTypes.WARN));
-
-        Stat stat = statModel.translateModelToStat();
-        stat.setId(statId);
-        statRepository.save(stat);
-        return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));
+        }
     }
 
     // delete by id
 
     public ResponseEntity<MessageResponse> delete( Stat stat){
         StatId id = stat.getId();
-        if(!statRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Stat with id: "+id, MessageTypes.WARN));
-
-        statRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Stat deleted with id: " + id, MessageTypes.INFO));
+        if(statRepository.existsById(id)) {
+            statRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Stat deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Stat with id: " + id, MessageTypes.WARN));
+        }
     }
 
     // edit/update a Stat record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(StatId id, Stat stat){
+    public ResponseEntity<MessageResponse> update(StatId id, Stat stat) {
 
         // check if exists first
         // then update
 
-        if(!statRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
-
-        statRepository.save(stat);
-        return ResponseEntity.ok(new MyMessageResponse("Stat record updated", MessageTypes.INFO));
+        if (statRepository.existsById(id)) {
+            statRepository.save(stat);
+            return ResponseEntity.ok(new MyMessageResponse("Stat record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
     }
 
-    public ResponseEntity<MessageResponse> findStatsForGamesWonAgainst(StatId id, Stat stat){
+    public List<List<Stat>> getStatsForFixtures(List<Fixture> fixtures) {
+        return fixtures.stream() // convert to straem
+                .map(fixture -> findByFixtureId(fixture.getId())) // this creates a new list which is a list of stats based on fixtureId
+                .collect(Collectors.toList()); // finally collecting and returning as a list.
 
-        // check if exists first
-        // then update
-
-        if(!statRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
-
-        statRepository.save(stat);
-        return ResponseEntity.ok(new MyMessageResponse("Stat record updated", MessageTypes.INFO));
     }
-
-
+    public HashMap<String, Integer> sumStatsForFixtures(List<List<Stat>> stats) {
+        // sum each stat for each fixture
+        HashMap<String, Integer> statCounts = new HashMap<>();
+        for(List<Stat> statsPerWin: stats){
+            for(int i = 0; i < statsPerWin.size(); i++){
+                String stat = statsPerWin.get(i).getStatName().getName();
+                statCounts.put(stat,  statCounts.containsKey(stat)
+                        ? statCounts.get(stat) + 1
+                        : 1 );
+            }
+        }
+        return statCounts;
+    }
+    public Map<String, Integer> getStatCountAverages(HashMap<String, Integer> statCounts, Integer fixtureCount) {
+        return statCounts.entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(), // Use a lambda expression to extract the key
+                        entry -> Math.round(entry.getValue() / fixtureCount) // Divide the original value by number of fixtureStat lists
+                ));
+    }
 
 }
 

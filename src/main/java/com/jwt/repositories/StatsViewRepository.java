@@ -120,4 +120,8 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             nativeQuery = true)
     List<Object[]> averageByStatNameByOpposition(String clubName, String opposition);
 
+
+
+
+
 }

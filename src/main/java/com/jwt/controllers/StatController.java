@@ -91,6 +91,4 @@ public class StatController {
         return statService.delete(stat);
     }
 
-
-
 }

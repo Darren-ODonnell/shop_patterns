@@ -59,11 +59,13 @@ public class StatNameService {
 
     public ResponseEntity<MessageResponse> add(StatNameModel statNameModel){
 
-        if(statNameRepository.existsById(statNameModel.getAbbrev()))
+        if(!statNameRepository.existsById(statNameModel.getAbbrev())) {
+            statNameRepository.save(statNameModel.translateModelToStatName(statNameModel.getAbbrev()));
+            return ResponseEntity.ok(new MyMessageResponse("new StatName added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: StatName already exists", MessageTypes.WARN));
+        }
 
-        statNameRepository.save(statNameModel.translateModelToStatName(statNameModel.getAbbrev()));
-        return ResponseEntity.ok(new MyMessageResponse("new StatName added", MessageTypes.INFO));
     }
 
     // delete by name
@@ -72,11 +74,13 @@ public class StatNameService {
         Optional<StatName> statname = statNameRepository.getByName(statName.getName());
 
         String id = statname.get().getId();
-        if(!statNameRepository.existsByName(statName.getName()))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete StatName with name: "+statName.getName(), MessageTypes.WARN));
+        if(statNameRepository.existsByName(statName.getName())) {
+            statNameRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete StatName with name: " + statName.getName(), MessageTypes.WARN));
+        }
 
-        statNameRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + id, MessageTypes.INFO));
     }
 
     // edit/update a StatName record - only if record with id exists
@@ -86,11 +90,13 @@ public class StatNameService {
         // check if exists first
         // then update
 
-        if(!statNameRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
+        if(statNameRepository.existsById(id)) {
+            statNameRepository.save(statName);
+            return ResponseEntity.ok(new MyMessageResponse("StatName record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
 
-        statNameRepository.save(statName);
-        return ResponseEntity.ok(new MyMessageResponse("StatName record updated", MessageTypes.INFO));
     }
 
 

@@ -53,11 +53,13 @@ public class RoleService {
         // check if exists first
         // then update
 
-        if(!roleRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
+        if(roleRepository.existsById(id)) {
+            roleRepository.save(role);
+            return ResponseEntity.ok(new MyMessageResponse("Role record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
 
-        roleRepository.save(role);
-        return ResponseEntity.ok(new MyMessageResponse("Role record updated", MessageTypes.INFO));
     }
 
     public void save(Role role) {

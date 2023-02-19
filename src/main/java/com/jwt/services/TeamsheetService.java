@@ -79,22 +79,25 @@ public class TeamsheetService {
     // add new Teamsheet
     public ResponseEntity<MessageResponse> add(TeamsheetModel teamsheetModel){
 
-        if(teamsheetRepository.existsByFixtureId(teamsheetModel.getFixture().getId()))
+        if(!teamsheetRepository.existsByFixtureId(teamsheetModel.getFixture().getId())) {
+            teamsheetRepository.save(teamsheetModel.translateModelToTeamsheet());
+            return ResponseEntity.ok(new MyMessageResponse("new Teamsheet added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Teamsheet already exists", MessageTypes.WARN));
-
-        teamsheetRepository.save(teamsheetModel.translateModelToTeamsheet());
-        return ResponseEntity.ok(new MyMessageResponse("new Teamsheet added", MessageTypes.INFO));
+        }
     }
 
     // delete by id
 
     public ResponseEntity<MessageResponse> delete(Teamsheet teamsheet){
         TeamsheetId id = teamsheet.getId();
-        if(!teamsheetRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Teamsheet with id: "+id, MessageTypes.WARN));
+        if(teamsheetRepository.existsById(id)) {
+            teamsheetRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Teamsheet deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Teamsheet with id: " + id, MessageTypes.WARN));
+        }
 
-        teamsheetRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Teamsheet deleted with id: " + id, MessageTypes.INFO));
     }
 
     // edit/update a Teamsheet record - only if record with id exists
@@ -104,11 +107,13 @@ public class TeamsheetService {
         // check if exists first
         // then update
 
-        if(!teamsheetRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
+        if(teamsheetRepository.existsById(id)) {
+            teamsheetRepository.save(teamsheet);
+            return ResponseEntity.ok(new MyMessageResponse("Teamsheet record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
 
-        teamsheetRepository.save(teamsheet);
-        return ResponseEntity.ok(new MyMessageResponse("Teamsheet record updated", MessageTypes.INFO));
     }
 
 

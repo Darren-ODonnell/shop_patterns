@@ -3,6 +3,7 @@ package com.jwt.models;
 import com.jwt.services.ClubService;
 import com.jwt.services.CompetitionService;
 
+import javax.persistence.Column;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -52,6 +53,9 @@ public class FixtureModel {
         return competitionId;
     }
 
+
+
+
     public Fixture translateModelToFixture(CompetitionService competitionService, ClubService clubService) {
         Fixture fixture = new Fixture();
 
@@ -64,7 +68,6 @@ public class FixtureModel {
         fixture.setFixtureTime(this.fixtureTime);
         fixture.setSeason(this.season);
         fixture.setRound(this.round);
-
         return fixture;
     }
     // used in update operations

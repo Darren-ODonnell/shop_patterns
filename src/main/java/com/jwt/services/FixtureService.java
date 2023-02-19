@@ -25,11 +25,14 @@ public class FixtureService {
     ClubService clubService;
     CompetitionService competitionService;
 
+
+
     @Autowired
     public FixtureService(FixtureRepository fixtureRepository, ClubService clubService, CompetitionService competitionService) {
         this.fixtureRepository = fixtureRepository;
         this.clubService = clubService;
         this.competitionService = competitionService;
+
     }
 
     // setter injection used to avoid circular dependencies
@@ -72,7 +75,7 @@ public class FixtureService {
     // find fixtures by opposition id
 
     public List<Fixture> findByOppositionId(Long clubId) {
-        Long id = getClubId(clubName);
+        Long id = clubService.getIdByName(clubName);
         Club club = clubService.findById(id);
         Club opposition = clubService.findById(clubId);
 
@@ -103,7 +106,7 @@ public class FixtureService {
         return fixtures;
     }
 
-    // return all the home fixtures form a club
+    // return all the home fixtures for a club
 
     public List<Fixture> getClubHomeFixtures(ClubModel clubModel)  {
         Long id = getClubId(clubModel.getName());
@@ -186,21 +189,25 @@ public class FixtureService {
         Club awayTeam = clubService.findById(fixtureModel.getAwayTeamId());
         Competition competition = competitionService.findById(fixtureModel.getCompetitionId());
 
-        if(fixtureRepository.existsByHomeTeamAndAwayTeamAndCompetitionAndSeason(homeTeam, awayTeam, competition, fixtureModel.getSeason()))
+        if(!fixtureRepository.existsByHomeTeamAndAwayTeamAndCompetitionAndSeason(homeTeam, awayTeam, competition, fixtureModel.getSeason())) {
+            fixtureRepository.save(fixtureModel.translateModelToFixture(competitionService, clubService));
+            return ResponseEntity.ok(new MyMessageResponse("new Fixture added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Fixture already exists", MessageTypes.WARN));
+        }
 
-        fixtureRepository.save(fixtureModel.translateModelToFixture(competitionService, clubService));
-        return ResponseEntity.ok(new MyMessageResponse("new Fixture added", MessageTypes.INFO));
     }
 
     // edit/update Fixture
 
     public ResponseEntity<MessageResponse> update(Long id, Fixture fixture){
-        if(!fixtureRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Fixture with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
+        if(fixtureRepository.existsById(id)) {
+            fixtureRepository.save(fixture);
+            return ResponseEntity.ok(new MyMessageResponse("Fixture record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Fixture with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+        }
 
-        fixtureRepository.save(fixture);
-        return ResponseEntity.ok(new MyMessageResponse("Fixture record updated", MessageTypes.INFO));
     }
 
     // delete fixture
@@ -208,11 +215,13 @@ public class FixtureService {
     public ResponseEntity<MessageResponse> delete(Fixture fixture) {
         Long id = fixture.getId();
 
-        if(!fixtureRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete fixture with id: "+id, MessageTypes.WARN));
+        if(fixtureRepository.existsById(id)) {
+            fixtureRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Fixture deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete fixture with id: " + id, MessageTypes.WARN));
+        }
 
-        fixtureRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Fixture deleted with id: " + id, MessageTypes.INFO));
     }
 
     // get clubid from name
@@ -233,24 +242,7 @@ public class FixtureService {
         return fixtures.get(0);
     }
 
-//    private List<Fixture> findWinsByOpposition(String team) {
-//        //Get all fixtures where judes are playing against opposition where home/ opposition is judes AND home/opposition is team
-//        Long clubId = clubService.getIdByName(team);
-//        List<Fixture> fixturesVsOpponent = findByOppositionId(clubId);
-//
-//        List<Fixture> fixturesWon = new ArrayList<>();
-//        for(Fixture fixture : fixturesVsOpponent) {
-//            Result result = statService.scoreByFixtureDate(fixture.getFixtureDate());
-//            long homeScore = result.getHomeScorePoints();
-//            long awayScore = result.getAwayScorePoints();
-//            if (Objects.equals(clubId, fixture.getHomeTeam().getId()) && homeScore < awayScore)
-//                fixturesWon.add(fixture);
-//            if(Objects.equals(clubId, fixture.getAwayTeam().getId()) && awayScore > homeScore)
-//                fixturesWon.add(fixture);
-//
-//        }
-//        return fixturesWon;
-//    }
-
-
+    public List<Fixture> findLastFive() {
+        return fixtureRepository.findLastFive().orElse(new ArrayList<>());
+    }
 }

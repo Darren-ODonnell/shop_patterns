@@ -62,30 +62,34 @@ public class LastnameService {
 
     public ResponseEntity<MessageResponse> delete( Lastname lastname){
         Long id = lastname.getId();
-        if(!lastnameRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: No Record exists with id: "+id, MessageTypes.WARN));
-
-        lastnameRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Lastname deleted with id: " + id, MessageTypes.INFO));
+        if(lastnameRepository.existsById(id)) {
+            lastnameRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Lastname deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: No Record exists with id: " + id, MessageTypes.WARN));
+        }
     }
 
     // add record
 
     public ResponseEntity<MessageResponse> add(LastnameModel lastnameModel){
-        if(lastnameRepository.existsByLastname(lastnameModel.getLastname()))
+        if(!lastnameRepository.existsByLastname(lastnameModel.getLastname())) {
+            lastnameRepository.save(lastnameModel.translateModelToLastname());
+            return ResponseEntity.ok(new MyMessageResponse("new Lastname added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Lastname already exists", MessageTypes.WARN));
-
-        lastnameRepository.save(lastnameModel.translateModelToLastname());
-        return ResponseEntity.ok(new MyMessageResponse("new Lastname added", MessageTypes.INFO));
+        }
     }
 
     // edit/update lastname
 
     public ResponseEntity<MessageResponse> update( Long id,  Lastname lastname){
-        if(!lastnameRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Lastname with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
+        if(lastnameRepository.existsById(id)) {
+            lastnameRepository.save(lastname);
+            return ResponseEntity.ok(new MyMessageResponse("Lastname record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Lastname with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+        }
 
-        lastnameRepository.save(lastname);
-        return ResponseEntity.ok(new MyMessageResponse("Lastname record updated", MessageTypes.INFO));
     }
 }

@@ -70,11 +70,13 @@ public class FirstnameService {
 
     public  ResponseEntity<MessageResponse> add(@ModelAttribute FirstnameModel firstnameModel){
 
-        if(firstnameRepository.existsByFirstname(firstnameModel.getFirstname()))
+        if(firstnameRepository.existsByFirstname(firstnameModel.getFirstname())) {
+            firstnameRepository.save(firstnameModel.translateModelToFirstname());
+            return ResponseEntity.ok(new MyMessageResponse("new Firstname added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Firstname already exists", MessageTypes.WARN));
+        }
 
-        firstnameRepository.save(firstnameModel.translateModelToFirstname());
-        return ResponseEntity.ok(new MyMessageResponse("new Firstname added", MessageTypes.INFO));
     }
 
     // delete by id
@@ -82,11 +84,13 @@ public class FirstnameService {
     public ResponseEntity<MessageResponse> delete(Firstname fname){
         Long id = fname.getId();
         Optional<Firstname> firstname = firstnameRepository.findById(id);
-        if(firstname.isEmpty())
+        if(!firstname.isEmpty()) {
+            firstnameRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Firstname deleted with id: " + id, MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete firstname with id: " + id, MessageTypes.WARN));
+        }
 
-        firstnameRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Firstname deleted with id: " + id, MessageTypes.INFO));
     }
 
     // edit/update a firstname record - only if record with id exists
@@ -95,11 +99,12 @@ public class FirstnameService {
         // check if exists first
         // then update
 
-        if(!firstnameRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Firstname with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
-
-        firstnameRepository.save(firstname);
-        return ResponseEntity.ok(new MyMessageResponse("Firstname record updated", MessageTypes.INFO));
+        if(firstnameRepository.existsById(id)) {
+            firstnameRepository.save(firstname);
+            return ResponseEntity.ok(new MyMessageResponse("Firstname record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Firstname with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+        }
     }
 
 }

@@ -81,32 +81,37 @@ public class PlayerService {
     // add player
 
     public ResponseEntity<MessageResponse> add( PlayerModel playerModel){
-        if(playerRepository.existsByFirstnameAndLastname(playerModel.getFirstname(), playerModel.getLastname()))
+        if(!playerRepository.existsByFirstnameAndLastname(playerModel.getFirstname(), playerModel.getLastname())) {
+            playerRepository.save(playerModel.translateModelToPlayer());
+            return ResponseEntity.ok(new MyMessageResponse("New PLayer Added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Player already exists", MessageTypes.WARN));
-
-        playerRepository.save(playerModel.translateModelToPlayer());
-        return ResponseEntity.ok(new MyMessageResponse("New PLayer Added", MessageTypes.INFO));
+        }
     }
 
     // edit/update player
 
     public ResponseEntity<MessageResponse> update(Long id, Player player){
-        if(!playerRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Player with Id: ["+id+"] -> does not exist - cannot update record", MessageTypes.WARN));
+        if(playerRepository.existsById(id)) {
+            playerRepository.save(player);
+            return ResponseEntity.ok(new MyMessageResponse("Player record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Player with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+        }
 
-        playerRepository.save(player);
-        return ResponseEntity.ok(new MyMessageResponse("Player record updated", MessageTypes.INFO));
     }
 
     // delete player
 
     public ResponseEntity<MessageResponse> delete(Player player){
         Long id = player.getId();
-        if(!playerRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete player with id: "+id, MessageTypes.WARN));
+        if(playerRepository.existsById(id)) {
+            playerRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Player deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete player with id: " + id, MessageTypes.WARN));
+        }
 
-        playerRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Player deleted with id: " + id, MessageTypes.INFO));
     }
 
 

@@ -71,11 +71,13 @@ public class UserService {
 
     public ResponseEntity<MessageResponse> add(User user){
 
-        if(userRepository.existsByUsername(user.getUsername()))
+        if(!userRepository.existsByUsername(user.getUsername())) {
+            userRepository.save(user);
+            return ResponseEntity.ok(new MyMessageResponse("new User added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Username already exists", MessageTypes.WARN));
+        }
 
-        userRepository.save(user);
-        return ResponseEntity.ok(new MyMessageResponse("new User added", MessageTypes.INFO));
     }
 
     // delete by id
@@ -89,11 +91,13 @@ public class UserService {
         return ResponseEntity.ok(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
     }
     public ResponseEntity<MessageResponse> deleteById( Long id){
-        if(!userRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete User with id: "+id, MessageTypes.WARN));
+        if(userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete User with id: " + id, MessageTypes.WARN));
+        }
 
-        userRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
     }
 
     // edit/update a User record - only if record with id exists
@@ -103,12 +107,13 @@ public class UserService {
         // check if exists first
         // then update
 
-        if(!userRepository.existsById(user.getId()))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+user.getId()+"] -> cannot update record", MessageTypes.WARN));
+        if(userRepository.existsById(user.getId())) {
+            userRepository.save(user);
+            return ResponseEntity.ok(new MyMessageResponse("User record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + user.getId() + "] -> cannot update record", MessageTypes.WARN));
+        }
 
-        userRepository.save(user);
-
-        return ResponseEntity.ok(new MyMessageResponse("User record updated", MessageTypes.INFO));
     }
 
 

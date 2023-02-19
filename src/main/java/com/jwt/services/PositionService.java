@@ -60,22 +60,25 @@ public class PositionService {
 
     public ResponseEntity<MessageResponse> add(PositionModel positionModel){
 
-        if(positionRepository.existsByName(positionModel.getName()))
+        if(!positionRepository.existsByName(positionModel.getName())) {
+            positionRepository.save(positionModel.translateModelToPosition());
+            return ResponseEntity.ok(new MyMessageResponse("new Position added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Position already exists", MessageTypes.WARN));
-
-        positionRepository.save(positionModel.translateModelToPosition());
-        return ResponseEntity.ok(new MyMessageResponse("new Position added", MessageTypes.INFO));
+        }
     }
 
     // delete by id
 
     public ResponseEntity<MessageResponse> delete( Position position){
         Long id = position.getId();
-        if(!positionRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Position with id: "+id, MessageTypes.WARN));
+        if(positionRepository.existsById(id)) {
+            positionRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Position deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Position with id: " + id, MessageTypes.WARN));
+        }
 
-        positionRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Position deleted with id: " + id, MessageTypes.INFO));
     }
 
     // edit/update a Position record - only if record with id exists
@@ -85,11 +88,13 @@ public class PositionService {
         // check if exists first
         // then update
 
-        if(!positionRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
+        if(positionRepository.existsById(id)) {
+            positionRepository.save(position);
+            return ResponseEntity.ok(new MyMessageResponse("Position record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
 
-        positionRepository.save(position);
-        return ResponseEntity.ok(new MyMessageResponse("Position record updated", MessageTypes.INFO));
     }
 
 

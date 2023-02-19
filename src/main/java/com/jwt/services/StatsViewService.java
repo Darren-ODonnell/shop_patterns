@@ -8,8 +8,10 @@ import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
 import com.jwt.models.stats.*;
+import com.jwt.repositories.FixtureRepository;
 import com.jwt.repositories.StatNameRepository;
 import com.jwt.repositories.StatsViewRepository;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Log
 @Service
 public class StatsViewService {
     @Value("${club.name}")
@@ -33,15 +36,17 @@ public class StatsViewService {
     StatService statService;
     ClubService clubService;
     FixtureService fixtureService;
-
+    private final FixtureRepository fixtureRepository;
 
 
     @Autowired
-    public StatsViewService(StatsViewRepository statsViewRepository, ClubService clubService, StatNameService statNameService
-                          ) {
+    public StatsViewService(StatsViewRepository statsViewRepository, ClubService clubService, StatNameService statNameService,
+                            FixtureRepository fixtureRepository) {
         this.statsViewRepository = statsViewRepository;
         this.clubService = clubService;
         this.statNameService = statNameService;
+        this.fixtureRepository = fixtureRepository;
+
 
     }
 
@@ -85,7 +90,10 @@ public class StatsViewService {
     }
 
 
+    // convert the List<Object[]> into List<StatViewCounts>
+    // most of the conversion is done in the StatViewCount constructor
     private List<StatViewCounts> mapData2(List<Object[]> seasons) {
+
         List<StatViewCounts> counts = new ArrayList<>();
         for(Object[] record : seasons) {
             StatViewCounts stat = new StatViewCounts(record);
@@ -147,56 +155,88 @@ public class StatsViewService {
         return mapData2(data);
     }
 
-
-    public List<Fixture> findWinsByOpposition(String team) {
+    public List<Fixture> findLossesByOpposition(String team) {
         //Get all fixtures where judes are playing against opposition where home/ opposition is judes AND home/opposition is team
         Long clubId = clubService.findByName(team).getId();
-        Long id = clubService.findByName(clubName).getId();
-
         List<Fixture> fixturesVsOpponent = fixtureService.findByOppositionId(clubId);
+        return fixturesVsOpponent.stream() // convert to stream
+                .filter(fixture -> !fixtureWon(fixture)) // select fixtures not won
+                .collect(Collectors.toList()); // collect to and return list of fixtures
+    }
 
-        List<Fixture> fixturesWon = new ArrayList<>();
+    private boolean fixtureWon(Fixture fixture) {
+        Long id = clubService.findByName(clubName).getId();
+        Result result = statService.scoreByFixtureDate(fixture.getFixtureDate());
+        return fixture.getHomeTeam().getId().equals(id)
+                ? result.getHomeScorePoints() > result.getAwayScorePoints()
+                : result.getHomeScorePoints() < result.getAwayScorePoints();
+    }
 
-        for(Fixture fixture : fixturesVsOpponent) {
-            Result result = statService.scoreByFixtureDate(fixture.getFixtureDate());
-            long homeScore = result.getHomeScorePoints();
-            long awayScore = result.getAwayScorePoints();
-            if (Objects.equals(clubId, fixture.getHomeTeam().getId()) && homeScore < awayScore)
-                fixturesWon.add(fixture);
-            if(Objects.equals(clubId, fixture.getAwayTeam().getId()) && awayScore > homeScore)
-                fixturesWon.add(fixture);
-        }
-        return fixturesWon;
+    public List<Fixture> getWins(List<Fixture> fixtures) {
+        return fixtures.stream()
+                .filter(this::fixtureWon) // return stream nased on fixtures Won passing in this = {current fixture)
+                .collect(Collectors.toList()); // finally collect results into List<Fixture>
+    }
+
+    public List<Fixture> getLosses(List<Fixture> fixtures) {
+        return fixtures.stream()
+                .filter(fixture -> !fixtureWon(fixture)) // return stream nased on fixtures Won passing in this = {current fixture)
+                .collect(Collectors.toList()); // finally collect results into List<Fixture>
+    }
+
+    public Map<String, Integer> getStatCountAverages(HashMap<String, Integer> statCounts, Integer fixtureCount) {
+        return statCounts.entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(), // Use a lambda expression to extract the key
+                        entry -> Math.round(entry.getValue() / fixtureCount) // Divide the original value by number of fixtureStat lists
+                ));
+    }
+
+    public List<Fixture> findWinsByOpposition(String team) {
+        Long clubId = clubService.findByName(team).getId();
+        return fixtureService.findByOppositionId(clubId)
+                .stream()
+                .filter(this::fixtureWon) // returns a new stream based on fixtureWon passing in this = (current fixture)
+                .collect(Collectors.toList()); // finnally collect results into a List<Fixture>
+    }
+
+    private List<StatViewCounts> mapStatCountToStatViewCount( Map<String, Integer> averageStatCounts ) {
+        return averageStatCounts.entrySet().stream()
+                .map(entry -> new StatViewCounts(entry.getKey(), BigInteger.valueOf(entry.getValue())))
+                .sorted(Comparator.comparing(StatViewCounts::getCount).reversed())
+                .collect(Collectors.toList());
+    }
+
+    private List<StatViewCounts> getStatsAverageStatsForFixtures(List<Fixture> fixtures) {
+        List<List<Stat>> statsForEachFixture = statService.getStatsForFixtures(fixtures);
+        HashMap<String, Integer> statCounts = statService.sumStatsForFixtures( statsForEachFixture );
+        Map<String, Integer> averageStatCounts = statService.getStatCountAverages(statCounts, statsForEachFixture.size());
+
+        // take the two values Stat - Value/Count and map to StatViewCount for return to client
+        return mapStatCountToStatViewCount(averageStatCounts);
     }
 
     public List<StatViewCounts> getAvgStatsForWinsByOpponent(String team){
+        // get the fixtures won and the stats for those fixtures
         List<Fixture> fixturesWon = findWinsByOpposition(team);
+        return getStatsAverageStatsForFixtures(fixturesWon);
+    }
 
-        List<List<Stat>> statsForEachWin = new ArrayList<>();
-        for(Fixture fixture: fixturesWon){
-            List<Stat> statsForWin = statService.findByFixtureId(fixture.getId());
-            statsForEachWin.add(statsForWin);
-        }
+    public List<StatViewCounts> getAvgStatsForLossesByOpponent(String team){
+        // get the fixtures won and the stats for those fixtures
+        List<Fixture> fixturesLost = findLossesByOpposition(team);
+        return getStatsAverageStatsForFixtures(fixturesLost);
+    }
 
-        HashMap<String, Integer> statCounts = new HashMap<>();
-        for(List<Stat> statsPerWin: statsForEachWin){
-            for(int i = 0; i < statsPerWin.size(); i++){
-                String stat = statsPerWin.get(i).getStatName().getName();
-                if (statCounts.containsKey(stat)) {
-                    int count = statCounts.get(stat);
-                    statCounts.put(stat, count + 1);
-                } else {
-                    statCounts.put(stat, 1);
-                }
-            }
-        }
-        List<StatViewCounts> statViewCounts = new ArrayList<>();
-        for(String key: statCounts.keySet()){
-            StatViewCounts statViewCount = new StatViewCounts(key, BigInteger.valueOf(statCounts.get(key)));
-            statViewCounts.add(statViewCount);
-        }
+    public List<StatViewCounts> getStatsForLastFiveFixturesWon() {
+        List<Fixture> fixtures = fixtureService.findLastFive();
+        fixtures = getWins(fixtures);
+        return getStatsAverageStatsForFixtures(fixtures);
+    }
 
-        Collections.sort(statViewCounts, Comparator.comparing(StatViewCounts::getCount).reversed());
-        return statViewCounts;
+    public List<StatViewCounts> getStatsForLastFiveFixturesLost() {
+        List<Fixture> fixtures = fixtureService.findLastFive();
+        fixtures = getLosses(fixtures);
+        return getStatsAverageStatsForFixtures(fixtures);
     }
 }

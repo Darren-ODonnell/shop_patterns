@@ -111,14 +111,28 @@ public class StatsViewController {
         return statsViewService.findWinsByOpposition( opposition);
     }
 
-
     @GetMapping(value={"/getAvgStatsForWinsByOpponent"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatViewCounts> getAvgStatsForWinsByOpponent(@RequestParam("club_name") String team) {
         return statsViewService.getAvgStatsForWinsByOpponent( team);
     }
 
+    @GetMapping(value={"/getAvgStatsForLossesByOpponent"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> getAvgStatsForLossesByOpponent(@RequestParam("club_name") String team) {
+        return statsViewService.getAvgStatsForLossesByOpponent( team);
+    }
 
+    @GetMapping(value={"/getStatsForLastFiveFixturesWon"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> getStatsForLastFiveFixturesWon() {
+        return statsViewService.getStatsForLastFiveFixturesWon();
+    }
 
+    @GetMapping(value={"/getStatsForLastFiveFixturesLost"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> getStatsForLastFiveFixturesLost() {
+        return statsViewService.getStatsForLastFiveFixturesLost();
+    }
 
 }

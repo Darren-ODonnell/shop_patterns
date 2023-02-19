@@ -1,10 +1,12 @@
 package com.jwt.models;
 
+import lombok.extern.java.Log;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
-
+@Log
 @Entity
 @Table(name = "fixtures", indexes = {
         @Index(name = "away_team_idx", columnList = "away_team_id"),
@@ -66,57 +68,42 @@ public class Fixture {
     public Competition getCompetition() {
         return competition;
     }
-
     public void setCompetition(Competition competition) {
         this.competition = competition;
     }
-
     public Club getHomeTeam() {
         return homeTeam;
     }
-
     public void setHomeTeam(Club homeTeam) {
         this.homeTeam = homeTeam;
     }
-
     public Club getAwayTeam() {
         return awayTeam;
     }
-
     public void setAwayTeam(Club awayTeam) {
         this.awayTeam = awayTeam;
     }
-
     public Date getFixtureDate() {
         return fixtureDate;
     }
-
     public void setFixtureDate(Date fixtureDate) {
         this.fixtureDate = fixtureDate;
     }
-
     public Time getFixtureTime() {
         return fixtureTime;
     }
-
     public void setFixtureTime(Time fixtureTime) {
         this.fixtureTime = fixtureTime;
     }
-
     public Integer getSeason() {
         return season;
     }
-
     public void setSeason(Integer season) {
         this.season = season;
     }
-
     public Integer getRound() {
         return round;
     }
-
-    public void setRound(Integer round) {
-        this.round = round;
-    }
+    public void setRound(Integer round) {        this.round = round;    }
 
 }

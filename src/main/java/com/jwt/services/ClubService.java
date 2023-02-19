@@ -33,8 +33,7 @@ public class ClubService {
 
     public Long getIdByName(String name){
         Club club = clubRepository.getByName(name).orElse(new Club());
-        if (!club.getName().equals(name))
-            new MyMessageResponse(String.format("Club name: %d not found", name), MessageTypes.ERROR);
+        if (!club.getName().equals(name)) new MyMessageResponse(String.format("Club name: %d not found", name), MessageTypes.ERROR);
         return club.getId();
     }
 
@@ -43,8 +42,7 @@ public class ClubService {
 
     public Club findById( Long id){
         Optional<Club> club = clubRepository.findById(id);
-        if(club.isEmpty())
-            new MyMessageResponse(String.format("Club id: %d not found", id), MessageTypes.ERROR);
+        if(club.isEmpty()) new MyMessageResponse(String.format("Club id: %d not found", id), MessageTypes.ERROR);
         return club.orElse(new Club());
     }
 
@@ -63,24 +61,26 @@ public class ClubService {
 
     // add new Club
 
-    public ResponseEntity<MessageResponse> add(ClubModel clubModel){
-
-        if(clubRepository.existsByName(clubModel.getName()))
+    public ResponseEntity<MessageResponse> add(ClubModel clubModel) {
+        if (!clubRepository.existsByName(clubModel.getName())) {
+            clubRepository.save(clubModel.translateModelToClub());
+            return ResponseEntity.ok(new MyMessageResponse("new Club added", MessageTypes.INFO));
+        } else  {
             return ResponseEntity.ok(new MyMessageResponse("Error: Club already exists", MessageTypes.WARN));
-
-        clubRepository.save(clubModel.translateModelToClub());
-        return ResponseEntity.ok(new MyMessageResponse("new Club added", MessageTypes.INFO));
+        }
     }
 
     // delete by id
 
     public ResponseEntity<MessageResponse> delete( Club club){
         Long id = club.getId();
-        if(!clubRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Club with id: "+id, MessageTypes.WARN));
+        if(clubRepository.existsById(id)) {
+            clubRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Club deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Club with id: " + id, MessageTypes.WARN));
+        }
 
-        clubRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Club deleted with id: " + id, MessageTypes.INFO));
     }
 
     // edit/update a Club record - only if record with id exists
@@ -90,11 +90,12 @@ public class ClubService {
         // check if exists first
         // then update
 
-        if(!clubRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
-
-        clubRepository.save(club);
-        return ResponseEntity.ok(new MyMessageResponse("Club record updated", MessageTypes.INFO));
+        if(clubRepository.existsById(id)) {
+            clubRepository.save(club);
+            return ResponseEntity.ok(new MyMessageResponse("Club record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
     }
 
 

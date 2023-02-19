@@ -64,11 +64,12 @@ public class CompetitionService {
 
     public  ResponseEntity<MessageResponse> add(CompetitionModel competitionModel){
 
-        if(competitionRepository.existsByName(competitionModel.getName()))
+        if(!competitionRepository.existsByName(competitionModel.getName())) {
+            competitionRepository.save(competitionModel.translateModelToCompetition());
+            return ResponseEntity.ok(new MyMessageResponse("new Competition added", MessageTypes.INFO));
+        } else {
             return ResponseEntity.ok(new MyMessageResponse("Error: Competition already exists", MessageTypes.WARN));
-
-        competitionRepository.save(competitionModel.translateModelToCompetition());
-        return ResponseEntity.ok(new MyMessageResponse("new Competition added", MessageTypes.INFO));
+        }
     }
 
     // edit/update a competition record - only if record with id exists
@@ -79,22 +80,26 @@ public class CompetitionService {
         // insert id
         // then update
 
-        if(!competitionRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist ["+id+"] -> cannot update record", MessageTypes.WARN));
+        if(competitionRepository.existsById(id)) {
+            competitionRepository.save(competition);
+            return ResponseEntity.ok(new MyMessageResponse("Competition record updated", MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+        }
 
-        competitionRepository.save(competition);
-        return ResponseEntity.ok(new MyMessageResponse("Competition record updated", MessageTypes.INFO));
     }
 
     // delete by id
 
     public ResponseEntity<MessageResponse> delete(Competition competition){
         Long id = competition.getId();
-        if(!competitionRepository.existsById(id))
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete competition with id: "+id, MessageTypes.WARN));
+        if(competitionRepository.existsById(id)) {
+            competitionRepository.deleteById(id);
+            return ResponseEntity.ok(new MyMessageResponse("Competition deleted with id: " + id, MessageTypes.INFO));
+        } else {
+            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete competition with id: " + id, MessageTypes.WARN));
+        }
 
-        competitionRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("Competition deleted with id: " + id, MessageTypes.INFO));
     }
 
 
