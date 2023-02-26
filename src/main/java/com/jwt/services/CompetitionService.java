@@ -69,8 +69,9 @@ public class CompetitionService {
             competitionRepository.save(competitionModel.translateModelToCompetition());
             return ResponseEntity.ok(new MyMessageResponse("new Competition added", MessageTypes.INFO));
         } else {
-            String errorMessage = "Error: Competition already exists";
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse(errorMessage, MessageTypes.WARN));        }
+            String errorMessage = "Error: Competition already exists or Data missing from definition";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse(errorMessage, MessageTypes.WARN));
+        }
     }
 
     // edit/update a competition record - only if record with id exists

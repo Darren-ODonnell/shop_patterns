@@ -2,7 +2,7 @@ package com.jwt.models;
 
 import lombok.Data;
 
-@Data
+//@Data
 public class CompetitionModel {
 
     public String name;
