@@ -200,7 +200,7 @@ public class StatsViewService {
 
     private List<StatViewCounts> mapStatCountToStatViewCount( Map<String, Integer> averageStatCounts ) {
         return averageStatCounts.entrySet().stream()
-                .map(entry -> new StatViewCounts(entry.getKey(), BigInteger.valueOf(entry.getValue())))
+                .map(entry -> new StatViewCounts(entry.getKey(), entry.getValue()))
                 .sorted(Comparator.comparing(StatViewCounts::getCount).reversed())
                 .collect(Collectors.toList());
     }
