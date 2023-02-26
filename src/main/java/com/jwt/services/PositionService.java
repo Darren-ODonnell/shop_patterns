@@ -7,6 +7,7 @@ import com.jwt.models.PositionModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +65,7 @@ public class PositionService {
             positionRepository.save(positionModel.translateModelToPosition());
             return ResponseEntity.ok(new MyMessageResponse("new Position added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Position already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Position already exists", MessageTypes.WARN));
         }
     }
 
@@ -76,7 +77,7 @@ public class PositionService {
             positionRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Position deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Position with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Position with id: " + id, MessageTypes.WARN));
         }
 
     }
@@ -92,7 +93,7 @@ public class PositionService {
             positionRepository.save(position);
             return ResponseEntity.ok(new MyMessageResponse("Position record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
         }
 
     }

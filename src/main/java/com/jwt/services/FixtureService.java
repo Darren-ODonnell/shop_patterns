@@ -8,6 +8,7 @@ import com.jwt.repositories.FixtureRepository;
 import com.jwt.repositories.StatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Service;
@@ -193,7 +194,7 @@ public class FixtureService {
             fixtureRepository.save(fixtureModel.translateModelToFixture(competitionService, clubService));
             return ResponseEntity.ok(new MyMessageResponse("new Fixture added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Fixture already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Fixture already exists", MessageTypes.WARN));
         }
 
     }
@@ -205,7 +206,7 @@ public class FixtureService {
             fixtureRepository.save(fixture);
             return ResponseEntity.ok(new MyMessageResponse("Fixture record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Fixture with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Fixture with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
         }
 
     }
@@ -219,7 +220,7 @@ public class FixtureService {
             fixtureRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Fixture deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete fixture with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete fixture with id: " + id, MessageTypes.WARN));
         }
 
     }

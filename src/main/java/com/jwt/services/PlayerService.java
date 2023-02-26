@@ -7,6 +7,7 @@ import com.jwt.models.PlayerModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -85,7 +86,7 @@ public class PlayerService {
             playerRepository.save(playerModel.translateModelToPlayer());
             return ResponseEntity.ok(new MyMessageResponse("New PLayer Added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Player already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Player already exists", MessageTypes.WARN));
         }
     }
 
@@ -96,7 +97,7 @@ public class PlayerService {
             playerRepository.save(player);
             return ResponseEntity.ok(new MyMessageResponse("Player record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Player with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Player with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
         }
 
     }
@@ -109,7 +110,7 @@ public class PlayerService {
             playerRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Player deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete player with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete player with id: " + id, MessageTypes.WARN));
         }
 
     }

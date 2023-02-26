@@ -9,6 +9,7 @@ import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.TeamsheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -83,7 +84,7 @@ public class TeamsheetService {
             teamsheetRepository.save(teamsheetModel.translateModelToTeamsheet());
             return ResponseEntity.ok(new MyMessageResponse("new Teamsheet added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Teamsheet already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Teamsheet already exists", MessageTypes.WARN));
         }
     }
 
@@ -95,7 +96,7 @@ public class TeamsheetService {
             teamsheetRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Teamsheet deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Teamsheet with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Teamsheet with id: " + id, MessageTypes.WARN));
         }
 
     }
@@ -111,7 +112,7 @@ public class TeamsheetService {
             teamsheetRepository.save(teamsheet);
             return ResponseEntity.ok(new MyMessageResponse("Teamsheet record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
         }
 
     }

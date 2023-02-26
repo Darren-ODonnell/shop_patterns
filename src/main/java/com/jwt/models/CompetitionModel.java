@@ -38,6 +38,7 @@ public class CompetitionModel {
         competition.setSeason(this.season);
         competition.setName(this.name);
         competition.setIrishName(this.irishName);
+        competition.setGrade(this.grade);
         return competition;
     }
 

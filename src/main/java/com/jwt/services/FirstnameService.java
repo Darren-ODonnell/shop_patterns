@@ -7,6 +7,7 @@ import com.jwt.models.FirstnameModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.FirstnameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -74,7 +75,7 @@ public class FirstnameService {
             firstnameRepository.save(firstnameModel.translateModelToFirstname());
             return ResponseEntity.ok(new MyMessageResponse("new Firstname added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Firstname already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Firstname already exists", MessageTypes.WARN));
         }
 
     }
@@ -88,7 +89,7 @@ public class FirstnameService {
             firstnameRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Firstname deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete firstname with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete firstname with id: " + id, MessageTypes.WARN));
         }
 
     }
@@ -103,7 +104,7 @@ public class FirstnameService {
             firstnameRepository.save(firstname);
             return ResponseEntity.ok(new MyMessageResponse("Firstname record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Firstname with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Firstname with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
         }
     }
 

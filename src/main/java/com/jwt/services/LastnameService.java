@@ -7,6 +7,7 @@ import com.jwt.models.LastnameModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.LastnameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +67,7 @@ public class LastnameService {
             lastnameRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Lastname deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: No Record exists with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: No Record exists with id: " + id, MessageTypes.WARN));
         }
     }
 
@@ -77,7 +78,7 @@ public class LastnameService {
             lastnameRepository.save(lastnameModel.translateModelToLastname());
             return ResponseEntity.ok(new MyMessageResponse("new Lastname added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Lastname already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Lastname already exists", MessageTypes.WARN));
         }
     }
 
@@ -88,7 +89,7 @@ public class LastnameService {
             lastnameRepository.save(lastname);
             return ResponseEntity.ok(new MyMessageResponse("Lastname record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Lastname with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Lastname with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
         }
 
     }

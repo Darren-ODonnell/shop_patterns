@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.*;
-import com.jwt.models.stats.*;
 import com.jwt.repositories.FixtureRepository;
-import com.jwt.repositories.StatNameRepository;
 import com.jwt.repositories.StatsViewRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +73,7 @@ public class StatsViewService {
 
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private <T> List<Key<T, BigInteger>>  mapData(List<Object[]> seasons, Class T) {
+    private <T> List<Key<T, BigInteger>>  mapData3(List<Object[]> seasons, Class T) {
         ArrayList<Key<T, BigInteger>> stats = new ArrayList<>();
 
         for(Object[] obj : seasons) {
@@ -92,7 +90,7 @@ public class StatsViewService {
 
     // convert the List<Object[]> into List<StatViewCounts>
     // most of the conversion is done in the StatViewCount constructor
-    private List<StatViewCounts> mapData2(List<Object[]> seasons) {
+    private List<StatViewCounts> mapData(List<Object[]> seasons) {
 
         List<StatViewCounts> counts = new ArrayList<>();
         for(Object[] record : seasons) {
@@ -104,55 +102,55 @@ public class StatsViewService {
 
     public List<StatViewCounts> countAllPlayerStat() {
         List<Object[]> data = statsViewRepository.countAllPlayerStat();
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> countAllPlayerFixtureByStatName(String statName) {
         List<Object[]> data = statsViewRepository.countAllPlayerFixtureByStatName(statName);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> countAllPlayerStatNameByFixtureDate(String fixtureDate) {
         List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDate(fixtureDate);
-        return mapData2(data);
+        return mapData(data);
     }
     public List<StatViewCounts> countAllStatNameFixtureByPlayer(String firstname, String lastname) {
         List<Object[]> data = statsViewRepository.countAllStatNameFixtureByPlayer(firstname, lastname);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> countAllPlayerByFixtureStatName(String fixtureDate, String statName) {
         List<Object[]> data = statsViewRepository.countAllPlayerByFixtureStatName(fixtureDate, statName);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> countAllFixtureByPlayerStatName(String firstname, String lastname, String statName) {
         List<Object[]> data = statsViewRepository.countAllFixtureByPlayerStatName(firstname, lastname, statName);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> countAllStatsByPlayerFixtureDate(String firstname, String lastname, String fixtureDate) {
         List<Object[]> data = statsViewRepository.countAllStatsByPlayerFixtureDate(firstname, lastname, fixtureDate);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> countStat(String firstname, String lastname, String fixtureDate, String statName) {
         List<Object[]> data = statsViewRepository.countStat(firstname, lastname, fixtureDate, statName);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(String fixtureDate) {
         List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDateGroupSuccess(fixtureDate);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<StatViewCounts> averageScoreByOpposition(String clubName) {
         List<Object[]> data = statsViewRepository.averageScoreByOpposition(clubName);
-        return mapData2(data);
+        return mapData(data);
     }
     public List<StatViewCounts> averageByStatNameByOpposition( String opposition) {
         List<Object[]> data = statsViewRepository.averageByStatNameByOpposition( clubName, opposition);
-        return mapData2(data);
+        return mapData(data);
     }
 
     public List<Fixture> findLossesByOpposition(String team) {

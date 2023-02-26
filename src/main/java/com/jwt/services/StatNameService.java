@@ -7,6 +7,7 @@ import com.jwt.models.StatNameModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.StatNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,7 @@ public class StatNameService {
             statNameRepository.save(statNameModel.translateModelToStatName(statNameModel.getAbbrev()));
             return ResponseEntity.ok(new MyMessageResponse("new StatName added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: StatName already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: StatName already exists", MessageTypes.WARN));
         }
 
     }
@@ -78,7 +79,7 @@ public class StatNameService {
             statNameRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete StatName with name: " + statName.getName(), MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete StatName with name: " + statName.getName(), MessageTypes.WARN));
         }
 
     }
@@ -94,7 +95,7 @@ public class StatNameService {
             statNameRepository.save(statName);
             return ResponseEntity.ok(new MyMessageResponse("StatName record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
         }
 
     }

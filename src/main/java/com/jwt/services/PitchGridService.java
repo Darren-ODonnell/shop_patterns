@@ -7,6 +7,7 @@ import com.jwt.models.PitchGridModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.PitchGridRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +59,7 @@ public class PitchGridService {
             pitchGridRepository.save(pitchGridModel.translateModelToPitchGrid());
             return ResponseEntity.ok(new MyMessageResponse("new PitchGrid added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: PitchGrid already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: PitchGrid already exists", MessageTypes.WARN));
         }
     }
 
@@ -70,7 +71,7 @@ public class PitchGridService {
             pitchGridRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("PitchGrid deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: " + id, MessageTypes.WARN));
         }
     }
 
@@ -85,7 +86,7 @@ public class PitchGridService {
             pitchGridRepository.save(pitchGrid);
             return ResponseEntity.ok(new MyMessageResponse("PitchGrid record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
         }
     }
 }

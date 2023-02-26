@@ -7,6 +7,7 @@ import com.jwt.repositories.UserRepository;
 import com.jwt.security.User;
 import com.jwt.security.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +76,7 @@ public class UserService {
             userRepository.save(user);
             return ResponseEntity.ok(new MyMessageResponse("new User added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Username already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Username already exists", MessageTypes.WARN));
         }
 
     }
@@ -88,14 +89,14 @@ public class UserService {
             return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete User with id: "+id, MessageTypes.WARN));
 
         userRepository.deleteById(id);
-        return ResponseEntity.ok(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
     }
     public ResponseEntity<MessageResponse> deleteById( Long id){
         if(userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("User deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete User with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete User with id: " + id, MessageTypes.WARN));
         }
 
     }
@@ -111,7 +112,7 @@ public class UserService {
             userRepository.save(user);
             return ResponseEntity.ok(new MyMessageResponse("User record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + user.getId() + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + user.getId() + "] -> cannot update record", MessageTypes.WARN));
         }
 
     }

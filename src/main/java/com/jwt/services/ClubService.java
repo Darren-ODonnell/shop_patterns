@@ -7,6 +7,7 @@ import com.jwt.models.ClubModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.ClubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +67,7 @@ public class ClubService {
             clubRepository.save(clubModel.translateModelToClub());
             return ResponseEntity.ok(new MyMessageResponse("new Club added", MessageTypes.INFO));
         } else  {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Club already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Club already exists", MessageTypes.WARN));
         }
     }
 
@@ -78,7 +79,7 @@ public class ClubService {
             clubRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Club deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Club with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Club with id: " + id, MessageTypes.WARN));
         }
 
     }
@@ -94,7 +95,7 @@ public class ClubService {
             clubRepository.save(club);
             return ResponseEntity.ok(new MyMessageResponse("Club record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
         }
     }
 

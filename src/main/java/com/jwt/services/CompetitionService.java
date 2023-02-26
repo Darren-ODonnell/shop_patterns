@@ -7,6 +7,7 @@ import com.jwt.models.CompetitionModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.CompetitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -68,8 +69,8 @@ public class CompetitionService {
             competitionRepository.save(competitionModel.translateModelToCompetition());
             return ResponseEntity.ok(new MyMessageResponse("new Competition added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Competition already exists", MessageTypes.WARN));
-        }
+            String errorMessage = "Error: Competition already exists";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse(errorMessage, MessageTypes.WARN));        }
     }
 
     // edit/update a competition record - only if record with id exists
@@ -84,7 +85,7 @@ public class CompetitionService {
             competitionRepository.save(competition);
             return ResponseEntity.ok(new MyMessageResponse("Competition record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
         }
 
     }
@@ -97,7 +98,7 @@ public class CompetitionService {
             competitionRepository.deleteById(id);
             return ResponseEntity.ok(new MyMessageResponse("Competition deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete competition with id: " + id, MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete competition with id: " + id, MessageTypes.WARN));
         }
 
     }

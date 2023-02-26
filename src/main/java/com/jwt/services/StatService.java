@@ -11,6 +11,7 @@ import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -190,7 +191,7 @@ public class StatService {
             statRepository.save(stat);
             return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Stat already exists", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Stat already exists", MessageTypes.WARN));
         }
     }
 
