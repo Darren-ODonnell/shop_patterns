@@ -16,4 +16,6 @@ public interface CompetitionRepository extends JpaRepository<Competition, Long> 
     boolean existsByName(String name);
 
     Optional<List<Competition>> findBySeason(Integer season);
+
+    List<String> findDistinctByName();
 }
