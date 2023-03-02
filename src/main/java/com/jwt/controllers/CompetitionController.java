@@ -33,11 +33,6 @@ public class CompetitionController {
         return competitionService.list();
     }
 
-    @GetMapping(value={"/","/listDistinctNames"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
-    public @ResponseBody   List<Competition> listDistinctNames(){
-        return competitionService.listDistinctNames();
-    }
 
     // return Competition by id
 

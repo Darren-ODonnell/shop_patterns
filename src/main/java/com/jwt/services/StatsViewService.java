@@ -139,6 +139,53 @@ public class StatsViewService {
         return mapData(data);
     }
 
+
+
+
+
+    public List<StatViewCounts> countAllPlayerStatHeatMap() {
+        List<Object[]> data = statsViewRepository.countAllPlayerStatHeatMap();
+        return mapData(data);
+    }
+
+    public List<StatViewCounts> countAllPlayerFixtureByStatNameHeatMap(String statName) {
+        List<Object[]> data = statsViewRepository.countAllPlayerFixtureByStatNameHeatMap(statName);
+        return mapData(data);
+    }
+
+    public List<StatViewCounts> countAllPlayerStatNameByFixtureDateHeatMap(String fixtureDate) {
+        List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDateHeatMap(fixtureDate);
+        return mapData(data);
+    }
+    public List<StatViewCounts> countAllStatNameFixtureByPlayerHeatMap(String firstname, String lastname) {
+        List<Object[]> data = statsViewRepository.countAllStatNameFixtureByPlayerHeatMap(firstname, lastname);
+        return mapData(data);
+    }
+
+    public List<StatViewCounts> countAllPlayerByFixtureStatNameHeatMap(String fixtureDate, String statName) {
+        List<Object[]> data = statsViewRepository.countAllPlayerByFixtureStatNameHeatMap(fixtureDate, statName);
+        return mapData(data);
+    }
+
+    public List<StatViewCounts> countAllFixtureByPlayerStatNameHeatMap(String firstname, String lastname, String statName) {
+        List<Object[]> data = statsViewRepository.countAllFixtureByPlayerStatNameHeatMap(firstname, lastname, statName);
+        return mapData(data);
+    }
+
+    public List<StatViewCounts> countAllStatsByPlayerFixtureDateHeatMap(String firstname, String lastname, String fixtureDate) {
+        List<Object[]> data = statsViewRepository.countAllStatsByPlayerFixtureDateHeatMap(firstname, lastname, fixtureDate);
+        return mapData(data);
+    }
+
+    public List<StatViewCounts> countStatHeatMap(String firstname, String lastname, String fixtureDate, String statName) {
+        List<Object[]> data = statsViewRepository.countStatHeatMap(firstname, lastname, fixtureDate, statName);
+        return mapData(data);
+    }
+
+
+
+
+
     public List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(String fixtureDate) {
         List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDateGroupSuccess(fixtureDate);
         return mapData(data);

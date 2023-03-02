@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CompetitionService {
@@ -30,20 +29,6 @@ public class CompetitionService {
     public List<Competition> list(){
         return competitionRepository.findAll();
     }
-
-    public List<Competition> listDistinctNames() {
-        List<String> names = competitionRepository.findDistinctByName();
-        List<Competition> competitions = names.stream()
-                .map(name -> {
-                    Competition comp = new Competition();
-                    comp.setName(name);
-                    return comp;
-                })
-                .collect(Collectors.toList());
-
-        return competitions;
-    }
-
 
 
 

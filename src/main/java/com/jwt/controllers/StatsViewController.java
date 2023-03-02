@@ -86,6 +86,66 @@ public class StatsViewController {
         return statsViewService.countStat(firstname, lastname, fixtureDate, statName);
     }
 
+
+    @GetMapping(value={"/countAllPlayerStatHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllPlayerStatHeatMap() {
+        return statsViewService.countAllPlayerStatHeatMap();
+    }
+
+    @GetMapping(value={"/countAllPlayerFixtureByStatNameHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllPlayerFixtureByStatNameHeatMap(@RequestParam("statName") String statName) {
+        return statsViewService.countAllPlayerFixtureByStatNameHeatMap(statName);
+    }
+
+    @GetMapping(value={"/countAllPlayerStatNameByFixtureDateHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllPlayerStatNameByFixtureDateHeatMap(@RequestParam("fixtureDate") String fixtureDate) {
+        return statsViewService.countAllPlayerStatNameByFixtureDateHeatMap(fixtureDate);
+    }
+
+    @GetMapping(value={"/countAllStatNameFixtureByPlayerHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllStatNameFixtureByPlayerHeatMap(@RequestParam("firstname") String firstname,
+                                                                              @RequestParam("lastname") String lastname) {
+        return statsViewService.countAllStatNameFixtureByPlayerHeatMap(firstname, lastname);
+    }
+
+    @GetMapping(value={"/countAllPlayerByFixtureStatNameHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllPlayerByFixtureStatNameHeatMap(@RequestParam("fixtureDate") String fixtureDate,
+                                                                              @RequestParam("statName") String statName) {
+        return statsViewService.countAllPlayerByFixtureStatNameHeatMap(fixtureDate, statName);
+    }
+
+    @GetMapping(value={"/countAllFixtureByPlayerStatNameHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllFixtureByPlayerStatNameHeatMap(@RequestParam("firstname") String firstname,
+                                                                              @RequestParam("lastname")String lastname,
+                                                                              @RequestParam("statName") String statName) {
+        return statsViewService.countAllFixtureByPlayerStatNameHeatMap(firstname, lastname, statName);
+    }
+
+    @GetMapping(value={"/countAllStatsByPlayerFixtureDateHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countAllStatsByPlayerFixtureDateHeatMap(@RequestParam("firstname") String firstname,
+                                                                               @RequestParam("lastname")String lastname,
+                                                                               @RequestParam("fixtureDate") String fixtureDate) {
+        return statsViewService.countAllStatsByPlayerFixtureDateHeatMap(firstname, lastname, fixtureDate);
+    }
+
+    @GetMapping(value={"/countStatHeatMap"} )
+    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    public @ResponseBody List<StatViewCounts> countStatHeatMap(@RequestParam("firstname") String firstname,
+                                                        @RequestParam("lastname")String lastname,
+                                                        @RequestParam("fixtureDate") String fixtureDate,
+                                                        @RequestParam("statName") String statName) {
+        return statsViewService.countStatHeatMap(firstname, lastname, fixtureDate, statName);
+    }
+
+
+
     @GetMapping(value={"/countAllPlayerStatNameByFixtureDateGroupSuccess"} )
     @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(@RequestParam("fixtureDate") String fixtureDate) {

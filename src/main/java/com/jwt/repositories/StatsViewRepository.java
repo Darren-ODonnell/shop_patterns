@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,6 +118,84 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             "GROUP BY stat_name ",
             nativeQuery = true)
     List<Object[]> averageByStatNameByOpposition(String clubName, String opposition);
+
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countAllPlayerStatHeatMap();
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where stat_name = :statName " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countAllPlayerFixtureByStatNameHeatMap(@Param("statName")String statName);
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where fixture_date = :fixtureDate " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countAllPlayerStatNameByFixtureDateHeatMap(@Param("fixtureDate")String fixtureDate);
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where first_name = :firstname " +
+            "AND last_name = :lastname " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countAllStatNameFixtureByPlayerHeatMap(@Param("firstname")String firstname, @Param("lastname")String lastname);
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where fixture_date = :fixtureDate " +
+            "AND stat_name = :statName " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countAllPlayerByFixtureStatNameHeatMap(@Param("fixtureDate")String fixtureDate, @Param("statName")String statName);
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where first_name = :firstname " +
+            "AND last_name = :lastname " +
+            "AND stat_name = :statName " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countAllFixtureByPlayerStatNameHeatMap(@Param("firstname")String firstname, @Param("lastname")String lastname, @Param("statName")String statName);
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where first_name = :firstname " +
+            "AND last_name = :lastname " +
+            "AND fixture_date = :fixtureDate " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countAllStatsByPlayerFixtureDateHeatMap(@Param("firstname")String firstname, @Param("lastname")String lastname, @Param("fixtureDate") String fixtureDate);
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where first_name = :firstname " +
+            "AND last_name = :lastname " +
+            "AND fixture_date = :fixtureDate " +
+            "AND stat_name = :statName " +
+            "GROUP BY location, success " +
+            "ORDER BY location, success ",
+            nativeQuery = true)
+    List<Object[]> countStatHeatMap(@Param("firstname")String firstname, @Param("lastname")String lastname, @Param("fixtureDate")String fixtureDate, @Param("statName")String statName);
+
+
+
+
+
 
 
 

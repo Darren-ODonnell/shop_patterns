@@ -18,11 +18,11 @@ public class StatViewCounts extends StatsViewModel implements Comparable<StatVie
         this.setSuccess( ((Boolean) record[SVC.SUCCESS]).booleanValue()  ? (Boolean) record[SVC.SUCCESS]   : false);
         this.setHalf( ((Integer)    record[SVC.HALF]).equals(null)       ? (Integer)  record[SVC.HALF]     : 0);
 
-        this.setFirstName( ((String) record[SVC.FIRST_NAME]) == null || ((String) record[SVC.FIRST_NAME]).equals("") ? (String) record[SVC.FIRST_NAME] : "");
-        this.setLastName(  ((String) record[SVC.LAST_NAME]) == null || ((String) record[SVC.LAST_NAME]).equals("")  ? (String) record[SVC.LAST_NAME]  : "");
-        this.setHomeTeam(  ((String) record[SVC.HOME_TEAM]) == null || ((String) record[SVC.HOME_TEAM]).equals("")  ? (String) record[SVC.HOME_TEAM]  : "");
-        this.setAwayTeam(  ((String) record[SVC.AWAY_TEAM]) == null || ((String) record[SVC.AWAY_TEAM]).equals("")  ? (String) record[SVC.AWAY_TEAM]  : "");
-        this.setLocation(  ((String) record[SVC.LOCATION]) == null || ((String) record[SVC.LOCATION]).equals("") ? (String) record[SVC.LOCATION]   : "");
+        this.setFirstName( ((String) record[SVC.FIRST_NAME]) == null || !((String) record[SVC.FIRST_NAME]).equals("") ? (String) record[SVC.FIRST_NAME] : "");
+        this.setLastName(  ((String) record[SVC.LAST_NAME]) == null || !((String) record[SVC.LAST_NAME]).equals("")  ? (String) record[SVC.LAST_NAME]  : "");
+        this.setHomeTeam(  ((String) record[SVC.HOME_TEAM]) == null || !((String) record[SVC.HOME_TEAM]).equals("")  ? (String) record[SVC.HOME_TEAM]  : "");
+        this.setAwayTeam(  ((String) record[SVC.AWAY_TEAM]) == null || !((String) record[SVC.AWAY_TEAM]).equals("")  ? (String) record[SVC.AWAY_TEAM]  : "");
+        this.setLocation(  ((String) record[SVC.LOCATION]) == null || !((String) record[SVC.LOCATION]).equals("") ? (String) record[SVC.LOCATION]   : "");
 
         this.setSeason( ((Integer) record[SVC.SEASON]).equals(null)                   ? 0 : (Integer) record[SVC.SEASON]);
         this.setFixtureDate( ((Date) record[SVC.FIXTURE_DATE]).equals(null)           ? new Date(System.currentTimeMillis()) : (Date) record[SVC.FIXTURE_DATE] );
