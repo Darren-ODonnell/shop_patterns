@@ -82,16 +82,16 @@ public class FirstnameService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> delete(Firstname fname){
+    public List<Firstname>delete(Firstname fname){
         Long id = fname.getId();
         Optional<Firstname> firstname = firstnameRepository.findById(id);
         if(!firstname.isEmpty()) {
             firstnameRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Firstname deleted with id: " + id, MessageTypes.INFO));
+            ResponseEntity.ok(new MyMessageResponse("Firstname deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete firstname with id: " + id, MessageTypes.WARN));
+            ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete firstname with id: " + id, MessageTypes.WARN));
         }
-
+        return list();
     }
 
     // edit/update a firstname record - only if record with id exists

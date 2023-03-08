@@ -64,7 +64,7 @@ public class LastnameController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody Lastname lastname){
+    public @ResponseBody List<Lastname> delete(@RequestBody Lastname lastname){
         return lastnameService.delete(lastname);
 
     }

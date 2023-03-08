@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,14 +105,15 @@ public class PlayerService {
 
     // delete player
 
-    public ResponseEntity<MessageResponse> delete(Player player){
+    public List<Player>  delete(Player player){
         Long id = player.getId();
         if(playerRepository.existsById(id)) {
             playerRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Player deleted with id: " + id, MessageTypes.INFO));
+             ResponseEntity.ok(new MyMessageResponse("Player deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete player with id: " + id, MessageTypes.WARN));
+             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete player with id: " + id, MessageTypes.WARN));
         }
+        return list();
 
     }
 

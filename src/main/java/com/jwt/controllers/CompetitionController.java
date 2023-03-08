@@ -81,7 +81,7 @@ public class CompetitionController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody Competition  competition){
+    public @ResponseBody   List<Competition> delete(@RequestBody Competition  competition){
         return competitionService.delete(competition) ;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,14 +66,15 @@ public class PitchGridService {
 
     // delete by name
 
-    public ResponseEntity<MessageResponse> delete( PitchGrid pitchGrid){
+    public List<PitchGrid> delete(PitchGrid pitchGrid){
         String id = pitchGrid.getId();
         if(pitchGridRepository.existsById(id)) {
             pitchGridRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("PitchGrid deleted with id: " + id, MessageTypes.INFO));
+             ResponseEntity.ok(new MyMessageResponse("PitchGrid deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: " + id, MessageTypes.WARN));
+             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete PitchGrid with abbrev: " + id, MessageTypes.WARN));
         }
+        return list();
     }
 
     // edit/update a PitchGrid record - only if record with id exists

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -90,14 +91,15 @@ public class TeamsheetService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> delete(Teamsheet teamsheet){
+    public List<Teamsheet> delete(Teamsheet teamsheet){
         TeamsheetId id = teamsheet.getId();
         if(teamsheetRepository.existsById(id)) {
             teamsheetRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Teamsheet deleted with id: " + id, MessageTypes.INFO));
+             ResponseEntity.ok(new MyMessageResponse("Teamsheet deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Teamsheet with id: " + id, MessageTypes.WARN));
+             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Teamsheet with id: " + id, MessageTypes.WARN));
         }
+        return list();
 
     }
 

@@ -95,15 +95,15 @@ public class CompetitionService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> delete(Competition competition){
+    public List<Competition> delete(Competition competition){
         Long id = competition.getId();
         if(competitionRepository.existsById(id)) {
             competitionRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Competition deleted with id: " + id, MessageTypes.INFO));
+            ResponseEntity.ok(new MyMessageResponse("Competition deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete competition with id: " + id, MessageTypes.WARN));
+            ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete competition with id: " + id, MessageTypes.WARN));
         }
-
+        return list();
     }
 
 

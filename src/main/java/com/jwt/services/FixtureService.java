@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 import java.util.*;
@@ -213,16 +214,16 @@ public class FixtureService {
 
     // delete fixture
 
-    public ResponseEntity<MessageResponse> delete(Fixture fixture) {
+    public @ResponseBody List<Fixture> delete(Fixture fixture) {
         Long id = fixture.getId();
 
         if(fixtureRepository.existsById(id)) {
             fixtureRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Fixture deleted with id: " + id, MessageTypes.INFO));
+             ResponseEntity.ok(new MyMessageResponse("Fixture deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete fixture with id: " + id, MessageTypes.WARN));
+             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete fixture with id: " + id, MessageTypes.WARN));
         }
-
+        return findAll();
     }
 
     // get clubid from name

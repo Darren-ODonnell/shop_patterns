@@ -117,7 +117,7 @@ public class FixtureController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody Fixture fixture){
+    public @ResponseBody List<Fixture> delete(@RequestBody Fixture fixture){
         return fixtureService.delete(fixture);
     }
 }

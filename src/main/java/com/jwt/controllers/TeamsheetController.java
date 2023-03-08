@@ -92,7 +92,7 @@ public class TeamsheetController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody Teamsheet teamsheet){
+    public @ResponseBody List<Teamsheet> delete(@RequestBody Teamsheet teamsheet){
         return teamsheetService.delete(teamsheet);
     }
 }

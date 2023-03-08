@@ -73,15 +73,17 @@ public class ClubService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> delete( Club club){
+    public List<Club> delete(Club club){
         Long id = club.getId();
         if(clubRepository.existsById(id)) {
             clubRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Club deleted with id: " + id, MessageTypes.INFO));
+            ResponseEntity.ok(new MyMessageResponse("Club deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Club with id: " + id, MessageTypes.WARN));
+            ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Club with id: " + id, MessageTypes.WARN));
         }
 
+        List<Club> clubs = clubRepository.findAll();
+        return clubs;
     }
 
     // edit/update a Club record - only if record with id exists

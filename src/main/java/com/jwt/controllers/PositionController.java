@@ -76,7 +76,7 @@ public class PositionController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody Position position){
+    public @ResponseBody List<Position> delete(@RequestBody Position position){
         return positionService.delete(position);
     }
 }

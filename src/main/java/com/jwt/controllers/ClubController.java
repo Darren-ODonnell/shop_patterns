@@ -70,7 +70,7 @@ public class ClubController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody Club club){
+    public @ResponseBody List<Club> delete(@RequestBody Club club){
         return clubService.delete(club);
     }
 }

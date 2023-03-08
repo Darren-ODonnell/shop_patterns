@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 import java.util.*;
@@ -197,14 +198,15 @@ public class StatService {
 
     // delete by id
 
-    public ResponseEntity<MessageResponse> delete( Stat stat){
+    public  List<Stat> delete(Stat stat){
         StatId id = stat.getId();
         if(statRepository.existsById(id)) {
             statRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Stat deleted with id: " + id, MessageTypes.INFO));
+             ResponseEntity.ok(new MyMessageResponse("Stat deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Stat with id: " + id, MessageTypes.WARN));
+             ResponseEntity.ok(new MyMessageResponse("Error: Cannot delete Stat with id: " + id, MessageTypes.WARN));
         }
+        return list();
     }
 
     // edit/update a Stat record - only if record with id exists

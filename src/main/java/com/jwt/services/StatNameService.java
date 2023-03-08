@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,16 +72,17 @@ public class StatNameService {
 
     // delete by name
 
-    public ResponseEntity<MessageResponse> delete( StatName statName){
+    public  List<StatName> delete(StatName statName){
         Optional<StatName> statname = statNameRepository.getByName(statName.getName());
 
         String id = statname.get().getId();
         if(statNameRepository.existsByName(statName.getName())) {
             statNameRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + id, MessageTypes.INFO));
+             ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete StatName with name: " + statName.getName(), MessageTypes.WARN));
+             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete StatName with name: " + statName.getName(), MessageTypes.WARN));
         }
+        return list();
 
     }
 

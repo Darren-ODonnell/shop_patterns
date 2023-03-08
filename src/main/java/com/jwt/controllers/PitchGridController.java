@@ -69,7 +69,7 @@ public class PitchGridController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody PitchGrid pitchGrid){
+    public @ResponseBody List<PitchGrid> delete(@RequestBody PitchGrid pitchGrid){
         return pitchGridService.delete(pitchGrid);
     }
 }

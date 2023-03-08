@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,14 +62,15 @@ public class LastnameService {
 
     // delete lastname
 
-    public ResponseEntity<MessageResponse> delete( Lastname lastname){
+    public List<Lastname> delete(Lastname lastname){
         Long id = lastname.getId();
         if(lastnameRepository.existsById(id)) {
             lastnameRepository.deleteById(id);
-            return ResponseEntity.ok(new MyMessageResponse("Lastname deleted with id: " + id, MessageTypes.INFO));
+             ResponseEntity.ok(new MyMessageResponse("Lastname deleted with id: " + id, MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: No Record exists with id: " + id, MessageTypes.WARN));
+             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: No Record exists with id: " + id, MessageTypes.WARN));
         }
+        return list();
     }
 
     // add record

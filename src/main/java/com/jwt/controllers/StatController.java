@@ -87,7 +87,7 @@ public class StatController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> delete(@RequestBody Stat stat){
+    public @ResponseBody List<Stat> delete(@RequestBody Stat stat){
         return statService.delete(stat);
     }
 
