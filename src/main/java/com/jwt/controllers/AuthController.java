@@ -12,6 +12,7 @@ import com.jwt.security.Role;
 import com.jwt.security.User;
 import com.jwt.security.jwt.JwtUtils;
 import com.jwt.security.services.UserDetailsImpl;
+import com.jwt.services.FellowshipService;
 import com.jwt.services.RoleService;
 import com.jwt.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     AuthenticationManager authenticationManager;
+    FellowshipService fellowshipService;
     UserService userService;
     RoleService roleService;
 
@@ -44,8 +46,9 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserService userService, RoleService roleService, JwtUtils jwtUtils) {
+    public AuthController(AuthenticationManager authenticationManager, FellowshipService fellowshipService, UserService userService, RoleService roleService, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
+        this.fellowshipService = fellowshipService;
         this.userService = userService;
         this.roleService = roleService;
         this.encoder = new BCryptPasswordEncoder(11);
@@ -71,6 +74,7 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                fellowshipService.getByEmail(userDetails.getEmail()),
                 roles));
     }
 
@@ -103,7 +107,7 @@ public class AuthController {
         Set<String> strRoles = signupRequest.getRole();
         Set<Role> roles = new HashSet<>();
         if (strRoles == null) {
-            Role userRole = roleService.findByName(ERole.ROLE_USER);
+            Role userRole = roleService.findByName(ERole.ROLE_PLAYER);
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
@@ -113,11 +117,11 @@ public class AuthController {
                         roles.add(adminRole);
                         break;
                     case "mod":
-                        Role modRole = roleService.findByName(ERole.ROLE_MODERATOR);
+                        Role modRole = roleService.findByName(ERole.ROLE_COACH);
                         roles.add(modRole);
                         break;
                     default:
-                        Role userRole = roleService.findByName(ERole.ROLE_USER);
+                        Role userRole = roleService.findByName(ERole.ROLE_PLAYER);
                         roles.add(userRole);
                 }
             });
@@ -182,7 +186,7 @@ public class AuthController {
     }
 
     @PostMapping(value="/changePassword" )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest){
 
         // verify new password and passwordConfirm are the same

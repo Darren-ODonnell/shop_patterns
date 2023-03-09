@@ -29,7 +29,7 @@ public class FirstnameController {
     // return all Firstnames - done
 
     @GetMapping(value={"/","/list"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody
     List<Firstname> list(){
         return firstnameService.list();
@@ -38,7 +38,7 @@ public class FirstnameController {
     // return Firstname by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody Firstname findById(@RequestParam("id") Long id){
 
         return firstnameService.findById( id);
@@ -47,7 +47,7 @@ public class FirstnameController {
     // return Firstname by firstname
 
     @GetMapping(value="/findByFirstname")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody Firstname findByFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findByFirstname(firstnameModel);
     }
@@ -55,7 +55,7 @@ public class FirstnameController {
     // return irish firstname given the english firstname
 
     @GetMapping(value="/findIrish")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody Firstname findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findIrishFirstname( firstnameModel);
     }
@@ -63,7 +63,7 @@ public class FirstnameController {
     // return english lastname given the irish lastname
 
     @GetMapping(value="/findEnglish")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<Firstname> findEnglishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findEnglishFirstname( firstnameModel);
     }
@@ -71,7 +71,7 @@ public class FirstnameController {
     // add new firstname
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> add(@RequestBody FirstnameModel firstnameModel){
         return firstnameService.add( firstnameModel);
     }
@@ -79,7 +79,7 @@ public class FirstnameController {
     // edit/update a firstname record - only if record with id exists
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> update(@RequestBody Firstname firstname){
         return firstnameService.update(firstname.getId(), firstname);
     }
@@ -87,7 +87,7 @@ public class FirstnameController {
     // delete by id
 
     @DeleteMapping(value="/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public List<Firstname> delete(@RequestBody Firstname firstname){
         return firstnameService.delete(firstname);
     }

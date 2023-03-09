@@ -28,7 +28,7 @@ public class PitchGridController {
     // return all PitchGrids
 
     @GetMapping(value={"/","/list"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<PitchGrid> list(){
         return pitchGridService.list();
     }
@@ -36,7 +36,7 @@ public class PitchGridController {
     // return PitchGrid by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody PitchGrid findById(@RequestParam("id")  String id){
         return pitchGridService.findById(id);
     }
@@ -44,7 +44,7 @@ public class PitchGridController {
     // return PitchGrid by name
 
     @GetMapping(value="/findByName")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody  PitchGrid findByName(@ModelAttribute PitchGridModel pitchGridModel) {
         return pitchGridService.findByName(pitchGridModel);
     }
@@ -52,7 +52,7 @@ public class PitchGridController {
     // add new PitchGrid
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> add(@RequestBody PitchGridModel pitchGridModel){
         return pitchGridService.add(pitchGridModel);
     }
@@ -60,7 +60,7 @@ public class PitchGridController {
     // edit/update a PitchGrid record - only if record with id exists
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> update(@RequestBody PitchGrid pitchGrid) {
         return pitchGridService.update( pitchGrid.getId(), pitchGrid);
     }
@@ -68,7 +68,7 @@ public class PitchGridController {
     // delete by id
 
     @DeleteMapping(value="/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<PitchGrid> delete(@RequestBody PitchGrid pitchGrid){
         return pitchGridService.delete(pitchGrid);
     }

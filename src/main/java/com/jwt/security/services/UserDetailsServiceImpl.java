@@ -1,7 +1,7 @@
 package com.jwt.security.services;
 
-import com.jwt.security.User;
 import com.jwt.repositories.UserRepository;
+import com.jwt.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

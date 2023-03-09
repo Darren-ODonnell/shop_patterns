@@ -29,7 +29,7 @@ public class StatNameController {
     // return all StatNames
 
     @GetMapping(value={"/","/list"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<StatName> list(){
         return statNameService.list();
     }
@@ -37,7 +37,7 @@ public class StatNameController {
     // return StatName by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody StatName findById(@RequestParam("abbrev")  String id){
         return statNameService.findById(id);
     }
@@ -45,7 +45,7 @@ public class StatNameController {
     // return StatName by name
 
     @GetMapping(value="/findByName")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody  StatName findByName(@RequestBody StatNameModel statNameModel) {
         return statNameService.findByStatName(statNameModel);
     }
@@ -53,7 +53,7 @@ public class StatNameController {
     // add new StatName
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> add(@RequestBody StatNameModel statNameModel){
         return statNameService.add(statNameModel);
     }
@@ -61,7 +61,7 @@ public class StatNameController {
     // edit/update a StatName record - only if record with id exists
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> update(@RequestBody StatName statName) {
         return statNameService.update( statName.getId(), statName);
     }
@@ -69,7 +69,7 @@ public class StatNameController {
     // delete by id
 
     @DeleteMapping(value="/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<StatName> delete(@RequestBody StatName statName){
         return statNameService.delete(statName);
     }

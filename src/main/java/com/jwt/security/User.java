@@ -1,5 +1,6 @@
 package com.jwt.security;
 
+import com.jwt.models.Fellowship;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,17 +24,26 @@ public class User {
     @Size(max = 20)
     private String username;
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 45)
     @Email
     private String email;
     @NotBlank
     @Size(max = 120)
     private String password;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinTable(	name = "fellowship",
+            joinColumns = @JoinColumn(name = "email", insertable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "email", insertable = false, updatable = false))
+    private Fellowship fellowship;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+
     public User() {
     }
     public User(String username, String email, String password) {
@@ -41,6 +51,9 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    public Fellowship getFellowship() { return fellowship;    }
+    public void setFellowship(Fellowship fellowship) { this.fellowship = fellowship;    }
     public Long getId() {
         return id;
     }

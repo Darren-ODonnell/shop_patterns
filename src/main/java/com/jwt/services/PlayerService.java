@@ -5,12 +5,12 @@ import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.Player;
 import com.jwt.models.PlayerModel;
 import com.jwt.payload.response.MessageResponse;
+import com.jwt.repositories.ManagerRepository;
 import com.jwt.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,16 @@ public class PlayerService {
         Optional<Player> player = playerRepository.findById(id);
         if(player.isEmpty())
             new MyMessageResponse("Player not found with id: " + id , MessageTypes.WARN);
+
+        return player.orElse(new Player());
+    }
+
+    // return player by email
+
+    public Player findByEmail(String email){
+        Optional<Player> player = playerRepository.findByEmail(email);
+        if(player.isEmpty())
+            new MyMessageResponse("Player not found with email: " + email , MessageTypes.WARN);
 
         return player.orElse(new Player());
     }

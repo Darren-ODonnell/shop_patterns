@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "stats", indexes = {
-        @Index(name = "player_id", columnList = "player_id"),
+        @Index(name = "player_id", columnList = "fellowship_id"),
         @Index(name = "stats_ibfk5_idx", columnList = "stat_name"),
         @Index(name = "location_id", columnList = "location_id")
 })
@@ -18,8 +18,8 @@ public class Stat {
     private Fixture fixture;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "player_id")
-    private Player player;
+    @JoinColumn(name = "fellowship_id")
+    private Fellowship fellow;
 
     @Column(name = "success")
     private Boolean success;
@@ -51,12 +51,12 @@ public class Stat {
         this.fixture = fixture;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Fellowship getFellow() {
+        return fellow;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setFellowship(Fellowship fellow) {
+        this.fellow = fellow;
     }
 
     public Boolean getSuccess() {

@@ -15,4 +15,5 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     Optional<List<Player>> findByLastname(String lastname);
     Optional<List<Player>> findByFirstname(String firstname);
     boolean existsByFirstnameAndLastname(String firstname, String lastname);
+    Optional<Player> findByEmail(String email);
 }

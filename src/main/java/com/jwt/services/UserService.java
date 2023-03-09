@@ -5,7 +5,6 @@ import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.UserRepository;
 import com.jwt.security.User;
-import com.jwt.security.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

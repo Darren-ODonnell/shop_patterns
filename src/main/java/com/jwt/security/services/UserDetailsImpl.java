@@ -1,6 +1,7 @@
 package com.jwt.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jwt.models.Fellowship;
 import com.jwt.security.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,14 +22,16 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+    private Fellowship fellow;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
+    public UserDetailsImpl(Long id, String username, String email, String password, Fellowship fellow,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.fellow = fellow;
     }
 
 
@@ -43,6 +46,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.get().getUsername(),
                 user.get().getEmail(),
                 user.get().getPassword(),
+                user.get().getFellowship(),
                 authorities);
     }
 
@@ -58,6 +62,8 @@ public class UserDetailsImpl implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+    public Fellowship getFellow(){return fellow;}
 
     @Override
     public String getPassword() {

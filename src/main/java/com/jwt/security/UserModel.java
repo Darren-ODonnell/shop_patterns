@@ -33,6 +33,10 @@ public class UserModel {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @Column(name = "fellowship_id")
+    private Long fellowshipId;
+
     public UserModel() {
     }
     public UserModel(String username, String email, String password) {

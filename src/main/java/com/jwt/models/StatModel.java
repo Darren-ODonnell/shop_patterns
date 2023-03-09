@@ -1,23 +1,20 @@
 package com.jwt.models;
 
-import com.jwt.services.FixtureService;
-import com.jwt.services.PitchGridService;
-import com.jwt.services.PlayerService;
-import com.jwt.services.StatNameService;
+import com.jwt.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
 public class StatModel {
     FixtureService fixtureService;
-    PlayerService playerService;
+    FellowshipService fellowshipService;
     PitchGridService pitchGridService;
     StatNameService statNameService;
 
 
 
     private Long fixtureId;
-    private Long playerId;
+    private Long fellowshipId;
     private Boolean success;
     private Integer half;
     private String locationId;
@@ -33,11 +30,11 @@ public class StatModel {
     }
 
     public Long getPlayerId() {
-        return playerId;
+        return fellowshipId;
     }
 
     public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+        this.fellowshipId = playerId;
     }
 
     public Boolean getSuccess() {
@@ -83,7 +80,7 @@ public class StatModel {
     public Stat translateModelToStat(){
         Stat stat = new Stat();
         stat.setFixture(fixtureService.getById(fixtureId));
-        stat.setPlayer(playerService.findById(playerId));
+        stat.setFellowship(fellowshipService.findById(fellowshipId));
         stat.setSuccess(this.success);
         stat.setHalf(this.half);
         PitchGrid location = pitchGridService.findById(locationId);

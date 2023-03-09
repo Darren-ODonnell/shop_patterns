@@ -32,7 +32,7 @@ public class TeamsheetController {
     // return all Teamsheets
 
     @GetMapping(value={"/","/list"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Teamsheet> list(){
 
         return teamsheetService.list();
@@ -41,7 +41,7 @@ public class TeamsheetController {
     // return Teamsheet by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody Teamsheet findById(@RequestParam("id") TeamsheetId id){
         return teamsheetService.findById(id);
     }
@@ -49,25 +49,25 @@ public class TeamsheetController {
     // return Teamsheet by id
 
     @GetMapping(value="/findByFixtureId")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Teamsheet> findByFixtureId(@RequestParam("id") Long fixtureId){
         return teamsheetService.findByFixtureId(fixtureId);
     }
     @GetMapping(value="/findPlayersByFixtureId")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Player> findPlayersByFixtureId(@RequestParam("id") Long id){
         return teamsheetService.findPlayersByFixtureId(id);
     }
 
     @GetMapping(value="/findPlayersByFixtureDate")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Teamsheet> findPlayersByFixtureDate(@RequestParam("fixture_date") Date fixtureDate){
         return teamsheetService.findPlayersByFixtureDate(fixtureDate);
     }
 
 
     @GetMapping(value="/findByPlayerId")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Teamsheet> findByPlayerId(@RequestParam("id") Long playerId){
         return teamsheetService.findByPlayerId(playerId);
     }
@@ -75,7 +75,7 @@ public class TeamsheetController {
     // add new Teamsheet
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> add(@RequestBody TeamsheetModel teamsheetModel){
         return teamsheetService.add(teamsheetModel);
     }
@@ -83,7 +83,7 @@ public class TeamsheetController {
     // edit/update a Teamsheet record - only if record with id exists
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> update(@RequestBody Teamsheet teamsheet) {
         return teamsheetService.update( teamsheet.getId(), teamsheet);
     }
@@ -91,7 +91,7 @@ public class TeamsheetController {
     // delete by id
 
     @DeleteMapping(value="/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<Teamsheet> delete(@RequestBody Teamsheet teamsheet){
         return teamsheetService.delete(teamsheet);
     }

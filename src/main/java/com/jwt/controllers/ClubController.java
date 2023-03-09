@@ -28,7 +28,7 @@ public class ClubController {
     // return all Clubs
 
     @GetMapping(value={"/","/list"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<Club> list(){
         return clubService.list();
     }
@@ -36,7 +36,7 @@ public class ClubController {
     // return Club by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody
     Club findById(@RequestParam("id")  Long id){
         return clubService.findById(id);
@@ -45,7 +45,7 @@ public class ClubController {
     // return Club by name
 
     @GetMapping(value="/findByName")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody  Club findByName(@ModelAttribute ClubModel clubModel) {
         return clubService.findByName(clubModel);
     }
@@ -53,7 +53,7 @@ public class ClubController {
     // add new Club
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> add(@RequestBody ClubModel clubModel){
         return clubService.add(clubModel);
     }
@@ -61,7 +61,7 @@ public class ClubController {
     // edit/update a Club record - only if record with id exists
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> update(@RequestBody Club club) {
         return clubService.update( club.getId(), club );
     }
@@ -69,7 +69,7 @@ public class ClubController {
     // delete by id
 
     @DeleteMapping(value="/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<Club> delete(@RequestBody Club club){
         return clubService.delete(club);
     }

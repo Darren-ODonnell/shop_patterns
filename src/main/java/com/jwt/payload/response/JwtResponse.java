@@ -1,5 +1,7 @@
 package com.jwt.payload.response;
 
+import com.jwt.models.Fellowship;
+
 import java.util.List;
 
 
@@ -9,13 +11,15 @@ public class JwtResponse {
     private Long id;
     private String username;
     private String email;
+    private Fellowship fellow;
     private List<String> roles;
 
-    public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+    public JwtResponse(String accessToken, Long id, String username, String email, Fellowship fellow, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
         this.email = email;
+        this.fellow = fellow;
         this.roles = roles;
     }
 
@@ -61,5 +65,13 @@ public class JwtResponse {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public Fellowship getFellow() {
+        return fellow;
+    }
+
+    public void setFellow(Fellowship fellow) {
+        this.fellow = fellow;
     }
 }

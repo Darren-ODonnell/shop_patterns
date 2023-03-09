@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 import java.util.*;
@@ -29,13 +28,13 @@ public class StatService {
     PitchGridService pitchGridService;
     FixtureService fixtureService;
     StatNameService statNameService;
-    PlayerService playerService;
+    ManagerService playerService;
     ClubService clubService;
 
 
     @Autowired
-    public StatService( StatRepository statRepository, PitchGridService pitchGridService,
-                        StatNameService statNameService, PlayerService playerService, ClubService clubService ) {
+    public StatService(StatRepository statRepository, PitchGridService pitchGridService,
+                       StatNameService statNameService, ManagerService playerService, ClubService clubService ) {
         this.statRepository = statRepository;
         this.pitchGridService = pitchGridService;
         this.clubService = clubService;
@@ -119,21 +118,21 @@ public class StatService {
         if(goals.isPresent()) {
             oppGoals = goals.get()
                     .stream()
-                    .filter(g -> g.getPlayer().getId() == oppositionID)
+                    .filter(g -> g.getFellow().getId() == oppositionID)
                     .count();
             ownGoals = goals.get()
                     .stream()
-                    .filter(g -> g.getPlayer().getId() != oppositionID)
+                    .filter(g -> g.getFellow().getId() != oppositionID)
                     .count();
         }
         if(points.isPresent()) {
             oppPoints = points.get()
                     .stream()
-                    .filter(p -> p.getPlayer().getId() == oppositionID)
+                    .filter(p -> p.getFellow().getId() == oppositionID)
                     .count();
             ownPoints = points.get()
                     .stream()
-                    .filter(p -> p.getPlayer().getId() != oppositionID)
+                    .filter(p -> p.getFellow().getId() != oppositionID)
                     .count();
         }
 

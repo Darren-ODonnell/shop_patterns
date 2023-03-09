@@ -31,7 +31,7 @@ public class LastnameController {
     // return all lastnames
 
     @GetMapping(value={"/","/list"} )
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<Lastname> list(){
         return lastnameService.list();
     }
@@ -39,7 +39,7 @@ public class LastnameController {
     // return Lastname by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody Lastname findById(@RequestParam("id") Long id){
         return lastnameService.findById(id);
     }
@@ -47,7 +47,7 @@ public class LastnameController {
     // return irish lastname given the english lastname
 
     @GetMapping(value={"/findIrish","/findByLastname"})
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<Lastname> findIrishLastname(@ModelAttribute LastnameModel lastnameModel) {
         return lastnameService.findByEnglishLastname(lastnameModel);
     }
@@ -55,7 +55,7 @@ public class LastnameController {
     // return english lastname given the irish lastname
 
     @GetMapping(value="/findEnglish")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER') or hasRole('ROLE_ADMIN')")
     public @ResponseBody List<Lastname> findEnglishLastname(@ModelAttribute LastnameModel lastnameModel) {
         return lastnameService.findByIrishLastname(lastnameModel);
     }
@@ -63,7 +63,7 @@ public class LastnameController {
     // delete lastname
 
     @DeleteMapping(value="/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public @ResponseBody List<Lastname> delete(@RequestBody Lastname lastname){
         return lastnameService.delete(lastname);
 
@@ -72,7 +72,7 @@ public class LastnameController {
     // add record
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
     public ResponseEntity<MessageResponse> add(@RequestBody LastnameModel lastnameModel){
         return lastnameService.add(lastnameModel);
     }
@@ -80,7 +80,7 @@ public class LastnameController {
     // update record
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public ResponseEntity<MessageResponse> update(@RequestBody Lastname lastname){
         return lastnameService.update(lastname.getId(), lastname);
     }

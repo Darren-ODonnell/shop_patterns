@@ -29,7 +29,7 @@ public class FixtureController {
     // return all Fixtures
 
     @GetMapping(value={"/","/list" })
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> list(){
         return fixtureService.findAll();
     }
@@ -37,7 +37,7 @@ public class FixtureController {
     // return all Upcoming Fixtures
 
     @GetMapping(value={"/findUpcoming" })
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> listUpcoming(){
         return fixtureService.findUpcoming();
     }
@@ -45,7 +45,7 @@ public class FixtureController {
     // return Fixture by id
 
     @GetMapping(value="/findById")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody Fixture findById(@RequestParam("id") Long id){
         return fixtureService.findById(id);
     }
@@ -53,7 +53,7 @@ public class FixtureController {
     // return Fixtures By Club name
 
     @GetMapping(value="/findByClub")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> findByClub(@ModelAttribute ClubModel clubModel)  {
         return fixtureService.getClubFixtures(clubModel);
     }
@@ -61,7 +61,7 @@ public class FixtureController {
     // return next Fixture By Club name
 
     @GetMapping(value="/findNextByClub")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody Fixture findNextFixture(@ModelAttribute ClubModel clubModel) {
         return fixtureService.getNextClubFixture(clubModel);
     }
@@ -69,7 +69,7 @@ public class FixtureController {
     // return Home Fixtures By Club name
 
     @GetMapping(value="/findByHomeByClub")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> findByHomeByClub(@ModelAttribute ClubModel clubModel) {
         return fixtureService.getClubHomeFixtures(clubModel);
     }
@@ -77,7 +77,7 @@ public class FixtureController {
     // locate specific fixture by Competition, HomeTeam, AwayTeam , FixtureDate and Season
 
     @GetMapping(value="/findByCompetitionHomeTeamAwayTeamFixtureDateSeason")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody Fixture findByCompetitionHomeTeamAwayTeamFixtureDateSeason(@ModelAttribute FixtureModel fixtureModel) {
         return fixtureService.findByCompetitionHomeTeamAwayTeamFixtureDateSeason( fixtureModel);
     }
@@ -85,13 +85,13 @@ public class FixtureController {
     // return Away Fixtures By Club name
 
     @GetMapping(value="/findByAwayByClub")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> findByAwayByClub(@ModelAttribute ClubModel clubModel)  {
         return fixtureService.getClubAwayFixtures(clubModel.getName());
     }
 
     @GetMapping(value="/findByFixtureDate")
-    @PreAuthorize("hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')")
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> findByAwayByClub(@ModelAttribute FixtureModel fixtureModel)  {
         return fixtureService.findByFixtureDate(fixtureModel.getFixtureDate());
     }
@@ -99,7 +99,7 @@ public class FixtureController {
     // add new fixture
 
     @PutMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public ResponseEntity<MessageResponse> add(@RequestBody FixtureModel fixtureModel) {
         ResponseEntity<MessageResponse> response = fixtureService.add(fixtureModel);
         return response;
@@ -108,7 +108,7 @@ public class FixtureController {
     // update record
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public ResponseEntity<MessageResponse> update(@RequestBody Fixture fixture){
         return fixtureService.update(fixture.getId(), fixture);
     }
@@ -116,7 +116,7 @@ public class FixtureController {
     // delete by id
 
     @DeleteMapping(value="/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> delete(@RequestBody Fixture fixture){
         return fixtureService.delete(fixture);
     }
