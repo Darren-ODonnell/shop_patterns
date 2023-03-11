@@ -51,12 +51,6 @@ public class Fellowship {
     @Column(name = "panel_member")
     private Byte panelMember;
 
-//    @OneToOne
-//    @JoinColumn(name = "email", referencedColumnName = "email", insertable=false, updatable=false)
-//    private User user;
-
-
-
     @Column(name = "fellow_type", length = 45)
     private String fellowType;
 
@@ -179,6 +173,5 @@ public class Fellowship {
     public void setFellowType(String fellowType) {
         this.fellowType = fellowType;
     }
-//    public User getUser() {        return user;    }
-//    public void setUser(User user) {        this.user = user;    }
+
 }

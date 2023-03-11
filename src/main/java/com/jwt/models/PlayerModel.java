@@ -3,7 +3,7 @@ package com.jwt.models;
 /**
  * @author Darren O'Donnell
  */
-public class PlayerModel {
+public class PlayerModel extends Fellowship {
 
     private String firstname;
     private String lastname;

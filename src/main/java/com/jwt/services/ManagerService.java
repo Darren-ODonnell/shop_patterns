@@ -2,6 +2,8 @@ package com.jwt.services;
 
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
+import com.jwt.models.Fellowship;
+import com.jwt.models.FellowshipModel;
 import com.jwt.models.Manager;
 import com.jwt.models.ManagerModel;
 import com.jwt.payload.response.MessageResponse;
@@ -18,10 +20,12 @@ import java.util.Optional;
 @Service
 public class ManagerService {
     ManagerRepository managerRepository;
+    FellowshipService fellowshipService;
 
     @Autowired
-    public ManagerService(ManagerRepository managerRepository) {
+    public ManagerService(ManagerRepository managerRepository,FellowshipService fellowshipService) {
         this.managerRepository = managerRepository;
+        this.fellowshipService = fellowshipService;
     }
 
     // return all managers - done
@@ -92,6 +96,8 @@ public class ManagerService {
     // add manager
 
     public ResponseEntity<MessageResponse> add( ManagerModel managerModel){
+
+
         if(!managerRepository.existsByFirstnameAndLastname(managerModel.getFirstname(), managerModel.getLastname())) {
             managerRepository.save(managerModel.translateModelToManager());
             return ResponseEntity.ok(new MyMessageResponse("New PLayer Added", MessageTypes.INFO));

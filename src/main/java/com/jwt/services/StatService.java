@@ -28,18 +28,21 @@ public class StatService {
     PitchGridService pitchGridService;
     FixtureService fixtureService;
     StatNameService statNameService;
-    ManagerService playerService;
+    PlayerService playerService;
+    ManagerService managerService;
     ClubService clubService;
 
 
     @Autowired
     public StatService(StatRepository statRepository, PitchGridService pitchGridService,
-                       StatNameService statNameService, ManagerService playerService, ClubService clubService ) {
+                       StatNameService statNameService, PlayerService playerService, ClubService clubService,ManagerService managerService ) {
         this.statRepository = statRepository;
         this.pitchGridService = pitchGridService;
         this.clubService = clubService;
         this.playerService = playerService;
         this.statNameService = statNameService;
+        this.managerService = managerService;
+
     }
 
     // return all Stats
@@ -88,7 +91,7 @@ public class StatService {
         StatName point = statNameService.findById( POINT );
         StatName goal = statNameService.findById( GOAL );
 
-        // get the id of the oppposition object to be used to search for opposition results
+        // get the id of the opposition object to be used to search for opposition results
         long oppositionID = playerService.findByLastname(OPPOSITION).get(0).getId();
 
         // initialise collectors

@@ -4,12 +4,15 @@ import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
 import com.jwt.models.Fellowship;
 import com.jwt.models.FellowshipModel;
+import com.jwt.models.ManagerModel;
+import com.jwt.models.PlayerModel;
 import com.jwt.payload.response.MessageResponse;
 import com.jwt.repositories.FellowshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,15 +126,40 @@ public class FellowshipService {
              ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete fellow with id: " + id, MessageTypes.WARN));
         }
         return list();
-
     }
-
 
     public Fellowship getByEmail(String email) {
         Optional<Fellowship> fellow = fellowshipRepository.findByEmail(email);
         if(fellow.isEmpty())
-            new MyMessageResponse("Fellowship not found with id: " + email , MessageTypes.WARN);
-
+            new MyMessageResponse("Fellowship not found with email: " + email , MessageTypes.WARN);
         return fellow.orElse(new Fellowship());
     }
+
+    public Fellowship getManagerByEmail(FellowshipModel fellowshipModel) {
+        Optional<Fellowship> fellow = fellowshipRepository.findByEmailAndFellowType(fellowshipModel.getEmail(), "Manager");
+        if(fellow.isEmpty())
+            new MyMessageResponse("Manager not found with email: " + fellowshipModel.getEmail() , MessageTypes.WARN);
+        return fellow.orElse(new Fellowship());
+    }
+    public Fellowship getManagerByFirstnameByLastname(FellowshipModel fellowshipModel) {
+        Optional<Fellowship> fellow = fellowshipRepository.findByFirstnameAndLastnameAndFellowType(fellowshipModel.getFirstname(),fellowshipModel.getLastname(), "Manager");
+        if(fellow.isEmpty())
+            new MyMessageResponse("Manager not found with firstname: " + fellowshipModel.getFirstname() + " and Lastname: " + fellowshipModel.getLastname() , MessageTypes.WARN);
+        return fellow.orElse(new Fellowship());
+    }
+
+    public Fellowship getPlayerByEmail(FellowshipModel fellowshipModel) {
+        Optional<Fellowship> fellow = fellowshipRepository.findByEmailAndFellowType(fellowshipModel.getEmail(), "Player");
+        if(fellow.isEmpty())
+            new MyMessageResponse("Player not found with email: " + fellowshipModel.getEmail() , MessageTypes.WARN);
+        return fellow.orElse(new Fellowship());
+    }
+    public Fellowship getPlayerByFirstnameByLastname(FellowshipModel fellowshipModel) {
+        Optional<Fellowship> fellow = fellowshipRepository.findByFirstnameAndLastnameAndFellowType(fellowshipModel.getFirstname(),fellowshipModel.getLastname(), "Player");
+        if(fellow.isEmpty())
+            new MyMessageResponse("Player not found with firstname: " + fellowshipModel.getFirstname() + " and Lastname: " + fellowshipModel.getLastname() , MessageTypes.WARN);
+        return fellow.orElse(new Fellowship());
+    }
+
+
 }

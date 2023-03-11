@@ -1,6 +1,8 @@
 package com.jwt.services;
 
 // identify the basic crud services which should be included here
+// as stats_view is basically a View - there are no edit/update/add or delete operations here just Get operations
+// these operations occur in the real table - Stats
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,7 +37,6 @@ public class StatsViewService {
     ClubService clubService;
     FixtureService fixtureService;
     private final FixtureRepository fixtureRepository;
-
 
     @Autowired
     public StatsViewService(StatsViewRepository statsViewRepository, ClubService clubService, StatNameService statNameService,
@@ -114,6 +115,7 @@ public class StatsViewService {
         List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDate(fixtureDate);
         return mapData(data);
     }
+
     public List<StatViewCounts> countAllStatNameFixtureByPlayer(String firstname, String lastname) {
         List<Object[]> data = statsViewRepository.countAllStatNameFixtureByPlayer(firstname, lastname);
         return mapData(data);
@@ -139,10 +141,6 @@ public class StatsViewService {
         return mapData(data);
     }
 
-
-
-
-
     public List<StatViewCounts> countAllPlayerStatHeatMap() {
         List<Object[]> data = statsViewRepository.countAllPlayerStatHeatMap();
         return mapData(data);
@@ -157,6 +155,7 @@ public class StatsViewService {
         List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDateHeatMap(fixtureDate);
         return mapData(data);
     }
+
     public List<StatViewCounts> countAllStatNameFixtureByPlayerHeatMap(String firstname, String lastname) {
         List<Object[]> data = statsViewRepository.countAllStatNameFixtureByPlayerHeatMap(firstname, lastname);
         return mapData(data);
@@ -182,10 +181,6 @@ public class StatsViewService {
         return mapData(data);
     }
 
-
-
-
-
     public List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(String fixtureDate) {
         List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDateGroupSuccess(fixtureDate);
         return mapData(data);
@@ -195,6 +190,7 @@ public class StatsViewService {
         List<Object[]> data = statsViewRepository.averageScoreByOpposition(clubName);
         return mapData(data);
     }
+
     public List<StatViewCounts> averageByStatNameByOpposition( String opposition) {
         List<Object[]> data = statsViewRepository.averageByStatNameByOpposition( clubName, opposition);
         return mapData(data);
@@ -219,7 +215,7 @@ public class StatsViewService {
 
     public List<Fixture> getWins(List<Fixture> fixtures) {
         return fixtures.stream()
-                .filter(this::fixtureWon) // return stream nased on fixtures Won passing in this = {current fixture)
+                .filter(this::fixtureWon) // return stream based on fixtures Won passing in this = {current fixture)
                 .collect(Collectors.toList()); // finally collect results into List<Fixture>
     }
 
