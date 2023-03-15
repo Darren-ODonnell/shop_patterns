@@ -21,6 +21,11 @@ public class Stat {
     @JoinColumn(name = "fellowship_id")
     private Fellowship fellow;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "player_id")
+    private Player player;
+
+
     @Column(name = "success")
     private Boolean success;
 
@@ -51,7 +56,7 @@ public class Stat {
         this.fixture = fixture;
     }
 
-    public Fellowship getFellow() {
+    public Fellowship getFellowship() {
         return fellow;
     }
 
@@ -91,4 +96,11 @@ public class Stat {
         this.statName = statName;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }

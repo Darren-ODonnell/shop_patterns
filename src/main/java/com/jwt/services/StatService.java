@@ -27,22 +27,28 @@ public class StatService {
     StatRepository statRepository;
     PitchGridService pitchGridService;
     FixtureService fixtureService;
+    FellowshipService fellowshipService;
     StatNameService statNameService;
     PlayerService playerService;
     ManagerService managerService;
     ClubService clubService;
+    private final FixtureRepository fixtureRepository;
 
 
     @Autowired
     public StatService(StatRepository statRepository, PitchGridService pitchGridService,
-                       StatNameService statNameService, PlayerService playerService, ClubService clubService,ManagerService managerService ) {
+                       StatNameService statNameService, PlayerService playerService, FellowshipService fellowshipService,
+                       ClubService clubService,ManagerService managerService,
+                       FixtureRepository fixtureRepository) {
         this.statRepository = statRepository;
         this.pitchGridService = pitchGridService;
         this.clubService = clubService;
         this.playerService = playerService;
+        this.fellowshipService = fellowshipService;
         this.statNameService = statNameService;
         this.managerService = managerService;
 
+        this.fixtureRepository = fixtureRepository;
     }
 
     // return all Stats
@@ -121,21 +127,21 @@ public class StatService {
         if(goals.isPresent()) {
             oppGoals = goals.get()
                     .stream()
-                    .filter(g -> g.getFellow().getId() == oppositionID)
+                    .filter(g -> g.getFellowship().getId() == oppositionID)
                     .count();
             ownGoals = goals.get()
                     .stream()
-                    .filter(g -> g.getFellow().getId() != oppositionID)
+                    .filter(g -> g.getFellowship().getId() != oppositionID)
                     .count();
         }
         if(points.isPresent()) {
             oppPoints = points.get()
                     .stream()
-                    .filter(p -> p.getFellow().getId() == oppositionID)
+                    .filter(p -> p.getFellowship().getId() == oppositionID)
                     .count();
             ownPoints = points.get()
                     .stream()
-                    .filter(p -> p.getFellow().getId() != oppositionID)
+                    .filter(p -> p.getFellowship().getId() != oppositionID)
                     .count();
         }
 
@@ -189,7 +195,7 @@ public class StatService {
         statId.setTimeOccurred(statModel.getTimeOccurred());
 
         if(!statRepository.existsById(statId)) {
-            Stat stat = statModel.translateModelToStat();
+            Stat stat = statModel.translateModelToStat(fixtureService, playerService, fellowshipService,pitchGridService, statNameService);
             stat.setId(statId);
             statRepository.save(stat);
             return ResponseEntity.ok(new MyMessageResponse("new Stat added", MessageTypes.INFO));

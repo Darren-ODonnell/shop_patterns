@@ -192,6 +192,21 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             nativeQuery = true)
     List<Object[]> countStatHeatMap(@Param("firstname")String firstname, @Param("lastname")String lastname, @Param("fixtureDate")String fixtureDate, @Param("statName")String statName);
 
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "where first_name = :firstname " +
+            "AND last_name = :lastname " +
+            "GROUP BY stat_name, success " +
+            "ORDER BY stat_name, success ",
+            nativeQuery = true)
+    List<Object[]> countStatsPlayerAnalysis(@Param("firstname")String firstname, @Param("lastname")String lastname);
+
+    @Query (value = "SELECT stat_name,success,half,season,time_occurred,first_name, last_name, home_team, away_team, fixture_date, location" +
+            ", count(*) FROM teamstats.stats_view " +
+            "GROUP BY stat_name, success " +
+            "ORDER BY stat_name, success ",
+            nativeQuery = true)
+    List<Object[]> countStatsAllPlayerAnalysis();
 
 
 

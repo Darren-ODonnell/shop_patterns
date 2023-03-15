@@ -144,6 +144,21 @@ public class StatsViewController {
         return statsViewService.countStatHeatMap(firstname, lastname, fixtureDate, statName);
     }
 
+    @GetMapping(value={"/countStatsPlayerAnalysis"} )
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+    public @ResponseBody List<StatViewCounts> countStatsPlayerAnalysis(@RequestParam("firstname") String firstname,
+                                                               @RequestParam("lastname")String lastname){
+        return statsViewService.countStatsPlayerAnalysis(firstname, lastname);
+    }
+
+    @GetMapping(value={"/countStatsAllPlayerAnalysis"} )
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+    public @ResponseBody List<StatViewCounts> countStatsPlayerAnalysis(){
+        return statsViewService.countStatsAllPlayerAnalysis();
+    }
+
+
+
 
 
     @GetMapping(value={"/countAllPlayerStatNameByFixtureDateGroupSuccess"} )

@@ -181,6 +181,17 @@ public class StatsViewService {
         return mapData(data);
     }
 
+    public List<StatViewCounts> countStatsPlayerAnalysis(String firstname, String lastname) {
+        List<Object[]> data = statsViewRepository.countStatsPlayerAnalysis(firstname, lastname);
+        return mapData(data);
+    }
+
+    public List<StatViewCounts> countStatsAllPlayerAnalysis() {
+        List<Object[]> data = statsViewRepository.countStatsAllPlayerAnalysis();
+        return mapData(data);
+    }
+
+
     public List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(String fixtureDate) {
         List<Object[]> data = statsViewRepository.countAllPlayerStatNameByFixtureDateGroupSuccess(fixtureDate);
         return mapData(data);

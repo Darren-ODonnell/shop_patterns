@@ -6,12 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 
 public class StatModel {
-    FixtureService fixtureService;
-    FellowshipService fellowshipService;
-    PitchGridService pitchGridService;
-    StatNameService statNameService;
-
-
 
     private Long fixtureId;
     private Long fellowshipId;
@@ -77,10 +71,11 @@ public class StatModel {
         this.timeOccurred = timeOccurred;
     }
 
-    public Stat translateModelToStat(){
+    public Stat translateModelToStat(FixtureService fixtureService, PlayerService playerService, FellowshipService fellowshipService, PitchGridService pitchGridService, StatNameService statNameService){
         Stat stat = new Stat();
         stat.setFixture(fixtureService.getById(fixtureId));
         stat.setFellowship(fellowshipService.findById(fellowshipId));
+        stat.setPlayer(playerService.findById(fellowshipId));
         stat.setSuccess(this.success);
         stat.setHalf(this.half);
         PitchGrid location = pitchGridService.findById(locationId);
@@ -91,8 +86,8 @@ public class StatModel {
     }
 
     // used in update operations
-    public Stat translateModelToStat( StatId id){
-        Stat stat = translateModelToStat();
+    public Stat translateModelToStat(FixtureService fixtureService, PlayerService playerService, FellowshipService fellowshipService, PitchGridService pitchGridService, StatNameService statNameService, StatId id){
+        Stat stat = translateModelToStat( fixtureService, playerService, fellowshipService,  pitchGridService,  statNameService);
         stat.setId(id);
         return stat;
     }
