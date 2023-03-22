@@ -31,12 +31,14 @@ public class StatsViewService {
     final int KEY = 0;
     final int COUNT = 1;
 
+    private final FixtureRepository fixtureRepository;
+
     StatsViewRepository statsViewRepository;
     StatNameService statNameService;
     StatService statService;
     ClubService clubService;
     FixtureService fixtureService;
-    private final FixtureRepository fixtureRepository;
+
 
     @Autowired
     public StatsViewService(StatsViewRepository statsViewRepository, ClubService clubService, StatNameService statNameService,

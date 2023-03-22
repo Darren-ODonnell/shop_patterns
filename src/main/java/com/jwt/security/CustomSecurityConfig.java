@@ -20,6 +20,4 @@ public class CustomSecurityConfig {
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {  return new AuthTokenFilter();    }
 
-
-
 }

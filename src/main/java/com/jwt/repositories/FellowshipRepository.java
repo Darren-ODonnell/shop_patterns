@@ -16,7 +16,6 @@ public interface FellowshipRepository extends JpaRepository<Fellowship, Long> {
     Optional<List<Fellowship>> findByFirstname(String firstname);
     boolean existsByFirstnameAndLastname(String firstname, String lastname);
     Optional<Fellowship> findByEmail(String email);
-
     Optional<Fellowship> findByEmailAndFellowType(String email, String manager);
     Optional<Fellowship> findByFirstnameAndLastnameAndFellowType(String firstname, String lastname, String manager);
 }

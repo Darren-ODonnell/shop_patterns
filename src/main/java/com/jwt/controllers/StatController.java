@@ -39,7 +39,7 @@ public class StatController {
 
     @GetMapping(value="/scoreByFixtureDate")
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody Result scoreByFixtureDateById(@RequestParam("fixture_date") Date fixtureDate){
+    public @ResponseBody Result scoreByFixtureDate(@RequestParam("fixture_date") Date fixtureDate){
         return statService.scoreByFixtureDate(fixtureDate);
     }
 
@@ -47,7 +47,7 @@ public class StatController {
 
     @GetMapping(value="/findByFixtureId")
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody List<Stat> findByFixtureDateById(@RequestParam("fixture_id") Long fixtureId){
+    public @ResponseBody List<Stat> findByFixtureId(@RequestParam("fixture_id") Long fixtureId){
         return statService.findByFixtureId(fixtureId);
     }
 

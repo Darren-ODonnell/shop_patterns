@@ -157,10 +157,6 @@ public class StatsViewController {
         return statsViewService.countStatsAllPlayerAnalysis();
     }
 
-
-
-
-
     @GetMapping(value={"/countAllPlayerStatNameByFixtureDateGroupSuccess"} )
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<StatViewCounts> countAllPlayerStatNameByFixtureDateGroupSuccess(@RequestParam("fixtureDate") String fixtureDate) {
@@ -185,6 +181,9 @@ public class StatsViewController {
     public @ResponseBody List<Fixture> findWinsByOpposition(@RequestParam("club_name") String opposition) {
         return statsViewService.findWinsByOpposition( opposition);
     }
+
+
+
 
     @GetMapping(value={"/getAvgStatsForWinsByOpponent"} )
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
