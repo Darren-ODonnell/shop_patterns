@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import java.util.Optional;
@@ -79,15 +80,29 @@ public class TeamsheetService {
     }
 
     // add new Teamsheet
-    public ResponseEntity<MessageResponse> add(TeamsheetModel teamsheetModel){
 
-        if(!teamsheetRepository.existsByFixtureId(teamsheetModel.getFixture().getId())) {
-            teamsheetRepository.save(teamsheetModel.translateModelToTeamsheet());
-            return ResponseEntity.ok(new MyMessageResponse("new Teamsheet added", MessageTypes.INFO));
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Teamsheet already exists", MessageTypes.WARN));
-        }
+    public ResponseEntity<MessageResponse> add(TeamsheetModel teamsheetModel){
+        return addAll(Collections.singletonList(teamsheetModel));
     }
+
+    // add new Teamsheet
+    public ResponseEntity<MessageResponse> addAll(List<TeamsheetModel> teamsheetModels){
+
+        List<Teamsheet> teamsheetsToSave = new ArrayList<>();
+
+        for (TeamsheetModel teamsheetModel : teamsheetModels) {
+            if(!teamsheetRepository.existsByFixtureId(teamsheetModel.getFixture().getId())) {
+                Teamsheet teamsheet = teamsheetModel.translateModelToTeamsheet();
+                teamsheetsToSave.add(teamsheet);
+            } else {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Teamsheet already exists", MessageTypes.WARN));
+            }
+        }
+
+        teamsheetRepository.saveAll(teamsheetsToSave);
+        return ResponseEntity.ok(new MyMessageResponse("new Teamsheets added", MessageTypes.INFO));
+    }
+
 
     // delete by id
 
@@ -103,20 +118,28 @@ public class TeamsheetService {
 
     }
 
+
     // edit/update a Teamsheet record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(TeamsheetId id, Teamsheet teamsheet){
+    public ResponseEntity<MessageResponse> update(Teamsheet teamsheet){
+        return updateAll(Collections.singletonList(teamsheet));
+    }
 
-        // check if exists first
-        // then update
+    // edit/update all Teamsheets records - only if record with id exists
 
-        if(teamsheetRepository.existsById(id)) {
-            teamsheetRepository.save(teamsheet);
-            return ResponseEntity.ok(new MyMessageResponse("Teamsheet record updated", MessageTypes.INFO));
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+    public ResponseEntity<MessageResponse> updateAll(List<Teamsheet> teamsheets){
+
+        List<Teamsheet> teamsheetsToUpdate = new ArrayList<>();
+
+        for (Teamsheet teamsheet : teamsheets) {
+            if (teamsheetRepository.existsById(teamsheet.getId())) {
+                teamsheetsToUpdate.add(teamsheet);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MyMessageResponse("Error: Teamsheet with ID " + teamsheet.getId() + " not found", MessageTypes.WARN));
+            }
         }
-
+        teamsheetRepository.saveAll(teamsheetsToUpdate);
+        return ResponseEntity.ok(new MyMessageResponse("Teamsheets updated", MessageTypes.INFO));
     }
 
 

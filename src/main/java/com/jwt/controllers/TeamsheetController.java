@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -80,13 +81,31 @@ public class TeamsheetController {
         return teamsheetService.add(teamsheetModel);
     }
 
+    // add new Teamsheet
+
+    @PutMapping(value="/addAll")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+    public ResponseEntity<MessageResponse> addAll(@RequestBody List<TeamsheetModel> teamsheetModels){
+        return teamsheetService.addAll(teamsheetModels);
+    }
+
     // edit/update a Teamsheet record - only if record with id exists
 
     @PostMapping(value="/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public ResponseEntity<MessageResponse> update(@RequestBody Teamsheet teamsheet) {
-        return teamsheetService.update( teamsheet.getId(), teamsheet);
+        return teamsheetService.updateAll(Collections.singletonList(teamsheet));
     }
+
+    // edit/update Teamsheet records - only if individual teamsheet records with id exist.
+
+    @PostMapping(value="/updateAll")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+    public ResponseEntity<MessageResponse> update(@RequestBody List<Teamsheet> teamsheets) {
+        return teamsheetService.updateAll(teamsheets);
+    }
+
+
 
     // delete by id
 
