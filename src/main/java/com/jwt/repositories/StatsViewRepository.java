@@ -205,15 +205,7 @@ public interface StatsViewRepository extends JpaRepository<StatsView, StatsViewI
             ", count(*) FROM teamstats.stats_view " +
             "GROUP BY stat_name, success " +
             "ORDER BY stat_name, success ",
-            nativeQuery = true)
+    nativeQuery = true)
     List<Object[]> countStatsAllPlayerAnalysis();
-
-
-
-
-
-
-
-
 
 }
