@@ -1,23 +1,23 @@
 package com.jwt.models;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-//@Data
+@Data
 public class CompetitionModel {
-
+    @NotNull
     public String name;
+    @NotNull
     public String irishName;
+    @NotNull
     public String grade;
+    @NotNull
     public Integer season;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setSeason(Integer season) {
-        this.season = season;
-    }
-    public void setIrishName(String irishName) {        this.irishName = irishName;    }
-    public void setGrade() {        this.grade = grade;    }
+    public void setName(String name)           {    this.name = name;      }
+    public void setSeason(Integer season)      {    this.season = season;  }
+    public void setIrishName(String irishName) {    this.irishName = irishName;    }
+    public void setGrade(String grade)         {    this.grade = grade;    }
 
     public String getIrishName() {
         return this.irishName;
@@ -29,7 +29,7 @@ public class CompetitionModel {
         return season;
     }
     public String getGrade() {
-        return grade;
+                return grade;
     }
 
 

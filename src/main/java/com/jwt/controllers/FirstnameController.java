@@ -48,7 +48,7 @@ public class FirstnameController {
 
     @GetMapping(value="/findByFirstname")
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody Firstname findByFirstname(@ModelAttribute FirstnameModel firstnameModel) {
+    public @ResponseBody List<Firstname> findByFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findByFirstname(firstnameModel);
     }
 
@@ -56,7 +56,7 @@ public class FirstnameController {
 
     @GetMapping(value="/findIrish")
         @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody Firstname findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
+    public @ResponseBody List<Firstname> findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findIrishFirstname( firstnameModel);
     }
 
@@ -72,7 +72,7 @@ public class FirstnameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@RequestBody FirstnameModel firstnameModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute FirstnameModel firstnameModel){
         return firstnameService.add( firstnameModel);
     }
 
@@ -80,7 +80,7 @@ public class FirstnameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> update(@RequestBody Firstname firstname){
+    public ResponseEntity<MessageResponse> update(@ModelAttribute Firstname firstname){
         return firstnameService.update(firstname.getId(), firstname);
     }
 
@@ -88,7 +88,7 @@ public class FirstnameController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public List<Firstname> delete(@RequestBody Firstname firstname){
+    public List<Firstname> delete(@ModelAttribute Firstname firstname){
         return firstnameService.delete(firstname);
     }
 }

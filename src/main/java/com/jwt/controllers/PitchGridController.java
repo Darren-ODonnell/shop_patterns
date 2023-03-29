@@ -41,6 +41,16 @@ public class PitchGridController {
         return pitchGridService.findById(id);
     }
 
+    // return PitchGrid by id
+
+    @GetMapping(value="/findByAbbrev")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+    public @ResponseBody PitchGrid findByAbbrev(@RequestParam("abbrev")  String id){
+        return pitchGridService.findById(id);
+    }
+
+
+
     // return PitchGrid by name
 
     @GetMapping(value="/findByName")

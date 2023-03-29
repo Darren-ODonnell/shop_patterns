@@ -1,7 +1,4 @@
 package com.jwt.models;
-
-import com.jwt.security.User;
-
 import javax.persistence.*;
 
 @Entity

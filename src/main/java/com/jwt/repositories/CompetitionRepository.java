@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface CompetitionRepository extends JpaRepository<Competition, Long> {
     List<Competition> findAll();
     Optional<Competition> findById(Long id);
-    Optional<Competition> findByName(String name);
+    Optional<List<Competition>> findByName(String name);
     boolean existsByName(String name);
     Optional<List<Competition>> findBySeason(Integer season);
 

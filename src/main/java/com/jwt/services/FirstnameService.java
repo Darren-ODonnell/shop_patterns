@@ -42,20 +42,20 @@ public class FirstnameService {
 
     // return Firstname by firstname
 
-    public  Firstname findByFirstname( @ModelAttribute FirstnameModel firstnameModel) {
-        Optional<Firstname> firstname =firstnameRepository.findByFirstname(firstnameModel.getFirstname());
-        if(firstname.isEmpty())
+    public  List<Firstname> findByFirstname( @ModelAttribute FirstnameModel firstnameModel) {
+        Optional<List<Firstname>> firstnames =firstnameRepository.findByFirstname(firstnameModel.getFirstname());
+        if(firstnames.isEmpty())
             new MyMessageResponse(String.format("Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
-        return firstname.orElse(new Firstname());
+        return firstnames.orElse(new ArrayList<>());
     }
 
     // return irish firstname given the english firstname
 
-    public  Firstname findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
-        Optional<Firstname> firstname = firstnameRepository.findByFirstname(firstnameModel.getFirstname());
-        if(firstname.isEmpty())
+    public  List<Firstname> findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
+        Optional<List<Firstname>> firstnames = firstnameRepository.findByFirstname(firstnameModel.getFirstname());
+        if(firstnames.isEmpty())
             new MyMessageResponse(String.format("English Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
-        return firstname.orElse(new Firstname());
+        return firstnames.orElse(new ArrayList<>());
     }
 
     // return english Firstname(s) given the irish firstname

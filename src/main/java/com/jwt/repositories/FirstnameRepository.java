@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface FirstnameRepository extends JpaRepository<Firstname, Long> {
     boolean existsByFirstname(String firstname);
     Optional<Firstname> findById(Long id);
-    Optional<Firstname> findByFirstname(String firstname);
+    Optional<List<Firstname>> findByFirstname(String firstname);
     Optional<List<Firstname>> findByFirstnameIrish(String firstnameIrish);
 }

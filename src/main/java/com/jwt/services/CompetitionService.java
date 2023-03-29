@@ -55,12 +55,12 @@ public class CompetitionService {
 
     // return Competition by Name
 
-    public Competition findByName(CompetitionModel competitionModel) {
-        Optional<Competition> competition = competitionRepository.findByName(competitionModel.getName());
-        if(competition.isEmpty())
+    public List<Competition> findByName(CompetitionModel competitionModel) {
+        Optional<List<Competition>>  competitions = competitionRepository.findByName(competitionModel.getName());
+        if(competitions.isEmpty())
             new MyMessageResponse( "Competition name does not exist : " + competitionModel.getName(),MessageTypes.WARN);
 
-        return competition.orElse(new Competition());
+        return competitions.orElse(new ArrayList<>());
     }
 
     // add new Competition

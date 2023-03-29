@@ -47,7 +47,7 @@ public class CompetitionController {
 
     @GetMapping(value="/findByName")
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody Competition findByName(@ModelAttribute CompetitionModel competitionModel) {
+    public @ResponseBody List<Competition> findByName(@ModelAttribute CompetitionModel competitionModel) {
         return competitionService.findByName(competitionModel);
     }
 
@@ -63,7 +63,7 @@ public class CompetitionController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> add(@RequestBody CompetitionModel competitionModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute CompetitionModel competitionModel){
         return competitionService.add( competitionModel);
     }
 
@@ -71,7 +71,7 @@ public class CompetitionController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update( @RequestBody Competition competition){
+    public ResponseEntity<MessageResponse> update( @ModelAttribute Competition competition){
         return competitionService.update(competition.getId(), competition);
     }
 
@@ -79,7 +79,7 @@ public class CompetitionController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody   List<Competition> delete(@RequestBody Competition  competition){
+    public @ResponseBody   List<Competition> delete(@ModelAttribute Competition  competition){
         return competitionService.delete(competition) ;
     }
 }

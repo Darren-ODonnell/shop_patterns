@@ -13,7 +13,7 @@ public class Competition {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @Column(name = "irish_name", nullable = false, length = 45)
+    @Column(name = "irish_name", nullable = true, length = 45)
     private String irishName;
 
     @Column(name = "grade", nullable = false, length = 10)
