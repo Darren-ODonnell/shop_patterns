@@ -172,14 +172,14 @@ public class StatsViewController {
     @GetMapping(value={"/averageByStatNameByOpposition"} )
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<StatViewCounts> averageByStatNameByOpposition( @RequestParam("club_name") String opposition) {
-        return statsViewService.averageByStatNameByOpposition( opposition);
+        return statsViewService.averageByStatNameByOpposition(opposition);
     }
 
 
     @GetMapping(value={"/findWinsByOpposition"} )
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Fixture> findWinsByOpposition(@RequestParam("club_name") String opposition) {
-        return statsViewService.findWinsByOpposition( opposition);
+        return statsViewService.findWinsByOpposition(opposition);
     }
 
 
@@ -188,13 +188,13 @@ public class StatsViewController {
     @GetMapping(value={"/getAvgStatsForWinsByOpponent"} )
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<StatViewCounts> getAvgStatsForWinsByOpponent(@RequestParam("club_name") String team) {
-        return statsViewService.getAvgStatsForWinsByOpponent( team);
+        return statsViewService.getAvgStatsForWinsByOpponent(team);
     }
 
     @GetMapping(value={"/getAvgStatsForLossesByOpponent"} )
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<StatViewCounts> getAvgStatsForLossesByOpponent(@RequestParam("club_name") String team) {
-        return statsViewService.getAvgStatsForLossesByOpponent( team);
+        return statsViewService.getAvgStatsForLossesByOpponent(team);
     }
 
     @GetMapping(value={"/getStatsForLastFiveFixturesWon"} )

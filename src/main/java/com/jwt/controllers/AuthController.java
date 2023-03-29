@@ -15,7 +15,9 @@ import com.jwt.security.services.UserDetailsImpl;
 import com.jwt.services.FellowshipService;
 import com.jwt.services.RoleService;
 import com.jwt.services.UserService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Log
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/auth")
@@ -41,17 +44,16 @@ public class AuthController {
     FellowshipService fellowshipService;
     UserService userService;
     RoleService roleService;
-
     PasswordEncoder encoder;
     JwtUtils jwtUtils;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, FellowshipService fellowshipService, UserService userService, RoleService roleService, JwtUtils jwtUtils) {
+    public AuthController(AuthenticationManager authenticationManager, FellowshipService fellowshipService, UserService userService, RoleService roleService, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.fellowshipService = fellowshipService;
         this.userService = userService;
         this.roleService = roleService;
-        this.encoder = new BCryptPasswordEncoder(11);
+        this.encoder = encoder;
         this.jwtUtils = jwtUtils;
     }
 
@@ -62,6 +64,7 @@ public class AuthController {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -82,7 +85,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody  SignupRequest signupRequest) {
-
         if(!signupRequest.getPassword().equals(signupRequest.getPasswordConfirm())) {
             return ResponseEntity
                     .badRequest()
