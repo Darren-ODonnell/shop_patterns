@@ -17,19 +17,10 @@ public class PlayerModel extends Fellowship {
     private boolean registered;
     private String grade;
     private String availability;
-
-    @Override
-    public String getFellowType() {
-        return fellowType;
-    }
-
-    @Override
-    public void setFellowType(String fellowType) {
-        this.fellowType = fellowType;
-    }
-
     private String fellowType;
 
+    @Override
+    public void setFellowType(String fellowType) {        this.fellowType = fellowType;    }
     public void setPhoneIce(String phoneIce) {
         this.phoneIce = phoneIce;
     }
@@ -61,6 +52,8 @@ public class PlayerModel extends Fellowship {
     public void setGrade(String grade) { this.grade = grade;  }
     public void setAvailability(String availability) { this.availability = availability; }
 
+    @Override
+    public String getFellowType() {        return fellowType;    }
     public String getPhoneIce() {
         return phoneIce;
     }
@@ -86,7 +79,7 @@ public class PlayerModel extends Fellowship {
         return lastname;
     }
     public String getFirstname() {
-        return firstname;
+                return firstname;
     }
     public boolean isRegistered() { return registered; }
     public String getGrade() { return grade; }
@@ -95,22 +88,23 @@ public class PlayerModel extends Fellowship {
     public Player translateModelToPlayer(){
         Player player = new Player();
 
-        player.setFirstname(this.firstname);
-        player.setLastname(this.lastname);
-        player.setFirstnameI(this.firstnameI);
-        player.setLastnameI(this.lastnameI);
-        player.setEmail(this.email);
-        player.setAddress(this.address);
-        player.setPhone(this.phone);
-        player.setPhoneIce(this.phoneIce);
-        player.setYob(this.yob);
-        player.setRegistered(this.registered);
-        player.setAvailability(this.availability);
-        player.setGrade(this.grade);
-        player.setFellowType("Player");
+        player.setFirstname(    this.firstname);
+        player.setLastname(     this.lastname);
+        player.setFirstnameI(   this.firstnameI);
+        player.setLastnameI(    this.lastnameI);
+        player.setEmail(        this.email);
+        player.setAddress(      this.address);
+        player.setPhone(        this.phone);
+        player.setPhoneIce(     this.phoneIce);
+        player.setYob(          this.yob);
+        player.setRegistered(   this.registered);
+        player.setAvailability( this.availability);
+        player.setGrade(        this.grade);
+        player.setFellowType(   "Player");
 
         return player;
     }
+
     // used in update operations
 
     public Player translateModelToPlayer(Long id){

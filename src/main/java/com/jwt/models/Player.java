@@ -22,7 +22,7 @@ public class Player {
     @Column(name = "last_name_i", length = 45)
     private String lastnameI;
 
-    @Column(name = "yob", nullable = false)
+    @Column(name = "yob")
     private Integer yob;
 
     @Column(name = "address", length = 128)
@@ -49,7 +49,7 @@ public class Player {
     @Column(name = "panel_member")
     private Byte panelMember;
 
-    @Column(name = "fellow_type", length = 45)
+    @Column(name = "fellow_type", nullable=false, length = 45)
     private String fellowType;
 
     public boolean isRegistered() {        return registered;    }

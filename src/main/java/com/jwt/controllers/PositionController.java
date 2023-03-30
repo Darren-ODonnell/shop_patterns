@@ -68,8 +68,8 @@ public class PositionController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> update(@ModelAttribute Position position) {
-        return positionService.update( position.getId(), position);
+    public ResponseEntity<MessageResponse> update(@ModelAttribute PositionModel positionModel) {
+        return positionService.update( positionModel);
     }
 
     // delete by id

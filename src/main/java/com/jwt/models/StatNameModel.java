@@ -3,8 +3,7 @@ package com.jwt.models;
 import javax.persistence.Column;
 
 public class StatNameModel {
-    
-    @Column(name = "name", nullable = false, length = 45)
+
     private String name;
     private String abbrev;
 
@@ -22,7 +21,9 @@ public class StatNameModel {
     }
 
     public StatName translateModelToStatName(){
+
         StatName statName = new StatName();
+        statName.setId(this.abbrev);
         statName.setName(this.name);
         return statName;
     }

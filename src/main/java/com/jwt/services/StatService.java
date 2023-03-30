@@ -34,7 +34,6 @@ public class StatService {
     ClubService clubService;
     private final FixtureRepository fixtureRepository;
 
-
     @Autowired
     public StatService(StatRepository statRepository, PitchGridService pitchGridService,
                        StatNameService statNameService, PlayerService playerService, FellowshipService fellowshipService,

@@ -62,8 +62,8 @@ public class StatNameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> update(@ModelAttribute StatName statName) {
-        return statNameService.update( statName.getId(), statName);
+    public ResponseEntity<MessageResponse> update(@ModelAttribute StatNameModel statNameModel) {
+        return statNameService.update( statNameModel);
     }
 
     // delete by id

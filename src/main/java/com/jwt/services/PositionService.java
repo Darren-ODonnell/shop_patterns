@@ -85,16 +85,16 @@ public class PositionService {
 
     // edit/update a Position record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Long id, Position position){
+    public ResponseEntity<MessageResponse> update( PositionModel positionModel){
 
         // check if exists first
         // then update
 
-        if(positionRepository.existsById(id)) {
-            positionRepository.save(position);
+        if(positionRepository.existsById(positionModel.getId())) {
+            positionRepository.save(positionModel.translateModelToPosition());
             return ResponseEntity.ok(new MyMessageResponse("Position record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + positionModel.getId() + "] -> cannot update record", MessageTypes.WARN));
         }
 
     }

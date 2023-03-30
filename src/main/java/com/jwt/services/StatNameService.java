@@ -73,31 +73,27 @@ public class StatNameService {
     // delete by name
 
     public  List<StatName> delete(StatName statName){
-        Optional<StatName> statname = statNameRepository.getByName(statName.getName());
-
-        String id = statname.get().getId();
-        if(statNameRepository.existsByName(statName.getName())) {
-            statNameRepository.deleteById(id);
-             ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + id, MessageTypes.INFO));
+        if(statNameRepository.existsById(statName.getId())) {
+            statNameRepository.deleteById(statName.getId());
+             ResponseEntity.ok(new MyMessageResponse("StatName deleted with id: " + statName.getId(), MessageTypes.INFO));
         } else {
-             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete StatName with name: " + statName.getName(), MessageTypes.WARN));
+             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete StatName with id: " + statName.getId(), MessageTypes.WARN));
         }
         return list();
-
     }
 
     // edit/update a StatName record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(String id, StatName statName){
+    public ResponseEntity<MessageResponse> update(StatNameModel statNameModel){
 
         // check if exists first
         // then update
 
-        if(statNameRepository.existsById(id)) {
-            statNameRepository.save(statName);
+        if(statNameRepository.existsById(statNameModel.getAbbrev())) {
+            statNameRepository.save(statNameModel.translateModelToStatName());
             return ResponseEntity.ok(new MyMessageResponse("StatName record updated", MessageTypes.INFO));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + id + "] -> cannot update record", MessageTypes.WARN));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Id does not exist [" + statNameModel.getAbbrev() + "] -> cannot update record", MessageTypes.WARN));
         }
 
     }
