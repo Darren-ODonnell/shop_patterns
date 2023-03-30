@@ -49,8 +49,6 @@ public class PitchGridController {
         return pitchGridService.findById(id);
     }
 
-
-
     // return PitchGrid by name
 
     @GetMapping(value="/findByName")

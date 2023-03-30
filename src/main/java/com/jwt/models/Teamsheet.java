@@ -25,6 +25,9 @@ public class Teamsheet {
     @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 
+    public Teamsheet() {
+    }
+
     public TeamsheetId getId() {
         return id;
     }

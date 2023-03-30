@@ -18,6 +18,9 @@ public class Position {
     @Column(name = "abbrev", length = 8)
     private String abbrev;
 
+    public Position() {
+    }
+
     public Long getId() {
         return id;
     }

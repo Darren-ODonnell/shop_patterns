@@ -5,6 +5,19 @@ import javax.persistence.Column;
 
 public class PitchGridModel {
 
+    @Column(name="abbrev", length = 10)
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+
     @Column(name = "name", length = 45)
     private String name;
 

@@ -16,6 +16,9 @@ public class TeamsheetId implements Serializable {
     @Column(name = "player_id", nullable = false)
     private Long playerId;
 
+    public TeamsheetId() {
+    }
+
     public Long getFixtureId() {
         return fixtureId;
     }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "pitch_grid")
 public class PitchGrid {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "abbrev", nullable = false, length = 5)
     private String id;
 

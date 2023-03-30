@@ -56,8 +56,8 @@ public class PitchGridService {
     // add new PitchGrid
 
     public ResponseEntity<MessageResponse> add(PitchGridModel pitchGridModel){
-        if(!pitchGridRepository.existsById(pitchGridModel.getName())) {
-            pitchGridRepository.save(pitchGridModel.translateModelToPitchGrid());
+        if(!pitchGridRepository.existsById(pitchGridModel.getId())) {
+            pitchGridRepository.save(pitchGridModel.translateModelToPitchGrid(pitchGridModel.getId()));
             return ResponseEntity.ok(new MyMessageResponse("new PitchGrid added", MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: PitchGrid already exists", MessageTypes.WARN));
