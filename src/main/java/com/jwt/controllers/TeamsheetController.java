@@ -101,7 +101,7 @@ public class TeamsheetController {
 
     @PostMapping(value="/updateAll")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody List<Teamsheet> update(@ModelAttribute List<Teamsheet> teamsheets) {
+    public @ResponseBody List<Teamsheet> update(@RequestBody List<Teamsheet> teamsheets) {
         return teamsheetService.updateAll(teamsheets);
     }
 

@@ -56,7 +56,7 @@ public class TeamsheetService {
         return teamsheet.orElse(new Teamsheet());
     }
     public List<Teamsheet> findByFixtureId( Long id){
-        Optional<List<Teamsheet>> teamsheets = teamsheetRepository.findByFixtureId(id);
+        Optional<List<Teamsheet>> teamsheets = teamsheetRepository.findByFixtureIdOrderByPosition(id);
         if(teamsheets.isEmpty())
             new MyMessageResponse(String.format("Fixture id: %d not found", id), MessageTypes.ERROR);
         return teamsheets.orElse(new ArrayList<>());
@@ -71,7 +71,7 @@ public class TeamsheetService {
     public List<Player> findPlayersByFixtureId( Long id){
         // get teamsheet by fixture id.
         // extract and return the list of players from this list
-        List<Teamsheet> teamsheets = teamsheetRepository.findByFixtureIdOrderByPosition(id);
+        List<Teamsheet> teamsheets = teamsheetRepository.findByFixtureIdOrderByPosition(id).orElse(new ArrayList<>());
         List<Player> players = new ArrayList<>();
         for(Teamsheet ts : teamsheets)
             players.add(ts.getPlayer());
@@ -117,7 +117,6 @@ public class TeamsheetService {
         return list();
     }
 
-
     // edit/update a Teamsheet record - only if record with id exists
 
     public List<Teamsheet> update(Teamsheet teamsheet){
@@ -150,7 +149,7 @@ public class TeamsheetService {
 
         return  fixtures.stream()
                 .filter(f -> f.getHomeTeam().getId().equals(teamId)  || f.getAwayTeam().getId().equals(teamId))
-                .flatMap(f -> teamsheetRepository.findByFixtureId(f.getId()).orElse(new ArrayList<Teamsheet>()).stream())
+                .flatMap(f -> teamsheetRepository.findByFixtureIdOrderByPosition(f.getId()).orElse(new ArrayList<Teamsheet>()).stream())
                 .collect(Collectors.toList());
     }
 }
