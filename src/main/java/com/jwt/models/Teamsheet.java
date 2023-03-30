@@ -25,6 +25,12 @@ public class Teamsheet {
     @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 
+
+
+    @Column(name = "jersey_number", nullable = false)
+    private int jerseyNumber;
+
+
     public Teamsheet() {
     }
 
@@ -59,5 +65,10 @@ public class Teamsheet {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    public int getJerseyNumber() {        return jerseyNumber;    }
+
+    public void setJerseyNumber(int jerseyNumber) {        this.jerseyNumber = jerseyNumber;    }
+
 
 }

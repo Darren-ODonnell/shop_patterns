@@ -1,10 +1,10 @@
 package com.jwt.models;
 
 public class TeamsheetModel {
-
     private Fixture fixture;
     private Player player;
     private Position position;
+    private int jerseyNumber;
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -15,7 +15,9 @@ public class TeamsheetModel {
     public void setPosition(Position position) {
         this.position = position;
     }
+    public void setJerseyNumber(int jerseyNumber) {        this.jerseyNumber = jerseyNumber;    }
 
+    public int getJerseyNumber() {        return jerseyNumber;    }
     public Player getPlayer() {
         return player;
     }
@@ -31,6 +33,7 @@ public class TeamsheetModel {
         teamsheet.setPosition(this.position);
         teamsheet.setPlayer(this.player);
         teamsheet.setFixture(this.fixture);
+        teamsheet.setJerseyNumber(this.jerseyNumber);
         return teamsheet;
     }
 
