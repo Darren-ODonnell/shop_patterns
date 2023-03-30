@@ -71,7 +71,7 @@ public class StatController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute StatModel statModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody StatModel statModel){
         return statService.add(statModel);
     }
 

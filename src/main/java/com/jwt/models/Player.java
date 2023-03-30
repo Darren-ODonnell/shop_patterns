@@ -49,133 +49,94 @@ public class Player {
     @Column(name = "panel_member")
     private Byte panelMember;
 
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public String getFellowType() {
-        return fellowType;
-    }
-
-    public void setFellowType(String fellowType) {
-        this.fellowType = fellowType;
-    }
-
     @Column(name = "fellow_type", length = 45)
     private String fellowType;
 
-
-
+    public boolean isRegistered() {        return registered;    }
+    public String getFellowType() {        return fellowType;    }
+    public void setFellowType(String fellowType) {        this.fellowType = fellowType;    }
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getFirstname() {
         return firstname;
     }
-
     public void setFirstname(String firstName) {
         this.firstname = firstName;
     }
-
     public String getLastname() {
         return lastname;
     }
-
     public void setLastname(String lastName) {
         this.lastname = lastName;
     }
-
     public String getFirstnameI() {
         return firstnameI;
     }
-
     public void setFirstnameI(String firstNameI) {
         this.firstnameI = firstNameI;
     }
-
     public String getLastnameI() {
         return lastnameI;
     }
-
     public void setLastnameI(String lastNameI) {
         this.lastnameI = lastNameI;
     }
-
     public Integer getYob() {
         return yob;
     }
-
     public void setYob(Integer yob) {
         this.yob = yob;
     }
-
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPhone() {
         return phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     public String getPhoneIce() {
         return phoneIce;
     }
-
     public void setPhoneIce(String phoneIce) {
         this.phoneIce = phoneIce;
     }
-
     public String getAvailability() {
         return availability;
     }
-
     public void setAvailability(String availability) {
         this.availability = availability;
     }
-
     public String getGrade() {
         return grade;
     }
-
     public void setGrade(String grade) {
         this.grade = grade;
     }
-
     public boolean getRegistered() {
         return registered;
     }
-
     public void setRegistered(boolean registered) {
         this.registered = registered;
     }
-
     public Byte getPanelMember() {
         return panelMember;
     }
-
     public void setPanelMember(Byte panelMember) {
         this.panelMember = panelMember;
     }
-
 }

@@ -31,7 +31,6 @@ public class PlayerService {
         return playerRepository.findAll();
     }
 
-
     // return player by id
 
     public Player findById(Long id){
