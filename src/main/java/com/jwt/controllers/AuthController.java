@@ -189,7 +189,7 @@ public class AuthController {
 
     @PostMapping(value="/changePassword" )
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest){
+    public ResponseEntity<String> changePassword(@ModelAttribute ChangePasswordRequest changePasswordRequest){
 
         // verify new password and passwordConfirm are the same
         if(!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getPasswordConfirm()))

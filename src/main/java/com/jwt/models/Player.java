@@ -49,6 +49,23 @@ public class Player {
     @Column(name = "panel_member")
     private Byte panelMember;
 
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public String getFellowType() {
+        return fellowType;
+    }
+
+    public void setFellowType(String fellowType) {
+        this.fellowType = fellowType;
+    }
+
+    @Column(name = "fellow_type", length = 45)
+    private String fellowType;
+
+
+
     public Long getId() {
         return id;
     }

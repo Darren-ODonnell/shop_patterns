@@ -52,10 +52,18 @@ public class FirstnameController {
         return firstnameService.findByFirstname(firstnameModel);
     }
 
+    // return Firstname by firstname
+
+    @GetMapping(value="/findByFirstnameIrish")
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
+    public @ResponseBody List<Firstname> findByFirstnameIrish(@ModelAttribute FirstnameModel firstnameModel) {
+        return firstnameService.findByFirstnameIrish(firstnameModel);
+    }
+
     // return irish firstname given the english firstname
 
     @GetMapping(value="/findIrish")
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Firstname> findIrishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findIrishFirstname( firstnameModel);
     }
@@ -63,7 +71,7 @@ public class FirstnameController {
     // return english lastname given the irish lastname
 
     @GetMapping(value="/findEnglish")
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
+    @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Firstname> findEnglishFirstname(@ModelAttribute FirstnameModel firstnameModel) {
         return firstnameService.findEnglishFirstname( firstnameModel);
     }

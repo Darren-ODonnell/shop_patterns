@@ -18,6 +18,18 @@ public class PlayerModel extends Fellowship {
     private String grade;
     private String availability;
 
+    @Override
+    public String getFellowType() {
+        return fellowType;
+    }
+
+    @Override
+    public void setFellowType(String fellowType) {
+        this.fellowType = fellowType;
+    }
+
+    private String fellowType;
+
     public void setPhoneIce(String phoneIce) {
         this.phoneIce = phoneIce;
     }
@@ -95,6 +107,7 @@ public class PlayerModel extends Fellowship {
         player.setRegistered(this.registered);
         player.setAvailability(this.availability);
         player.setGrade(this.grade);
+        player.setFellowType("Player");
 
         return player;
     }

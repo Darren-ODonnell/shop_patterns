@@ -112,22 +112,22 @@ public class TeamsheetService {
             teamsheetRepository.deleteById(id);
              ResponseEntity.ok(new MyMessageResponse("Teamsheet deleted with id: " + id, MessageTypes.INFO));
         } else {
-             ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Teamsheet with id: " + id, MessageTypes.WARN));
+            ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete Teamsheet with id: " + id, MessageTypes.WARN));
         }
         return list();
-
     }
 
 
     // edit/update a Teamsheet record - only if record with id exists
 
-    public ResponseEntity<MessageResponse> update(Teamsheet teamsheet){
+    public List<Teamsheet> update(Teamsheet teamsheet){
         return updateAll(Collections.singletonList(teamsheet));
     }
 
     // edit/update all Teamsheets records - only if record with id exists
 
-    public ResponseEntity<MessageResponse> updateAll(List<Teamsheet> teamsheets){
+    public List<Teamsheet> updateAll(List<Teamsheet> teamsheets){
+        // this method assumes that the list of updates are all against the same fixture.
 
         List<Teamsheet> teamsheetsToUpdate = new ArrayList<>();
 
@@ -135,11 +135,11 @@ public class TeamsheetService {
             if (teamsheetRepository.existsById(teamsheet.getId())) {
                 teamsheetsToUpdate.add(teamsheet);
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MyMessageResponse("Error: Teamsheet with ID " + teamsheet.getId() + " not found", MessageTypes.WARN));
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MyMessageResponse("Error: Teamsheet with ID " + teamsheet.getId() + " not found", MessageTypes.WARN));
             }
         }
         teamsheetRepository.saveAll(teamsheetsToUpdate);
-        return ResponseEntity.ok(new MyMessageResponse("Teamsheets updated", MessageTypes.INFO));
+        return findByFixtureId(teamsheets.get(0).getFixture().getId());
     }
 
 

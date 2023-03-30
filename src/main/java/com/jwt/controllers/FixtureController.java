@@ -100,7 +100,7 @@ public class FixtureController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> add(@RequestBody FixtureModel fixtureModel) {
+    public ResponseEntity<MessageResponse> add(@ModelAttribute FixtureModel fixtureModel) {
         ResponseEntity<MessageResponse> response = fixtureService.add(fixtureModel);
         return response;
     }
@@ -109,7 +109,7 @@ public class FixtureController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update(@RequestBody Fixture fixture){
+    public ResponseEntity<MessageResponse> update(@ModelAttribute Fixture fixture){
         return fixtureService.update(fixture.getId(), fixture);
     }
 
@@ -117,7 +117,7 @@ public class FixtureController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody List<Fixture> delete(@RequestBody Fixture fixture){
+    public @ResponseBody List<Fixture> delete(@ModelAttribute Fixture fixture){
         return fixtureService.delete(fixture);
     }
 }

@@ -77,7 +77,7 @@ public class TeamsheetController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@RequestBody TeamsheetModel teamsheetModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute TeamsheetModel teamsheetModel){
         return teamsheetService.add(teamsheetModel);
     }
 
@@ -85,7 +85,7 @@ public class TeamsheetController {
 
     @PutMapping(value="/addAll")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> addAll(@RequestBody List<TeamsheetModel> teamsheetModels){
+    public ResponseEntity<MessageResponse> addAll(@ModelAttribute List<TeamsheetModel> teamsheetModels){
         return teamsheetService.addAll(teamsheetModels);
     }
 
@@ -93,7 +93,7 @@ public class TeamsheetController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update(@RequestBody Teamsheet teamsheet) {
+    public List<Teamsheet> update(@ModelAttribute Teamsheet teamsheet) {
         return teamsheetService.updateAll(Collections.singletonList(teamsheet));
     }
 
@@ -101,17 +101,15 @@ public class TeamsheetController {
 
     @PostMapping(value="/updateAll")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update(@RequestBody List<Teamsheet> teamsheets) {
+    public @ResponseBody List<Teamsheet> update(@ModelAttribute List<Teamsheet> teamsheets) {
         return teamsheetService.updateAll(teamsheets);
     }
-
-
 
     // delete by id
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<Teamsheet> delete(@RequestBody Teamsheet teamsheet){
+    public @ResponseBody List<Teamsheet> delete(@ModelAttribute Teamsheet teamsheet){
         return teamsheetService.delete(teamsheet);
     }
 }

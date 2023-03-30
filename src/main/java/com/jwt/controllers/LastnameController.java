@@ -64,7 +64,7 @@ public class LastnameController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<Lastname> delete(@RequestBody Lastname lastname){
+    public @ResponseBody List<Lastname> delete(@ModelAttribute Lastname lastname){
         return lastnameService.delete(lastname);
 
     }
@@ -73,7 +73,7 @@ public class LastnameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@RequestBody LastnameModel lastnameModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute LastnameModel lastnameModel){
         return lastnameService.add(lastnameModel);
     }
 
@@ -81,7 +81,7 @@ public class LastnameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update(@RequestBody Lastname lastname){
+    public ResponseEntity<MessageResponse> update(@ModelAttribute Lastname lastname){
         return lastnameService.update(lastname.getId(), lastname);
     }
 

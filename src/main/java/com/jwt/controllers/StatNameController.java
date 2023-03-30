@@ -46,7 +46,7 @@ public class StatNameController {
 
     @GetMapping(value="/findByName")
     @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody  StatName findByName(@RequestBody StatNameModel statNameModel) {
+    public @ResponseBody  StatName findByName(@ModelAttribute StatNameModel statNameModel) {
         return statNameService.findByStatName(statNameModel);
     }
 
@@ -54,7 +54,7 @@ public class StatNameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@RequestBody StatNameModel statNameModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute StatNameModel statNameModel){
         return statNameService.add(statNameModel);
     }
 
@@ -62,7 +62,7 @@ public class StatNameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> update(@RequestBody StatName statName) {
+    public ResponseEntity<MessageResponse> update(@ModelAttribute StatName statName) {
         return statNameService.update( statName.getId(), statName);
     }
 
@@ -70,7 +70,7 @@ public class StatNameController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<StatName> delete(@RequestBody StatName statName){
+    public @ResponseBody List<StatName> delete(@ModelAttribute StatName statName){
         return statNameService.delete(statName);
     }
 }

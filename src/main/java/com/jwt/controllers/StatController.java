@@ -71,7 +71,7 @@ public class StatController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> add(@RequestBody StatModel statModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute StatModel statModel){
         return statService.add(statModel);
     }
 
@@ -79,7 +79,7 @@ public class StatController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update(@RequestBody Stat stat) {
+    public ResponseEntity<MessageResponse> update(@ModelAttribute Stat stat) {
         return statService.update( stat.getId(), stat );
     }
 
@@ -87,7 +87,7 @@ public class StatController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody List<Stat> delete(@RequestBody Stat stat){
+    public @ResponseBody List<Stat> delete(@ModelAttribute Stat stat){
         return statService.delete(stat);
     }
 

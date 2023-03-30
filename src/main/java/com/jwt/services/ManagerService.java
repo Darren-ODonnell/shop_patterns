@@ -100,7 +100,7 @@ public class ManagerService {
 
         if(!managerRepository.existsByFirstnameAndLastname(managerModel.getFirstname(), managerModel.getLastname())) {
             managerRepository.save(managerModel.translateModelToManager());
-            return ResponseEntity.ok(new MyMessageResponse("New PLayer Added", MessageTypes.INFO));
+            return ResponseEntity.ok(new MyMessageResponse("New Manager Added", MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Manager already exists", MessageTypes.WARN));
         }

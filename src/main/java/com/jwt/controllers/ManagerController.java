@@ -78,7 +78,7 @@ public class ManagerController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add( @RequestBody ManagerModel managerModel){
+    public ResponseEntity<MessageResponse> add( @ModelAttribute ManagerModel managerModel){
         return managerService.add( managerModel);
     }
 
@@ -86,7 +86,7 @@ public class ManagerController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update( @RequestBody Manager manager){
+    public ResponseEntity<MessageResponse> update( @ModelAttribute Manager manager){
         return managerService.update(manager.getId(), manager);
     }
 
@@ -95,7 +95,7 @@ public class ManagerController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<Manager>  delete(@RequestBody Manager manager){
+    public @ResponseBody List<Manager>  delete(@ModelAttribute Manager manager){
         return managerService.delete(manager);
     }
 }

@@ -60,7 +60,7 @@ public class PositionController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@RequestBody PositionModel positionModel){
+    public ResponseEntity<MessageResponse> add(@ModelAttribute PositionModel positionModel){
         return positionService.add(positionModel);
     }
 
@@ -68,7 +68,7 @@ public class PositionController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> update(@RequestBody Position position) {
+    public ResponseEntity<MessageResponse> update(@ModelAttribute Position position) {
         return positionService.update( position.getId(), position);
     }
 
@@ -76,7 +76,7 @@ public class PositionController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<Position> delete(@RequestBody Position position){
+    public @ResponseBody List<Position> delete(@ModelAttribute Position position){
         return positionService.delete(position);
     }
 }

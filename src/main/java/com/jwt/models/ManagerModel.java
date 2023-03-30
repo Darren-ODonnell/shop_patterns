@@ -86,6 +86,7 @@ public class ManagerModel {
         manager.setEmail(this.email);
         manager.setAddress(this.address);
         manager.setPhone(this.phone);
+        manager.setFellowType("Manager");
 
         return manager;
     }

@@ -45,7 +45,13 @@ public class FirstnameService {
     public  List<Firstname> findByFirstname( @ModelAttribute FirstnameModel firstnameModel) {
         Optional<List<Firstname>> firstnames =firstnameRepository.findByFirstname(firstnameModel.getFirstname());
         if(firstnames.isEmpty())
-            new MyMessageResponse(String.format("Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
+            new MyMessageResponse(String.format("Irish Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
+        return firstnames.orElse(new ArrayList<>());
+    }
+    public  List<Firstname> findByFirstnameIrish( @ModelAttribute FirstnameModel firstnameModel) {
+        Optional<List<Firstname>> firstnames =firstnameRepository.findByFirstnameIrish(firstnameModel.getFirstnameIrish());
+        if(firstnames.isEmpty())
+            new MyMessageResponse(String.format("Irish Firstname : %s not found", firstnameModel.getFirstnameIrish()), MessageTypes.WARN);
         return firstnames.orElse(new ArrayList<>());
     }
 
@@ -57,6 +63,7 @@ public class FirstnameService {
             new MyMessageResponse(String.format("English Firstname : %s not found", firstnameModel.getFirstname()), MessageTypes.WARN);
         return firstnames.orElse(new ArrayList<>());
     }
+
 
     // return english Firstname(s) given the irish firstname
 
@@ -70,14 +77,12 @@ public class FirstnameService {
     // add new firstname
 
     public  ResponseEntity<MessageResponse> add(@ModelAttribute FirstnameModel firstnameModel){
-
-        if(firstnameRepository.existsByFirstname(firstnameModel.getFirstname())) {
+        if(!firstnameRepository.existsByFirstname(firstnameModel.getFirstname())) {
             firstnameRepository.save(firstnameModel.translateModelToFirstname());
             return ResponseEntity.ok(new MyMessageResponse("new Firstname added", MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Firstname already exists", MessageTypes.WARN));
         }
-
     }
 
     // delete by id

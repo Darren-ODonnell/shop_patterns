@@ -53,18 +53,6 @@ public class Fixture {
         this.id = id;
     }
 
-//    public Time getSqlTime() {
-//        return sqlTime;
-//    }
-//
-//    public void setSqlTime(Time sqlTime) {
-//        this.sqlTime = sqlTime;
-//    }
-//
-//    public void setSqlTime(Long time) {
-//        this.sqlTime = new Time(time);
-//    }
-
     public Competition getCompetition() {
         return competition;
     }
