@@ -1,11 +1,17 @@
 package com.jwt.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class LastnameModel implements Serializable {
-
+    @JsonProperty("lastname")
     private String lastname;
+    @JsonProperty("lastnameIrish")
     private String lastnameIrish;
+
+    public LastnameModel() {
+    }
 
     public LastnameModel(String lastname, String lastnameIrish) {
         this.lastname = lastname;

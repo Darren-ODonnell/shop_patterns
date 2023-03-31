@@ -14,6 +14,9 @@ public class CompetitionModel {
     @NotNull
     public Integer season;
 
+    public CompetitionModel() {
+
+    }
     public void setName(String name)           {    this.name = name;      }
     public void setSeason(Integer season)      {    this.season = season;  }
     public void setIrishName(String irishName) {    this.irishName = irishName;    }

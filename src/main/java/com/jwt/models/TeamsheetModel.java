@@ -6,6 +6,8 @@ public class TeamsheetModel {
     private Position position;
     private int jerseyNumber;
 
+    public TeamsheetModel() {}
+
     public void setPlayer(Player player) {           this.player = player;    }
     public void setFixture(Fixture fixture) {        this.fixture = fixture;    }
     public void setPosition(Position position) {     this.position = position;    }

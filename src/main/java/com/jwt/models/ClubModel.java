@@ -13,6 +13,11 @@ public class ClubModel {
     private String colours;
     private String abbrev;
 
+    public ClubModel() {
+
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }

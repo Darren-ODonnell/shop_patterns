@@ -78,7 +78,7 @@ public class FellowshipController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> add( @ModelAttribute FellowshipModel fellowModel){
+    public ResponseEntity<MessageResponse> add( @RequestBody FellowshipModel fellowModel){
         return fellowshipService.add( fellowModel);
     }
     // add player fellow

@@ -100,7 +100,7 @@ public class FixtureController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> add(@ModelAttribute FixtureModel fixtureModel) {
+    public ResponseEntity<MessageResponse> add(@RequestBody FixtureModel fixtureModel) {
         ResponseEntity<MessageResponse> response = fixtureService.add(fixtureModel);
         return response;
     }

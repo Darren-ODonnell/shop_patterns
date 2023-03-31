@@ -19,6 +19,8 @@ public class PlayerModel extends Fellowship {
     private String availability;
     private String fellowType;
 
+    public PlayerModel() {}
+
     @Override
     public void setFellowType(String fellowType) {        this.fellowType = fellowType;    }
     public void setPhoneIce(String phoneIce) {

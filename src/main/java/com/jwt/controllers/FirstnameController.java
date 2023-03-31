@@ -80,7 +80,7 @@ public class FirstnameController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@ModelAttribute FirstnameModel firstnameModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody FirstnameModel firstnameModel){
         return firstnameService.add( firstnameModel);
     }
 

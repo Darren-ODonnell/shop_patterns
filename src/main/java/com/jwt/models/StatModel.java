@@ -15,6 +15,8 @@ public class StatModel {
     private String statNameId;
     private BigDecimal timeOccurred;
 
+    public StatModel() {}
+
     public Long getFixtureId() {
         return fixtureId;
     }

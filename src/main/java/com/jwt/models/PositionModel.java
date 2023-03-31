@@ -7,6 +7,8 @@ public class PositionModel {
     private String name;
     private String abbrev;
 
+    public PositionModel() {}
+
     public String getAbbrev() {
         return abbrev;
     }

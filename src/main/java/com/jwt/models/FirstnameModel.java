@@ -9,6 +9,8 @@ public class FirstnameModel {
     private String firstname;
     private String firstnameIrish;
 
+    public FirstnameModel() {}
+
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }

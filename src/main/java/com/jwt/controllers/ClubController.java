@@ -54,7 +54,7 @@ public class ClubController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@ModelAttribute ClubModel clubModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody ClubModel clubModel){
         return clubService.add(clubModel);
     }
 

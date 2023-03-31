@@ -1,6 +1,23 @@
 package com.jwt.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jwt.models.Lastname;
+import com.jwt.models.LastnameModel;
+import com.jwt.payload.response.MessageResponse;
+import com.jwt.services.LastnameService;
+import lombok.extern.java.Log;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jwt.models.Lastname;
 import com.jwt.models.LastnameModel;
@@ -19,6 +36,7 @@ import java.util.List;
 /**
  * @author Darren O'Donnell
  */
+@Log
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/lastname")
@@ -34,7 +52,7 @@ public class LastnameController {
     // return all lastnames
 
     @GetMapping(value={"/","/list"} )
-        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
+        @PreAuthorize("hasRole('ROLE_PLAYER')  or hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
     public @ResponseBody List<Lastname> list(){
         return lastnameService.list();
     }
@@ -74,24 +92,12 @@ public class LastnameController {
 
     // add record
 
-    @PutMapping(value="/add2")
+    @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> add2(@RequestBody LastnameModel data){
+    public ResponseEntity<MessageResponse> add(@RequestBody LastnameModel data){
         return lastnameService.add(data);
     }
-    @PutMapping(value="/add", consumes = MediaType.ALL_VALUE)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> add(@RequestBody String requestBody) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            LastnameModel lastnameModel = objectMapper.readValue(requestBody, LastnameModel.class);
-            System.out.println("Deserialized LastnameModel: " + lastnameModel);
-            return lastnameService.add(lastnameModel);
-        } catch (JsonProcessingException e) {
-            System.err.println("Error deserializing JSON: " + e.getMessage());
-            return ResponseEntity.badRequest().body(new MessageResponse("Invalid JSON data"));
-        }
-    }
+
 
 
     // update record

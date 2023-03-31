@@ -9,8 +9,9 @@ public class ManagerModel {
     private String address;
     private String email;
     private String phone;
-
     private String fellowType;
+
+    public ManagerModel() {}
 
     public String getFirstname() {
         return firstname;

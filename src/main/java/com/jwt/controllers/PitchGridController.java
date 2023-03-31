@@ -61,7 +61,7 @@ public class PitchGridController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@ModelAttribute PitchGridModel pitchGridModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody PitchGridModel pitchGridModel){
         return pitchGridService.add(pitchGridModel);
     }
 

@@ -17,6 +17,8 @@ public class FixtureModel {
     private Integer season;
     private Integer round;
 
+    public FixtureModel() {}
+
     public void setRound(Integer round) {
         this.round = round;
     }

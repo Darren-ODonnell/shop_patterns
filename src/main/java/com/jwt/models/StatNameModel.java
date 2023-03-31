@@ -7,6 +7,8 @@ public class StatNameModel {
     private String name;
     private String abbrev;
 
+    public StatNameModel() {}
+
     public String getName() {
         return name;
     }

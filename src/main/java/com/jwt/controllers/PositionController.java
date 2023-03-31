@@ -60,7 +60,7 @@ public class PositionController {
 
     @PutMapping(value="/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> add(@ModelAttribute PositionModel positionModel){
+    public ResponseEntity<MessageResponse> add(@RequestBody PositionModel positionModel){
         return positionService.add(positionModel);
     }
 

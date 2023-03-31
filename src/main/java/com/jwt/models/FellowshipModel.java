@@ -17,6 +17,8 @@ public class FellowshipModel {
     private Byte panelMember;
     private String fellowType;
 
+    public FellowshipModel() {}
+
     public String getFirstname() {
         return firstname;
     }

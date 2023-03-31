@@ -21,6 +21,8 @@ public class PitchGridModel {
     @Column(name = "name", length = 45)
     private String name;
 
+    public PitchGridModel() {}
+
     public String getName() {
         return name;
     }
