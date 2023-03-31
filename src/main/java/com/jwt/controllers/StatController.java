@@ -79,7 +79,7 @@ public class StatController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update(@ModelAttribute Stat stat) {
+    public ResponseEntity<MessageResponse> update(@RequestBody Stat stat) {
         return statService.update( stat.getId(), stat );
     }
 
@@ -87,7 +87,7 @@ public class StatController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody List<Stat> delete(@ModelAttribute Stat stat){
+    public @ResponseBody List<Stat> delete(@RequestBody Stat stat){
         return statService.delete(stat);
     }
 

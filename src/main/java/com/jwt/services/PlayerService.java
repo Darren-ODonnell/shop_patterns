@@ -2,9 +2,11 @@ package com.jwt.services;
 
 import com.jwt.enums.MessageTypes;
 import com.jwt.exceptions.MyMessageResponse;
+import com.jwt.models.Fellowship;
 import com.jwt.models.Player;
 import com.jwt.models.PlayerModel;
 import com.jwt.payload.response.MessageResponse;
+import com.jwt.repositories.FellowshipRepository;
 import com.jwt.repositories.ManagerRepository;
 import com.jwt.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,12 @@ import java.util.Optional;
 @Service
 public class PlayerService {
     PlayerRepository playerRepository;
+    FellowshipRepository fellowshipRepository;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository) {
+    public PlayerService(FellowshipRepository fellowshipRepository, PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
+        this.fellowshipRepository = fellowshipRepository;
     }
 
     // return all players - done
@@ -92,8 +96,8 @@ public class PlayerService {
     // add player
 
     public ResponseEntity<MessageResponse> add( PlayerModel playerModel){
-        if(!playerRepository.existsByFirstnameAndLastname(playerModel.getFirstname(), playerModel.getLastname())) {
-            playerRepository.save(playerModel.translateModelToPlayer());
+        if(!fellowshipRepository.existsByFirstnameAndLastname(playerModel.getFirstname(), playerModel.getLastname())) {
+            fellowshipRepository.save(playerModel.translateModelToFellowship());
             return ResponseEntity.ok(new MyMessageResponse("New PLayer Added", MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Player already exists", MessageTypes.WARN));
@@ -103,8 +107,23 @@ public class PlayerService {
     // edit/update player
 
     public ResponseEntity<MessageResponse> update(Long id, Player player){
-        if(playerRepository.existsById(id)) {
-            playerRepository.save(player);
+        Fellowship fellow = new Fellowship();
+        fellow.setFirstname(player.getFirstname());
+        fellow.setLastname(player.getLastname());
+        fellow.setFirstnameI(player.getFirstnameI());
+        fellow.setLastnameI(player.getLastnameI());
+        fellow.setEmail(player.getEmail());
+        fellow.setAddress(player.getAddress());
+        fellow.setPhone(player.getPhone());
+        fellow.setPhoneIce(player.getPhoneIce());
+        fellow.setYob(player.getYob());
+        fellow.setRegistered(player.getRegistered());
+        fellow.setAvailability(player.getAvailability());
+        fellow.setGrade(player.getGrade());
+        fellow.setFellowType("Player");
+
+        if(fellowshipRepository.existsById(id)) {
+            fellowshipRepository.save(fellow);
             return ResponseEntity.ok(new MyMessageResponse("Player record updated", MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Player with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));
@@ -116,8 +135,8 @@ public class PlayerService {
 
     public List<Player>  delete(Player player){
         Long id = player.getId();
-        if(playerRepository.existsById(id)) {
-            playerRepository.deleteById(id);
+        if(fellowshipRepository.existsById(id)) {
+            fellowshipRepository.deleteById(id);
              ResponseEntity.ok(new MyMessageResponse("Player deleted with id: " + id, MessageTypes.INFO));
         } else {
              ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Cannot delete player with id: " + id, MessageTypes.WARN));

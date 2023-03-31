@@ -17,6 +17,7 @@ public class PlayerModel extends Fellowship {
     private boolean registered;
     private String grade;
     private String availability;
+
     private String fellowType;
 
     public PlayerModel() {}
@@ -87,31 +88,31 @@ public class PlayerModel extends Fellowship {
     public String getGrade() { return grade; }
     public String getAvailability() { return availability;  }
 
-    public Player translateModelToPlayer(){
-        Player player = new Player();
+    public Fellowship translateModelToFellowship(){
+        Fellowship fellow = new Fellowship();
 
-        player.setFirstname(    this.firstname);
-        player.setLastname(     this.lastname);
-        player.setFirstnameI(   this.firstnameI);
-        player.setLastnameI(    this.lastnameI);
-        player.setEmail(        this.email);
-        player.setAddress(      this.address);
-        player.setPhone(        this.phone);
-        player.setPhoneIce(     this.phoneIce);
-        player.setYob(          this.yob);
-        player.setRegistered(   this.registered);
-        player.setAvailability( this.availability);
-        player.setGrade(        this.grade);
-        player.setFellowType(   "Player");
+        fellow.setFirstname(    this.firstname);
+        fellow.setLastname(     this.lastname);
+        fellow.setFirstnameI(   this.firstnameI);
+        fellow.setLastnameI(    this.lastnameI);
+        fellow.setEmail(        this.email);
+        fellow.setAddress(      this.address);
+        fellow.setPhone(        this.phone);
+        fellow.setPhoneIce(     this.phoneIce);
+        fellow.setYob(          this.yob);
+        fellow.setRegistered(   this.registered);
+        fellow.setAvailability( this.availability);
+        fellow.setGrade(        this.grade);
+        fellow.setFellowType(   "Player");
 
-        return player;
+        return fellow;
     }
 
     // used in update operations
 
-    public Player translateModelToPlayer(Long id){
-        Player player = translateModelToPlayer();
-        player.setId(id);
-        return player;
+    public Fellowship translateModelToFellowship(Long id){
+        Fellowship fellow = translateModelToFellowship();
+        fellow.setId(id);
+        return fellow;
     }
 }

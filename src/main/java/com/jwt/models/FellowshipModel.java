@@ -13,7 +13,7 @@ public class FellowshipModel {
     private String phoneIce;
     private String availability;
     private String grade;
-    private Integer registered;
+    private boolean registered;
     private Byte panelMember;
     private String fellowType;
 
@@ -107,11 +107,11 @@ public class FellowshipModel {
         this.grade = grade;
     }
 
-    public Integer getRegistered() {
+    public boolean getRegistered() {
         return registered;
     }
 
-    public void setRegistered(Integer registered) {
+    public void setRegistered(boolean registered) {
         this.registered = registered;
     }
 

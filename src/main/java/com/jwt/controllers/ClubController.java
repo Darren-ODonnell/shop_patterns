@@ -62,7 +62,7 @@ public class ClubController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> update(@ModelAttribute Club club) {
+    public ResponseEntity<MessageResponse> update(@RequestBody Club club) {
         return clubService.update( club.getId(), club );
     }
 
@@ -70,7 +70,7 @@ public class ClubController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<Club> delete(@ModelAttribute Club club){
+    public @ResponseBody List<Club> delete(@RequestBody Club club){
         return clubService.delete(club);
     }
 }

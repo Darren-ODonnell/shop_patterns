@@ -88,7 +88,7 @@ public class FirstnameController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public ResponseEntity<MessageResponse> update(@ModelAttribute Firstname firstname){
+    public ResponseEntity<MessageResponse> update(@RequestBody Firstname firstname){
         return firstnameService.update(firstname.getId(), firstname);
     }
 
@@ -96,7 +96,7 @@ public class FirstnameController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public List<Firstname> delete(@ModelAttribute Firstname firstname){
+    public List<Firstname> delete(@RequestBody Firstname firstname){
         return firstnameService.delete(firstname);
     }
 }

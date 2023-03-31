@@ -43,7 +43,7 @@ public class Fellowship {
     private String grade;
 
     @Column(name = "registered")
-    private Integer registered;
+    private boolean registered;
 
     @Column(name = "panel_member")
     private Byte panelMember;
@@ -147,11 +147,11 @@ public class Fellowship {
         this.grade = grade;
     }
 
-    public Integer getRegistered() {
+    public boolean getRegistered() {
         return registered;
     }
 
-    public void setRegistered(Integer registered) {
+    public void setRegistered(boolean registered) {
         this.registered = registered;
     }
 

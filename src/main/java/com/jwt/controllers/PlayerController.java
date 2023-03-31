@@ -87,7 +87,7 @@ public class PlayerController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update( @ModelAttribute Player player){
+    public ResponseEntity<MessageResponse> update( @RequestBody Player player){
         return playerService.update(player.getId(), player);
     }
 
@@ -96,7 +96,7 @@ public class PlayerController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<Player>  delete(@ModelAttribute Player player){
+    public @ResponseBody List<Player>  delete(@RequestBody Player player){
         return playerService.delete(player);
     }
 }

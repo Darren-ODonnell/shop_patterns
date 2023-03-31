@@ -7,6 +7,7 @@ import com.jwt.models.FellowshipModel;
 import com.jwt.models.Manager;
 import com.jwt.models.ManagerModel;
 import com.jwt.payload.response.MessageResponse;
+import com.jwt.repositories.FellowshipRepository;
 import com.jwt.repositories.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @Service
 public class ManagerService {
     ManagerRepository managerRepository;
+    FellowshipRepository fellowshipRepository;
     FellowshipService fellowshipService;
 
     @Autowired
@@ -99,7 +101,7 @@ public class ManagerService {
 
 
         if(!managerRepository.existsByFirstnameAndLastname(managerModel.getFirstname(), managerModel.getLastname())) {
-            managerRepository.save(managerModel.translateModelToManager());
+            fellowshipRepository.save(managerModel.translateModelToFellowship());
             return ResponseEntity.ok(new MyMessageResponse("New Manager Added", MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Manager already exists", MessageTypes.WARN));
@@ -109,8 +111,18 @@ public class ManagerService {
     // edit/update manager
 
     public ResponseEntity<MessageResponse> update(Long id, Manager manager){
-        if(managerRepository.existsById(id)) {
-            managerRepository.save(manager);
+        if(fellowshipRepository.existsById(id)) {
+            Fellowship fellow = new Fellowship();
+            fellow.setFirstname(manager.getFirstname());
+            fellow.setLastname(manager.getLastname());
+            fellow.setFirstnameI(manager.getFirstnameI());
+            fellow.setLastnameI(manager.getLastnameI());
+            fellow.setEmail(manager.getEmail());
+            fellow.setAddress(manager.getAddress());
+            fellow.setPhone(manager.getPhone());
+            fellow.setFellowType("Manager");
+
+            fellowshipRepository.save(fellow);
             return ResponseEntity.ok(new MyMessageResponse("Manager record updated", MessageTypes.INFO));
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MyMessageResponse("Error: Manager with Id: [" + id + "] -> does not exist - cannot update record", MessageTypes.WARN));

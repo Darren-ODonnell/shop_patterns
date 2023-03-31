@@ -71,7 +71,7 @@ public class CompetitionController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> update( @ModelAttribute Competition competition){
+    public ResponseEntity<MessageResponse> update( @RequestBody Competition competition){
         return competitionService.update(competition.getId(), competition);
     }
 
@@ -79,7 +79,7 @@ public class CompetitionController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody   List<Competition> delete(@ModelAttribute Competition  competition){
+    public @ResponseBody   List<Competition> delete(@RequestBody Competition  competition){
         return competitionService.delete(competition) ;
     }
 }

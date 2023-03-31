@@ -93,7 +93,7 @@ public class TeamsheetController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public List<Teamsheet> update(@ModelAttribute Teamsheet teamsheet) {
+    public List<Teamsheet> update(@RequestBody Teamsheet teamsheet) {
         return teamsheetService.updateAll(Collections.singletonList(teamsheet));
     }
 
@@ -109,7 +109,7 @@ public class TeamsheetController {
 
     @DeleteMapping(value="/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')") 
-    public @ResponseBody List<Teamsheet> delete(@ModelAttribute Teamsheet teamsheet){
+    public @ResponseBody List<Teamsheet> delete(@RequestBody Teamsheet teamsheet){
         return teamsheetService.delete(teamsheet);
     }
 }

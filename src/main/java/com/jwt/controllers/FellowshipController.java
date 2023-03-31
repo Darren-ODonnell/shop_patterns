@@ -85,7 +85,7 @@ public class FellowshipController {
 
     @PutMapping(value="/player/add")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> addPlayer( @ModelAttribute FellowshipModel fellowModel){
+    public ResponseEntity<MessageResponse> addPlayer( @RequestBody FellowshipModel fellowModel){
         fellowModel.setFellowType("Player");
         return fellowshipService.add( fellowModel);
     }
@@ -93,7 +93,7 @@ public class FellowshipController {
 
     @PutMapping(value="/manager/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> addManager( @ModelAttribute FellowshipModel fellowModel){
+    public ResponseEntity<MessageResponse> addManager( @RequestBody FellowshipModel fellowModel){
         fellowModel.setFellowType("Manager");
         return fellowshipService.add( fellowModel);
     }
@@ -102,7 +102,7 @@ public class FellowshipController {
 
     @PostMapping(value="/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> update( @ModelAttribute Fellowship fellow){
+    public ResponseEntity<MessageResponse> update( @RequestBody Fellowship fellow){
         return fellowshipService.update(fellow.getId(), fellow);
     }
 
@@ -110,7 +110,7 @@ public class FellowshipController {
 
     @PostMapping(value="/player/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public ResponseEntity<MessageResponse> updatePlayer( @ModelAttribute Fellowship fellow){
+    public ResponseEntity<MessageResponse> updatePlayer( @RequestBody Fellowship fellow){
         fellow.setFellowType("Player");
         return fellowshipService.update(fellow.getId(), fellow);
     }
@@ -118,7 +118,7 @@ public class FellowshipController {
 
     @PostMapping(value="/manager/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<MessageResponse> updateManager( @ModelAttribute Fellowship fellow){
+    public ResponseEntity<MessageResponse> updateManager( @RequestBody Fellowship fellow){
         fellow.setFellowType("Manager");
         return fellowshipService.update(fellow.getId(), fellow);
     }
@@ -135,7 +135,7 @@ public class FellowshipController {
 
     @DeleteMapping(value="/player/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COACH')")
-    public @ResponseBody List<Fellowship>  deletePlayer(@ModelAttribute Fellowship fellow){
+    public @ResponseBody List<Fellowship>  deletePlayer(@RequestBody Fellowship fellow){
         return fellowshipService.delete(fellow);
     }
 
@@ -143,7 +143,7 @@ public class FellowshipController {
 
     @DeleteMapping(value="/manager/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody List<Fellowship>  deleteManager(@ModelAttribute Fellowship fellow){
+    public @ResponseBody List<Fellowship>  deleteManager(@RequestBody Fellowship fellow){
         return fellowshipService.delete(fellow);
     }
 
