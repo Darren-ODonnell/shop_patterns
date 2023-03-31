@@ -1,9 +1,16 @@
 package com.jwt.models;
 
-public class LastnameModel {
+import java.io.Serializable;
+
+public class LastnameModel implements Serializable {
 
     private String lastname;
     private String lastnameIrish;
+
+    public LastnameModel(String lastname, String lastnameIrish) {
+        this.lastname = lastname;
+        this.lastnameIrish = lastnameIrish;
+    }
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
@@ -18,6 +25,8 @@ public class LastnameModel {
     public String getLastnameIrish() {
         return lastnameIrish;
     }
+
+
 
     public Lastname translateModelToLastname(){
         Lastname lastname = new Lastname();
