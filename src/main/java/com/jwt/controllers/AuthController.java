@@ -55,6 +55,7 @@ public class AuthController {
         this.roleService = roleService;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
+        
     }
 
     // login
